@@ -73,11 +73,13 @@
 
 - 生成式 AI 是深度学习子集，创建**全新原创内容**（非分类/预测）
 - 模型输出机制：预测下一个词/Token（概率性过程）
-- 参数量 → 规模 → 内存 → 能力（正向关系）
+- 参数量 → 规模 → 内存 → 能力（正向关系）；**涌现能力**：模型越大越无需 few-shot
+- **预训练 = 自监督学习**：数据量 GB→PB，来源含互联网抓取；策管后仅 **1%~3%** 的分词可用
 - 数学基础：概率建模、损失函数、矩阵乘法
 - Transformer 架构与注意力机制（2017, "Attention Is All You Need"）
-- Tokenization 与 Embeddings（向量数据库）
-- 模态（Modalities）：文本、图像、音频、视频
+- Tokenization 与 Embeddings（向量、语义接近原则、Q/K/V 注意力）
+- **单模态 vs 多模态**：LLM = 单模态；多模态 = 文本 + 图像 + 音频
+- **扩散模型**：正向扩散 / 反向扩散 / 稳定扩散（隐空间）；优于 GAN/VAE
 - 提示工程（Prompt Engineering）：零样本、**单样本**、少样本、思维链
 - **上下文学习 (In-Context Learning)**：在提示词中加入示例，无需重新训练
 - **补全 (Completion)**：模型输出；**推理 (Inference)**：提示词→模型→补全的过程
@@ -86,26 +88,32 @@
 
 ### Domain 3 - 基础模型应用
 
-- Amazon Bedrock：基础模型访问、Fine-tuning、RAG
-- Bedrock Agents、Knowledge Bases、Guardrails
-- 模型评估与选择
-- SageMaker：ML 完整流程
+- Amazon Bedrock：基础模型访问、Fine-tuning、RAG、Agents、Guardrails
+- **迁移学习**：预训练模型 + 小数据集微调，节省时间和成本
+- **项目生命周期**：确定使用案例 → 实验 → 适应调整（高度迭代）→ 评估部署 → 监控
+- **基础模型生命周期**：数据选择 → 模型选择 → 预训练 → 微调 → 评估 → 部署 → 反馈
+- **RLHF**：HHH 原则（有用/诚实/无害）；对齐人类偏好
+- **SageMaker JumpStart**：预构建基础模型、快速微调和部署
+- **PartyRock**：基于 Bedrock 的免费学习/原型体验平台
+- 模型评估与选择；ROUGE（摘要）/ BLEU（翻译）
 
 相关笔记：[[Amazon Bedrock]] | [[Amazon SageMaker]]
 
 ### Domain 4 - 负责任的 AI
 
 - AI 偏见（Bias）与公平性（Fairness）
-- 可解释性（Explainability）与透明度
+- 可解释性（Explainability）：内在分析（简单模型）vs 事后分析（复杂模型，本地/全局）
 - 数据隐私与 PII 处理
 - Guardrails 内容过滤
+- **HHH 原则**：有用性 / 诚实性 / 无害性
 
 ### Domain 5 - 安全、合规、治理
 
-- AI 安全威胁（Prompt Injection、数据投毒）
-- IAM 权限控制
-- CloudWatch 日志监控
-- 数据加密与合规要求
+- AI 安全威胁：**提示词注入** / **数据中毒** / **模型反演漏洞**（三类考试必记）
+- **AWS Nitro System**：强制安全限制，保护 EC2 工作负载和数据
+- **Trainium（训练）/ Inferentia（推理）**：专用 AI 芯片，高性价比
+- IAM 权限控制；CloudWatch 日志监控
+- 加密、MFA、持续监控合规框架
 
 相关笔记：[[负责任的AI与安全]]
 
