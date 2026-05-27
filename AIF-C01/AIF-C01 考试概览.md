@@ -71,11 +71,16 @@
 
 ### Domain 2 - 生成式 AI 基础
 
-- 生成式 AI / 大语言模型 (LLM) 定义
-- Transformer 架构与注意力机制
+- 生成式 AI 是深度学习子集，创建**全新原创内容**（非分类/预测）
+- 模型输出机制：预测下一个词/Token（概率性过程）
+- 参数量 → 规模 → 内存 → 能力（正向关系）
+- 数学基础：概率建模、损失函数、矩阵乘法
+- Transformer 架构与注意力机制（2017, "Attention Is All You Need"）
 - Tokenization 与 Embeddings（向量数据库）
 - 模态（Modalities）：文本、图像、音频、视频
-- 提示工程（Prompt Engineering）：零样本、少样本、思维链
+- 提示工程（Prompt Engineering）：零样本、**单样本**、少样本、思维链
+- **上下文学习 (In-Context Learning)**：在提示词中加入示例，无需重新训练
+- **补全 (Completion)**：模型输出；**推理 (Inference)**：提示词→模型→补全的过程
 
 相关笔记：[[大语言模型 - LLM]] | [[Transformer与Embeddings]] | [[提示工程 - Prompt Engineering]]
 
