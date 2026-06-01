@@ -345,17 +345,17 @@
 
 ### 服务场景匹配（高频考点）
 
-| 需求关键词 | 对应服务 |
-|-----------|---------|
-| "图像识别"、"人脸识别"、"视频分析"、"内容审核" | Amazon Rekognition |
-| "情感分析"、"实体提取"、"PII"、"自定义文本分类" | Amazon Comprehend |
-| "OCR"、"文档提取"、"发票"、"表单"、"手写内容" | Amazon Textract |
-| "聊天机器人"、"语音机器人"、"Alexa 企业版"、"IVR 替换" | Amazon Lex |
-| "企业搜索"、"语义搜索"、"自然语言问答（企业文档）" | Amazon Kendra |
-| "个性化推荐"、"用户-物品交互"、"'您可能还喜欢'" | Amazon Personalize |
-| "语音转文字"、"实时转录"、"100+ 语言 ASR" | Amazon Transcribe |
-| "文字转语音"、"TTS"、"语音合成" | Amazon Polly |
-| "机器翻译"、"75 种语言"、"实时聊天翻译" | Amazon Translate |
-| "时间序列预测"、"预测销售/呼叫量/库存" | Amazon Forecast |
-| "欺诈检测"、"在线支付欺诈"、"虚假账户检测" | Amazon Fraud Detector |
-| "代码生成"、"AI 编程助手" | Amazon Q Developer |
+| 需求关键词                                | 对应服务                  |
+| ------------------------------------ | --------------------- |
+| "图像识别"、"人脸识别"、"视频分析"、"内容审核"          | Amazon Rekognition    |
+| "情感分析"、"实体提取"、"PII"、"自定义文本分类"        | Amazon Comprehend     |
+| "OCR"、"文档提取"、"发票"、"表单"、"手写内容"        | Amazon Textract       |
+| "聊天机器人"、"语音机器人"、"Alexa 企业版"、"IVR 替换" | Amazon Lex            |
+| "企业搜索"、"语义搜索"、"自然语言问答（企业文档）"         | Amazon Kendra         |
+| "个性化推荐"、"用户-物品交互"、"'您可能还喜欢'"         | Amazon Personalize    |
+| "语音转文字"、"实时转录"、"100+ 语言 ASR"         | Amazon Transcribe     |
+| "文字转语音"、"TTS"、"语音合成"                 | Amazon Polly          |
+| "机器翻译"、"75 种语言"、"实时聊天翻译"             | Amazon Translate      |
+| "时间序列预测"、"预测销售/呼叫量/库存"               | Amazon Forecast       |
+| "欺诈检测"、"在线支付欺诈"、"虚假账户检测"             | Amazon Fraud Detector |
+| "代码生成"、"AI 编程助手"                     | Amazon Q Developer    |
