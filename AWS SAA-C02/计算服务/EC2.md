@@ -308,6 +308,49 @@ m5.large
 | **shutting-down** | 实例正在终止 |
 | **terminated** | 实例已终止 |
 
+### 生命周期状态转换图
+
+```
+                    launch
+                      │
+                      ▼
+                  ┌─────────┐
+                  │ pending │
+                  └────┬────┘
+                       │ 启动成功
+                       ▼
+        ┌────────► running ◄────────┐
+        │             │              │
+        │      stop   │  reboot      │ start
+        │             │  (状态不变)   │
+        │             ▼              │
+        │        ┌──────────┐        │
+        │        │ stopping │        │
+        │        └────┬─────┘        │
+        │             │              │
+        │             ▼              │
+        │        ┌─────────┐         │
+        └────────┤ stopped ├─────────┘
+                  └────┬────┘
+                       │ terminate
+                       │ (running / stopped 均可触发)
+                       ▼
+                ┌───────────────┐
+                │ shutting-down │
+                └───────┬───────┘
+                        │
+                        ▼
+                 ┌────────────┐
+                 │ terminated │  ← 终态，实例记录保留一段时间后消失
+                 └────────────┘
+```
+
+- **reboot（重启）**：状态不变化，仍为 `running`，仅操作系统重启，公网 IP 通常保留、数据不丢失
+- **stop（停止）**：仅 **EBS-backed** 实例支持，`running → stopping → stopped`
+- **start（启动）**：`stopped → pending → running`，重新分配新的公网 IP（除非使用 EIP）
+- **terminate（终止）**：`running` 或 `stopped` 状态均可触发，进入 `shutting-down → terminated`，为不可逆操作
+- **hibernate（休眠）**：`running → stopping → stopped`，但会将内存 (RAM) 数据保存到 EBS 根卷，下次启动时恢复内存状态，加快启动速度
+
 ### 启动和停止 vs 终止
 
 | 操作 | EBS 卷 | 公网 IP | 计费 | 适用场景 |
