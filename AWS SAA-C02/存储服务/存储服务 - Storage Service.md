@@ -59,6 +59,7 @@
   - **FSx for Windows File Server**：Windows 原生文件系统，SMB 协议
   - **FSx for Lustre**：高性能计算文件系统，Linux 原生
 - **适用场景**：Windows 应用迁移、HPC、机器学习
+- **相关文档**：[[文件储存 - AWS FSx]]
 
 ### 3. AWS Storage Gateway
 
@@ -100,7 +101,7 @@
 需要文件级访问？
 ├── 是 → 多实例共享？
 │         ├── 是 → Linux (NFS) → [[文件储存 - AWS EFS]]
-│         └── 否 → Windows (SMB) → [[Amazon FSx]] for Windows
+│         └── 否 → Windows (SMB) → [[文件储存 - AWS FSx]] for Windows
 └── 否 → 需要块设备挂载？
           ├── 是 → [[块储存 - EBS]]
           └── 否 → 对象/API 访问 → [[S3 - Object Storage]]
