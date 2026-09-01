@@ -1,8 +1,8 @@
-# Amazon API Gateway
+# Amazon API Gateway - API 网关服务
 
 > **Amazon API Gateway** 是一种完全托管的服务，用于创建、发布、维护、监控和保护 REST、HTTP 和 WebSocket API。它是构建 API 驱动的微服务架构和 Serverless 应用的核心服务。
 >
-> 相关文档：[[EC2|EC2]] | [[Lambda|Lambda]] | [[CloudWatch]]
+> 相关文档：[[EC2]] | [[AWS Lambda]] | [[CloudWatch]] | [[DynamoDB - NoSQL]] | [[S3 - Object Storage]] | [[Cognito]] | [[虚拟私有云 - VPC]]
 
 ---
 
@@ -13,8 +13,8 @@
 | 服务                                                | 类型            | 场景           | 特点         |
 | ------------------------------------------------- | ------------- | ------------ | ---------- |
 | **API Gateway**                                   | API 管理        | API 创建、发布、监控 | 流量入口、认证、限流 |
-| [[Lambda\|计算服务 - Lambda]] | Serverless 计算 | 事件驱动函数执行     | 无需管理服务器    |
-| [[EC2\|计算服务 - EC2]]       | 虚拟机           | 传统应用托管       | 完全控制服务器    |
+| [[AWS Lambda]] | Serverless 计算 | 事件驱动函数执行     | 无需管理服务器    |
+| [[EC2]]       | 虚拟机           | 传统应用托管       | 完全控制服务器    |
 
 ### 支持的 API 类型
 
@@ -24,6 +24,16 @@
 | **HTTP API**      | HTTP/1.1, HTTP/2 | 轻量级、低成本、低延迟      |
 | **WebSocket API** | WebSocket        | 实时双向通信（聊天、游戏）    |
 | **v2 API**        | REST/HTTP 升级版    | 新增功能（自定义认证、路由变量） |
+
+### 端点类型（Endpoint Types，考试高频）
+
+| 类型 | 说明 | 适用场景 |
+|------|------|---------|
+| **Edge-Optimized（边缘优化）** | 请求通过 CloudFront 全球边缘网络路由到最近节点，再转发到 API Gateway | 客户端分布在全球各地的公网 API，默认类型 |
+| **Regional（区域）** | 请求直接进入部署所在区域，不经过 CloudFront | 客户端与 API 同区域，或希望自行在前面搭配自定义 CloudFront 分发以获得更精细控制 |
+| **Private（私有）** | 只能通过 [[虚拟私有云 - VPC]] 内的**接口终端节点（Interface VPC Endpoint）**访问，完全不暴露公网 | 内部企业 API、仅供 VPC 内部服务调用 |
+
+> **考试陷阱**：题目描述"API 只能被公司内部 VPC 访问，绝不能暴露在公网"→ **Private 端点类型** + 配套的资源策略（Resource Policy）限制来源 VPC/VPC Endpoint；不要误选 Regional（Regional 仍然是公网可达，只是不经过 CloudFront）。
 
 ---
 
@@ -39,7 +49,7 @@
                     │  │  (Prod / Dev)     │   │
                     │  └───────────────────┘   │
                     │  ┌───────────────────┐   │
-                    │  │  Resources & Methods│  │
+                    │  │Resources & Methods│   │
                     │  └───────────────────┘   │
                     └─────────────────────────┘
 ```
@@ -62,6 +72,14 @@
 | **AWS 服务集成** | 调用其他 AWS 服务 | S3、DynamoDB 等 |
 | **VPC Link** | 调用 VPC 内资源 | 私有后端服务 |
 
+### CORS（跨源资源共享）
+
+- 当前端网页（如 `app.example.com`）通过 JavaScript 调用部署在不同域名下的 API Gateway 端点时，浏览器的**同源策略**会拦截该跨域请求
+- 需要在 API Gateway 的**资源（Resource）**上启用 CORS，为 `OPTIONS` 方法配置**预检响应（Preflight Response）**，并在实际响应中返回 `Access-Control-Allow-Origin` 等头部
+- 与 [[S3 - Object Storage]] 的 CORS 配置是同一类问题的两种表现：**S3 CORS 解决直连 S3 的跨域请求**，**API Gateway CORS 解决调用 API 端点的跨域请求**，两者需要分别配置，不能相互替代
+
+> **考试陷阱**：题目描述"前端调用 API Gateway 时浏览器报 CORS 错误，但 Postman/curl 直接调用正常"→ 这是典型的**浏览器端 CORS 问题**，解决方案是在 API Gateway 上**启用 CORS**（配置 `OPTIONS` 方法和响应头），而不是检查 IAM 权限或 Lambda 代码（后端本身没有问题，是浏览器预检请求被拒绝）。
+
 ---
 
 ## 认证和授权
@@ -72,7 +90,7 @@
 |------|------|---------|
 | **IAM 认证** | 使用 AWS IAM 凭证 | AWS 服务间调用 |
 | **API Key** | 简单的密钥验证 | 免费 API、限流 |
-| **Cognito User Pools** | AWS 用户身份池 | 用户认证和授权 |
+| **[[Cognito]] User Pools** | 验证请求携带的用户池 JWT 令牌 | 面向应用终端用户的身份验证（详见 [[Cognito]]） |
 | **Lambda 授权** | 自定义 Lambda 函数验证 | 复杂认证逻辑 |
 | **OIDC/JWT** | OpenID Connect 令牌 | 现代应用、微服务 |
 
@@ -142,6 +160,14 @@
 | **配额 (Quotas)** | 时间窗口内总请求数 |
 | **计数头** | 响应中包含剩余请求计数 |
 
+### Usage Plan + API Key（考试要点）
+
+- **API Key**：标识调用方身份的密钥，本身**不做认证**（不验证调用方是谁），只用于**限流和计量**
+- **Usage Plan（使用计划）**：将一个或多个 API Key 关联到具体的**速率限制**和**配额**，常用于向不同的第三方客户（如免费版/付费版 SaaS 客户）提供差异化的调用额度
+- 超出限制的请求会收到 **HTTP 429（Too Many Requests）**
+
+> **考试陷阱**：**API Key 不是身份认证机制**——题目若要求"验证调用方身份"，应选择 IAM/Cognito/Lambda 授权方/JWT；API Key 只适用于"区分不同调用方并分别限流计量"的场景，两者不能混淆。
+
 ### 监控和日志
 
 | 服务 | 功能 |
@@ -193,11 +219,11 @@
 
 | 服务 | 集成方式 | 场景 |
 |------|---------|------|
-| **DynamoDB** | AWS 服务集成 | 快速 CRUD API |
-| **S3** | AWS 服务集成 | 对象上传/下载 |
+| [[DynamoDB - NoSQL]] | AWS 服务集成 | 快速 CRUD API |
+| [[S3 - Object Storage]] | AWS 服务集成 | 对象上传/下载 |
 | **AppSync** | GraphQL API | 移动和 Web 应用 |
-| **Cognito** | 身份认证 | 用户管理 |
-| **Step Functions** | 工作流编排 | 复杂业务流程 |
+| [[Cognito]] | 身份认证 | 用户管理 |
+| [[AWS Step Functions]] | 工作流编排 | 复杂业务流程 |
 
 ---
 
@@ -250,6 +276,10 @@
 8. **Stage 和部署**：环境隔离和版本管理
 9. **Lambda 集成**：Serverless 架构核心
 10. **CloudWatch 监控**：延迟、错误数、调用次数
+11. **端点类型**：Edge-Optimized（全球公网，走 CloudFront）、Regional（同区域公网）、Private（仅 VPC 内可访问）
+12. **CORS 是浏览器端问题**：报错但 Postman/curl 正常 → 在 API Gateway 启用 CORS，而非查后端权限
+13. **API Key 不做身份认证**：只用于结合 Usage Plan 做限流和计量，不能替代 IAM/Cognito/JWT 等认证方式
+14. **超限返回 429**：Usage Plan/速率限制超出后的标准 HTTP 状态码
 
 ### 场景题解题思路
 
@@ -260,4 +290,7 @@
 ├── "需要完整功能" → REST API
 ├── "需要保护后端 VPC 资源" → VPC Link
 ├── "需要 JWT 认证" → 原生 JWT 认证
+├── "API 只能被公司内部 VPC 访问，不能暴露公网" → Private 端点类型
+├── "前端调用报 CORS 错误，但 curl/Postman 正常" → 在 API Gateway 启用 CORS
+├── "需要按不同客户分别限流/计量调用次数" → Usage Plan + API Key
 └── "需要防止 DDoS/SQL 注入" → WAF 集成

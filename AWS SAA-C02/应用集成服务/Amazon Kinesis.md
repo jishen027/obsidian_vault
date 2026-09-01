@@ -2,7 +2,7 @@
 
 > **Amazon Kinesis** 是一组用于收集、处理、存储和交付**实时流数据**的全托管服务集合，能够每秒从数千个源摄入千兆字节级数据，适合日志、遥测、点击流、音频和视频等场景。
 >
-> 相关文档：[[SQS]] | [[SNS]] | [[Lambda]] | [[S3 - Object Storage]] | [[数据仓库服务 - Redshift]] | [[DynamoDB - NoSQL]]
+> 相关文档：[[SQS]] | [[SNS]] | [[AWS Lambda]] | [[S3 - Object Storage]] | [[数据仓库服务 - Redshift]] | [[DynamoDB - NoSQL]]
 
 ---
 
@@ -66,7 +66,7 @@
 ## Kinesis Data Firehose（交付流）
 
 - **定位**：全托管的**交付**服务，专注于将流数据近实时地加载到目标存储/分析服务，**没有"消费者订阅"概念**，数据由 Firehose 自动投递
-- **数据转换**：交付前可调用 **[[Lambda]]** 函数对数据做格式转换（如 JSON 转 Parquet/ORC）或轻量处理
+- **数据转换**：交付前可调用 **[[AWS Lambda]]** 函数对数据做格式转换（如 JSON 转 Parquet/ORC）或轻量处理
 - **缓冲机制**：数据先按**缓冲大小（Buffer Size，最小 1 MB）**或**缓冲时间（Buffer Interval，最小 60 秒）**中先满足者触发投递，因此是**近实时（Near Real-Time）**而非真正的亚秒级实时
 - **目的地**：[[S3 - Object Storage]]、[[数据仓库服务 - Redshift]]、Amazon OpenSearch Service、Splunk、HTTP 端点、第三方服务商
 - **自动缩放**：无需管理分片，吞吐量随数据量自动伸缩

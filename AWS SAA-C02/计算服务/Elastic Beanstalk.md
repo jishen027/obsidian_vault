@@ -2,7 +2,7 @@
 
 > **AWS Elastic Beanstalk** 是一种面向应用的 PaaS（平台即服务），开发者只需上传代码，Beanstalk 会自动完成底层基础设施（[[EC2]]、[[AWS Load Balance]]、[[Auto Scaling]]、[[CloudWatch]] 等）的配置、部署和管理。
 >
-> 相关文档：[[EC2]] | [[ECS]] | [[Lambda]] | [[Auto Scaling]] | [[AWS CloudFormation]]
+> 相关文档：[[EC2]] | [[ECS]] | [[AWS Lambda]] | [[Auto Scaling]] | [[AWS CloudFormation]]
 
 ---
 
@@ -15,7 +15,7 @@
 | **Elastic Beanstalk** | PaaS | 传统 Web 应用快速部署 | 只需管理代码，基础设施持续运行 |
 | [[EC2]] | IaaS | 完全自定义的服务器托管 | 手动管理底层架构，控制力最强 |
 | [[ECS]] | 容器编排 | 微服务架构 | 更适合容器化、松耦合的微服务 |
-| [[Lambda]] | Serverless 计算 | 事件驱动函数 | 无基础设施、按调用计费、可缩容至零 |
+| [[AWS Lambda]] | Serverless 计算 | 事件驱动函数 | 无基础设施、按调用计费、可缩容至零 |
 
 ### 核心特性
 
@@ -105,7 +105,7 @@
 ## 架构局限性
 
 - Beanstalk 面向**传统单体或简单多层应用**的快速部署，构建**微服务架构**时不如 [[ECS]] 灵活（缺乏细粒度的服务发现、任务编排能力）
-- 基础设施持续运行，无法像 [[Lambda]] 一样在无流量时自动缩容至零，成本模型更接近传统 EC2
+- 基础设施持续运行，无法像 [[AWS Lambda]] 一样在无流量时自动缩容至零，成本模型更接近传统 EC2
 
 ---
 

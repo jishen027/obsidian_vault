@@ -2,7 +2,7 @@
 
 > **Amazon SQS（Simple Queue Service）** 是全托管的消息队列服务，用于在分布式系统和微服务组件之间传递消息，实现应用间的**解耦（Decoupling）**与**削峰填谷（Buffering）**。
 >
-> 相关文档：[[SNS]] | [[Lambda]] | [[Auto Scaling]] | [[Amazon Kinesis]] | [[Amazon API Gateway]] | [[DynamoDB - NoSQL]]
+> 相关文档：[[SNS]] | [[AWS Lambda]] | [[Auto Scaling]] | [[Amazon Kinesis]] | [[Amazon API Gateway]] | [[DynamoDB - NoSQL]]
 
 ---
 
@@ -101,7 +101,7 @@
 
 ### SQS + Lambda
 
-- [[Lambda]] 可通过**事件源映射（Event Source Mapping）**轮询 SQS 队列，自动触发函数处理消息，无需手动管理消费者
+- [[AWS Lambda]] 可通过**事件源映射（Event Source Mapping）**轮询 SQS 队列，自动触发函数处理消息，无需手动管理消费者
 - 可配置**批处理大小（Batch Size）**，一次调用处理多条消息，提升吞吐、降低调用成本
 - FIFO 队列作为 Lambda 触发源时，同一 `MessageGroupId` 内的消息仍保证顺序处理
 

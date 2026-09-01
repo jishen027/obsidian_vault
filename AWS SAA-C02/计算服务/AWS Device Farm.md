@@ -2,7 +2,7 @@
 
 > **AWS Device Farm** 是一项完全托管的服务，用于在 AWS 云中的真实物理设备上测试 Android、iOS 和 Web 应用程序。它是移动应用开发和测试的核心服务。
 >
-> 相关文档：[[Lambda]] | [[Elastic Beanstalk]]
+> 相关文档：[[AWS Lambda]] | [[Elastic Beanstalk]]
 
 ---
 

@@ -2,7 +2,7 @@
 
 > **Amazon SNS（Simple Notification Service）** 是全托管的**发布/订阅（Pub/Sub）消息服务**，允许一个发布者将消息**一对多**地推送给多个订阅端点，实现事件通知与系统间的扇出（Fan-out）架构。
 >
-> 相关文档：[[SQS]] | [[Lambda]] | [[CloudWatch]] | [[Amazon Kinesis]] | [[KMS]]
+> 相关文档：[[SQS]] | [[AWS Lambda]] | [[CloudWatch]] | [[Amazon Kinesis]] | [[KMS]]
 
 ---
 
@@ -32,7 +32,7 @@
 | 端点类型 | 说明 | 典型场景 |
 |---------|------|---------|
 | **[[SQS]]** | 消息投递到 SQS 队列 | Fan-out 扇出模式，各下游系统独立异步消费 |
-| **[[Lambda]]** | 直接触发 Lambda 函数执行 | 事件驱动的实时处理逻辑 |
+| **[[AWS Lambda]]** | 直接触发 Lambda 函数执行 | 事件驱动的实时处理逻辑 |
 | **HTTP/HTTPS** | 推送到任意 Web 端点 | Webhook 集成第三方系统 |
 | **Email / Email-JSON** | 发送邮件通知 | 人工告警、运营通知 |
 | **SMS** | 发送短信 | 紧急告警、验证码类通知 |

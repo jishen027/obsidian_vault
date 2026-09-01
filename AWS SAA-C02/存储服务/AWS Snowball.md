@@ -23,7 +23,7 @@
 | **Snowball Edge - Compute Optimized** | 计算优化型 | 更强 CPU/GPU + 存储 | 边缘机器学习推理、视频分析、需要较强本地计算的场景 |
 | **Snowmobile** | 超大规模迁移的集装箱卡车 | 单台最高 **100 PB** | Exabyte 级别的数据中心整体迁移 |
 
-> **考试陷阱**：**Snowball（经典款）已被 Snowball Edge 取代**，现在的 AWS 文档和考试中提到的"Snowball"通常指 **Snowball Edge**（自带计算能力，可在设备本地运行 [[Lambda]] 函数或 EC2 实例进行边缘处理），不要将其误认为只是一个"纯存储运输盒子"。
+> **考试陷阱**：**Snowball（经典款）已被 Snowball Edge 取代**，现在的 AWS 文档和考试中提到的"Snowball"通常指 **Snowball Edge**（自带计算能力，可在设备本地运行 [[AWS Lambda]] 函数或 EC2 实例进行边缘处理），不要将其误认为只是一个"纯存储运输盒子"。
 
 ---
 
@@ -54,7 +54,7 @@
 
 ## Snowball Edge 的本地计算能力
 
-- Snowball Edge 内置计算资源，可在设备上运行 **[[Lambda]] 函数**或 **EC2 兼容实例**，实现"边处理边迁移"
+- Snowball Edge 内置计算资源，可在设备上运行 **[[AWS Lambda]] 函数**或 **EC2 兼容实例**，实现"边处理边迁移"
 - **典型用途**：
   - 在断网/弱网的边缘环境（如工厂、船舶、油田）预处理数据后再批量传回 AWS
   - 数据迁移前先做过滤、压缩、格式转换，减少后续处理负担
