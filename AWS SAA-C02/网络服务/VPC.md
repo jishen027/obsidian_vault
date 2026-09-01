@@ -2,7 +2,7 @@
 
 > **Amazon VPC (Virtual Private Cloud)** 让您能在 AWS 云中启动资源在您逻辑定义的虚拟网络中。它是 AWS 网络架构的核心服务，提供网络隔离、安全控制和灵活的网络配置。
 >
-> 相关文档：[[Security Group]] | [[NACL]] | [[S3 - Object Storage]] | [[DynamoDB - NoSQL]]
+> 相关文档：[[Security Group]] | [[NACL]] | [[S3]] | [[DynamoDB]]
 
 ---
 

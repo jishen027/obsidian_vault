@@ -2,7 +2,7 @@
 
 > **Amazon API Gateway** 是一种完全托管的服务，用于创建、发布、维护、监控和保护 REST、HTTP 和 WebSocket API。它是构建 API 驱动的微服务架构和 Serverless 应用的核心服务。
 >
-> 相关文档：[[EC2]] | [[AWS Lambda]] | [[CloudWatch]] | [[DynamoDB - NoSQL]] | [[S3 - Object Storage]] | [[Cognito]] | [[虚拟私有云 - VPC]]
+> 相关文档：[[EC2]] | [[AWS Lambda]] | [[CloudWatch]] | [[DynamoDB]] | [[S3]] | [[Cognito]] | [[VPC]]
 
 ---
 
@@ -31,7 +31,7 @@
 |------|------|---------|
 | **Edge-Optimized（边缘优化）** | 请求通过 CloudFront 全球边缘网络路由到最近节点，再转发到 API Gateway | 客户端分布在全球各地的公网 API，默认类型 |
 | **Regional（区域）** | 请求直接进入部署所在区域，不经过 CloudFront | 客户端与 API 同区域，或希望自行在前面搭配自定义 CloudFront 分发以获得更精细控制 |
-| **Private（私有）** | 只能通过 [[虚拟私有云 - VPC]] 内的**接口终端节点（Interface VPC Endpoint）**访问，完全不暴露公网 | 内部企业 API、仅供 VPC 内部服务调用 |
+| **Private（私有）** | 只能通过 [[VPC]] 内的**接口终端节点（Interface VPC Endpoint）**访问，完全不暴露公网 | 内部企业 API、仅供 VPC 内部服务调用 |
 
 > **考试陷阱**：题目描述"API 只能被公司内部 VPC 访问，绝不能暴露在公网"→ **Private 端点类型** + 配套的资源策略（Resource Policy）限制来源 VPC/VPC Endpoint；不要误选 Regional（Regional 仍然是公网可达，只是不经过 CloudFront）。
 
@@ -76,7 +76,7 @@
 
 - 当前端网页（如 `app.example.com`）通过 JavaScript 调用部署在不同域名下的 API Gateway 端点时，浏览器的**同源策略**会拦截该跨域请求
 - 需要在 API Gateway 的**资源（Resource）**上启用 CORS，为 `OPTIONS` 方法配置**预检响应（Preflight Response）**，并在实际响应中返回 `Access-Control-Allow-Origin` 等头部
-- 与 [[S3 - Object Storage]] 的 CORS 配置是同一类问题的两种表现：**S3 CORS 解决直连 S3 的跨域请求**，**API Gateway CORS 解决调用 API 端点的跨域请求**，两者需要分别配置，不能相互替代
+- 与 [[S3]] 的 CORS 配置是同一类问题的两种表现：**S3 CORS 解决直连 S3 的跨域请求**，**API Gateway CORS 解决调用 API 端点的跨域请求**，两者需要分别配置，不能相互替代
 
 > **考试陷阱**：题目描述"前端调用 API Gateway 时浏览器报 CORS 错误，但 Postman/curl 直接调用正常"→ 这是典型的**浏览器端 CORS 问题**，解决方案是在 API Gateway 上**启用 CORS**（配置 `OPTIONS` 方法和响应头），而不是检查 IAM 权限或 Lambda 代码（后端本身没有问题，是浏览器预检请求被拒绝）。
 
@@ -219,8 +219,8 @@
 
 | 服务 | 集成方式 | 场景 |
 |------|---------|------|
-| [[DynamoDB - NoSQL]] | AWS 服务集成 | 快速 CRUD API |
-| [[S3 - Object Storage]] | AWS 服务集成 | 对象上传/下载 |
+| [[DynamoDB]] | AWS 服务集成 | 快速 CRUD API |
+| [[S3]] | AWS 服务集成 | 对象上传/下载 |
 | **AppSync** | GraphQL API | 移动和 Web 应用 |
 | [[Cognito]] | 身份认证 | 用户管理 |
 | [[AWS Step Functions]] | 工作流编排 | 复杂业务流程 |

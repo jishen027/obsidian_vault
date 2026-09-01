@@ -2,7 +2,7 @@
 
 > **Amazon CloudFront** 是 AWS 的全球内容分发网络（CDN），通过遍布全球的边缘节点（Edge Locations）缓存内容，为用户提供低延迟、高传输速度的静态与动态内容分发。
 >
-> 相关文档：[[S3 - Object Storage]] | [[AWS Load Balance]] | [[Route 53 DNS]] | [[IAM]]
+> 相关文档：[[S3]] | [[AWS Load Balance]] | [[Route 53 DNS]] | [[IAM]]
 
 ---
 
@@ -13,7 +13,7 @@
 | 服务 | 类型 | 场景 | 特点 |
 |------|------|------|------|
 | **CloudFront** | CDN | 全球加速静态/动态内容分发 | 边缘缓存、就近接入、降低源站负载 |
-| [[S3 - Object Storage]] | 对象存储 | 存储源内容 | 常作为 CloudFront 的源站之一 |
+| [[S3]] | 对象存储 | 存储源内容 | 常作为 CloudFront 的源站之一 |
 | [[AWS Load Balance]] | 负载均衡 | 区域内流量分发 | 常作为 CloudFront 的动态内容源站 |
 | [[Route 53 DNS]] | DNS | 域名解析 | 通过 Alias 记录将自定义域名指向 CloudFront |
 
@@ -38,7 +38,7 @@
 
 | 源类型 | 说明 |
 |--------|------|
-| **[[S3 - Object Storage]] 存储桶** | 最常见的对象存储源，通常配合 OAC 限制直连访问 |
+| **[[S3]] 存储桶** | 最常见的对象存储源，通常配合 OAC 限制直连访问 |
 | **[[AWS Load Balance]]** | 用于分发后端 EC2 实例集群提供的动态内容 |
 | **媒体服务** | AWS MediaPackage、MediaStore 等流媒体源 |
 | **自定义源（Custom Origin）** | 任意具有公网域名或 IP 的服务器，包括本地数据中心服务器 |

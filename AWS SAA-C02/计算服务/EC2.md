@@ -2,7 +2,7 @@
 
 > **Amazon EC2 (Elastic Compute Cloud)** 是 AWS 的核心计算服务，提供安全、可调整的虚拟服务器容量。它是 AWS 云中最基础和最常用的计算服务。
 >
-> 相关文档：[[块储存 - EBS]] | [[文件储存 - AWS EFS]] | [[Security Group]] | [[Auto Scaling]] | [[IAM]]
+> 相关文档：[[EBS]] | [[AWS EFS]] | [[Security Group]] | [[Auto Scaling]] | [[IAM]]
 
 ---
 
@@ -86,7 +86,7 @@ m5.large
 | **st1** | HDD | 大数据、数据仓库 | 最高 500 |
 | **sc1** | HDD | 冷数据归档 | 最高 250 |
 
-> 相关文档：[[块储存 - EBS]]
+> 相关文档：[[EBS]]
 
 ---
 

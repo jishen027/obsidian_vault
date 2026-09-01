@@ -2,7 +2,7 @@
 
 > **AWS Snowball** 是 AWS Snow 家族的核心成员，通过**物理存储设备**在本地环境与 AWS 之间安全地迁移大规模（TB 到 PB 级）数据，专为网络带宽受限或成本过高的场景设计。
 >
-> 相关文档：[[存储服务 - Storage Service]] | [[AWS DataSync]] | [[AWS Storage Gateway]] | [[S3 - Object Storage]] | [[块储存 - EBS]] | [[文件储存 - AWS EFS]] | [[KMS]]
+> 相关文档：[[Storage Service]] | [[AWS DataSync]] | [[AWS Storage Gateway]] | [[S3]] | [[EBS]] | [[AWS EFS]] | [[KMS]]
 
 ---
 
@@ -69,7 +69,7 @@
 | ----------------------- | ----------- | ------------------------------------------------------------------------------------- |
 | **Snowball Edge**       | 物理设备运输      | 数据量大（TB 到几十 TB 级）、网络带宽不足或不可用                                                          |
 | **Snowmobile**          | 集装箱卡车运输     | 单次迁移达 **Exabyte** 级别的超大规模数据中心迁移                                                       |
-| [[AWS DataSync]]        | 网络自动化传输     | 有可用网络带宽，需要持续/增量同步本地与 [[S3 - Object Storage]]/[[文件储存 - AWS EFS]]/[[文件储存 - AWS FSx]] 数据 |
+| [[AWS DataSync]]        | 网络自动化传输     | 有可用网络带宽，需要持续/增量同步本地与 [[S3]]/[[AWS EFS]]/[[AWS FSx]] 数据 |
 | [[AWS Storage Gateway]] | 混合云网关（持续在线） | 长期、持续的本地与云存储集成，而非一次性迁移                                                                |
 | **AWS Direct Connect**  | 专线网络连接      | 需要长期稳定、低延迟的本地到 AWS 专线，带宽充足时的更优选择                                                      |
 

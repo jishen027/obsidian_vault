@@ -7,7 +7,7 @@ AWS KMS 负责集中管理加密密钥的核心托管服务
 - 授权机制： KMS 必须通过密钥策略 - Key policies 进行授权, 该策略划分了密钥管理员和密钥用户，进行严格的最小特权原则
 
 ## 服务集成和数据保护
-- 落盘数据加密 - Encryption at Rest : KMS广泛集成AWS 核心服务， 为S3[[S3 - Object Storage]] - SSE-KMS, [[块储存 - EBS]] 和 [[文件储存 - AWS EFS]]， 以及 [[关系型数据库 - RDS]] 和 [[DynamoDB - NoSQL]]提供透明的加密保护
+- 落盘数据加密 - Encryption at Rest : KMS广泛集成AWS 核心服务， 为S3[[S3]] - SSE-KMS, [[EBS]] 和 [[AWS EFS]]， 以及 [[RDS]] 和 [[DynamoDB]]提供透明的加密保护
 - 开发工具安全： 即使时CodeCommit存储库，也会使用KMS 管理的密钥对静态代码进行自动加密
 - 合规和审计：KMS和AWS CloudTrail深度集成，每一次密钥的使用行为都会被记录在案，为企业提供完整的审计追踪
 

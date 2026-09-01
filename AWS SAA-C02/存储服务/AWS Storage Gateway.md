@@ -2,7 +2,7 @@
 
 > **AWS Storage Gateway** 是混合云存储服务，通过部署在本地的网关设备，让本地应用像访问本地存储一样**持续、实时**地访问 AWS 云存储，同时提供本地缓存以获得低延迟访问。与一次性迁移的 [[AWS Snowball]]、批量同步的 [[AWS DataSync]] 不同，Storage Gateway 面向的是**长期在线**的混合云集成场景。
 >
-> 相关文档：[[AWS DataSync]] | [[AWS Snowball]] | [[S3 - Object Storage]] | [[块储存 - EBS]] | [[S3 Glacier Archive]]
+> 相关文档：[[AWS DataSync]] | [[AWS Snowball]] | [[S3]] | [[EBS]] | [[S3 Glacier Archive]]
 
 ---
 
@@ -30,8 +30,8 @@
 
 | 网关类型 | 协议 | 云端存储 | 典型场景 |
 |---------|------|---------|---------|
-| **文件网关（File Gateway）** | NFS / SMB | [[S3 - Object Storage]]（对象直接以文件形式存取） | 需要通过文件协议访问 S3 中的对象，如内容仓库、数据湖前端 |
-| **卷网关（Volume Gateway）** | iSCSI | [[块储存 - EBS]] 快照（存储在 S3，以 EBS 快照格式管理） | 本地服务器需要块存储卷，同时希望云端保留备份/快照 |
+| **文件网关（File Gateway）** | NFS / SMB | [[S3]]（对象直接以文件形式存取） | 需要通过文件协议访问 S3 中的对象，如内容仓库、数据湖前端 |
+| **卷网关（Volume Gateway）** | iSCSI | [[EBS]] 快照（存储在 S3，以 EBS 快照格式管理） | 本地服务器需要块存储卷，同时希望云端保留备份/快照 |
 | **磁带网关（Tape Gateway）** | iSCSI-VTL（虚拟磁带库） | [[S3 Glacier Archive]] | 替代物理磁带备份，兼容现有备份软件（NetBackup、Veeam 等） |
 
 ### 卷网关的两种子模式

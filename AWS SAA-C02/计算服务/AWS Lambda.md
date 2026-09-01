@@ -2,7 +2,7 @@
 
 > **AWS Lambda** 是无服务器（Serverless）计算的核心服务，让用户无需预置或管理任何服务器，只需上传代码，函数即可在事件触发时自动运行，并按实际执行时间计费。
 >
-> 相关文档：[[ECS]] | [[EKS]] | [[AWS Fargate]] | [[EC2]] | [[Amazon API Gateway]] | [[SQS]] | [[SNS]] | [[DynamoDB - NoSQL]] | [[IAM]] | [[CloudWatch]]
+> 相关文档：[[ECS]] | [[EKS]] | [[AWS Fargate]] | [[EC2]] | [[Amazon API Gateway]] | [[SQS]] | [[SNS]] | [[DynamoDB]] | [[IAM]] | [[CloudWatch]]
 
 ---
 
@@ -64,7 +64,7 @@
 | 触发类型                            | 说明                                            | 典型服务                                             |
 | ------------------------------- | --------------------------------------------- | ------------------------------------------------ |
 | **同步调用**                        | 调用方等待函数返回结果                                   | [[Amazon API Gateway]]、Application Load Balancer |
-| **异步调用**                        | 调用方不等待结果，Lambda 内部排队处理，失败可配置重试和**死信队列/失败目的地** | [[S3 - Object Storage]] 事件通知、[[SNS]]             |
+| **异步调用**                        | 调用方不等待结果，Lambda 内部排队处理，失败可配置重试和**死信队列/失败目的地** | [[S3]] 事件通知、[[SNS]]             |
 | **事件源映射（Event Source Mapping）** | Lambda 主动轮询/订阅流式或队列服务，批量拉取记录触发函数              | [[SQS]]、[[Amazon Kinesis]]、DynamoDB Streams      |
 
 - **失败处理（异步调用）**：可配置 **On-Failure Destination**（SQS/SNS/EventBridge/另一个 Lambda）接收失败事件，避免静默丢失
@@ -82,7 +82,7 @@
 ### VPC 集成
 
 - Lambda 默认运行在 AWS 托管的网络环境中，可直接访问公网服务和大多数 AWS 服务
-- 若函数需要访问 [[虚拟私有云 - VPC]] 内的私有资源（如 RDS 私有子网中的数据库），需将 Lambda **配置进 VPC**（指定子网和安全组）
+- 若函数需要访问 [[VPC]] 内的私有资源（如 RDS 私有子网中的数据库），需将 Lambda **配置进 VPC**（指定子网和安全组）
 - **考试陷阱**：Lambda 配置进 VPC 私有子网后，若还需要访问公网/其他 AWS 服务，必须通过 **NAT Gateway** 或对应的 **VPC Endpoint**，否则会因缺少出网路径而调用超时
 
 ---
@@ -123,7 +123,7 @@
 |------|---------|
 | **从后端数据库检索数据** | Lambda + [[Amazon API Gateway]] 构建 REST API |
 | **解析实时数据流** | Lambda + [[SQS]]/[[Amazon Kinesis]] 事件源映射 |
-| **轻量级事务处理** | Lambda + [[DynamoDB - NoSQL]] |
+| **轻量级事务处理** | Lambda + [[DynamoDB]] |
 | **自动化运维任务** | Lambda + CloudWatch Events/EventBridge 定时触发 |
 | **图片/文件处理流水线** | S3 事件通知 → Lambda（缩略图生成、格式转换） |
 | **对延迟敏感的高频 API** | Lambda + 预置并发 |

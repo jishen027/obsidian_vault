@@ -2,7 +2,7 @@
 
 > **AWS Step Functions** 是全托管的 **Serverless 工作流编排服务**，通过可视化的状态机（State Machine）协调多个 [[AWS Lambda]] 函数或其他 AWS 服务，按预定逻辑顺序、并行或条件分支执行，并自动处理重试、错误捕获和状态跟踪。
 >
-> 相关文档：[[AWS Lambda]] | [[Amazon SWF]] | [[SQS]] | [[SNS]] | [[DynamoDB - NoSQL]] | [[Amazon API Gateway]] | [[ECS]]
+> 相关文档：[[AWS Lambda]] | [[Amazon SWF]] | [[SQS]] | [[SNS]] | [[DynamoDB]] | [[Amazon API Gateway]] | [[ECS]]
 
 ---
 

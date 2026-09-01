@@ -2,7 +2,7 @@
 
 > **Amazon FSx** 是一组**完全托管的第三方文件系统**服务，让用户可以在 AWS 上运行熟悉的商业和开源文件系统（Windows、Lustre、NetApp ONTAP、OpenZFS），而无需自行搭建和维护底层基础设施。
 >
-> 相关文档：[[文件储存 - AWS EFS]] | [[块储存 - EBS]] | [[S3 - Object Storage]] | [[虚拟私有云 - VPC]] | [[存储服务 - Storage Service]]
+> 相关文档：[[AWS EFS]] | [[EBS]] | [[S3]] | [[VPC]] | [[Storage Service]]
 
 ---
 
@@ -19,7 +19,7 @@
 
 ### 为什么选择 FSx 而不是 EFS
 
-| 特性 | [[文件储存 - AWS EFS]] | Amazon FSx |
+| 特性 | [[AWS EFS]] | Amazon FSx |
 |------|----------|-----------|
 | **协议** | 仅 NFS（Linux） | SMB（Windows）、Lustre、NFS、iSCSI（因产品而异） |
 | **底层文件系统** | AWS 自研的 NFS 实现 | 直接使用第三方原生文件系统（如 Windows Server、Lustre） |
@@ -27,7 +27,7 @@
 | **AD 集成** | 不支持 | FSx for Windows 原生支持 Microsoft Active Directory |
 | **高性能计算** | 不擅长 | FSx for Lustre 专为 HPC / ML 设计 |
 
-> **一句话总结**：需要 **Linux + NFS** 共享存储 → 首选 [[文件储存 - AWS EFS]]；需要 **Windows 原生文件系统 (SMB)** 或 **高性能计算 (HPC/ML)** → 选择对应的 **FSx** 产品。
+> **一句话总结**：需要 **Linux + NFS** 共享存储 → 首选 [[AWS EFS]]；需要 **Windows 原生文件系统 (SMB)** 或 **高性能计算 (HPC/ML)** → 选择对应的 **FSx** 产品。
 
 ---
 
@@ -74,7 +74,7 @@
 - **Lustre** 是专为**高性能计算 (HPC)** 设计的开源并行文件系统
 - 提供**亚毫秒级延迟**、数百 GB/s 吞吐量、数百万 IOPS
 - 原生 **POSIX 兼容**，可像本地磁盘一样挂载使用
-- **与 [[S3 - Object Storage]] 无缝集成**：
+- **与 [[S3]] 无缝集成**：
   - 可将 S3 存储桶中的对象**延迟加载 (lazy load)** 为 Lustre 文件系统中的文件
   - 计算完成后可将结果**写回 S3**
 
@@ -124,13 +124,13 @@
 - **FSx for Windows**：Multi-AZ 部署提供自动故障转移；Single-AZ 内部件级冗余
 - **FSx for Lustre**：Persistent 部署在单个 AZ 内自动复制数据；Scratch 部署不提供数据复制
 - **FSx for ONTAP / OpenZFS**：支持 Multi-AZ 部署实现高可用
-- 与 [[文件储存 - AWS EFS]] 的"原生跨多 AZ"不同，FSx 各产品的高可用能力**因部署类型和产品而异**，需按需选择
+- 与 [[AWS EFS]] 的"原生跨多 AZ"不同，FSx 各产品的高可用能力**因部署类型和产品而异**，需按需选择
 
 ---
 
 ## 安全与访问控制
 
-- 通过 **[[虚拟私有云 - VPC]]** 内部网络访问，流量不经过公网
+- 通过 **[[VPC]]** 内部网络访问，流量不经过公网
 - 通过**安全组**控制访问（参考 [[Security Group]]）
 - **静态数据加密**：与 AWS KMS 集成，支持客户托管密钥 (CMK)
 - **传输中加密**：SMB/NFS 流量可加密传输

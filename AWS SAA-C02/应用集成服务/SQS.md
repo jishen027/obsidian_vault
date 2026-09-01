@@ -2,7 +2,7 @@
 
 > **Amazon SQS（Simple Queue Service）** 是全托管的消息队列服务，用于在分布式系统和微服务组件之间传递消息，实现应用间的**解耦（Decoupling）**与**削峰填谷（Buffering）**。
 >
-> 相关文档：[[SNS]] | [[AWS Lambda]] | [[Auto Scaling]] | [[Amazon Kinesis]] | [[Amazon API Gateway]] | [[DynamoDB - NoSQL]]
+> 相关文档：[[SNS]] | [[AWS Lambda]] | [[Auto Scaling]] | [[Amazon Kinesis]] | [[Amazon API Gateway]] | [[DynamoDB]]
 
 ---
 
@@ -52,7 +52,7 @@
 
 | 参数                            | 默认值      | 范围/说明                                                                                                  |
 | ----------------------------- | -------- | ------------------------------------------------------------------------------------------------------ |
-| **消息大小**                      | -        | 最高 **256 KB**；更大的负载需配合 **SQS Extended Client Library**，将消息体存入 [[S3 - Object Storage]]，队列中只存指针（最大 2 GB） |
+| **消息大小**                      | -        | 最高 **256 KB**；更大的负载需配合 **SQS Extended Client Library**，将消息体存入 [[S3]]，队列中只存指针（最大 2 GB） |
 | **可见性超时（Visibility Timeout）** | 30 秒     | 0 秒-12 小时，消费者应在此时间内处理完并删除消息                                                                            |
 | **消息保留期（Retention Period）**   | 4 天      | 1 分钟-14 天                                                                                              |
 | **延迟队列（Delay Seconds）**       | 0 秒      | 0-15 分钟，消息发布后延迟一段时间才对消费者可见                                                                             |

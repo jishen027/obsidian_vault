@@ -2,7 +2,7 @@
 
 > **Amazon S3 Glacier** 是 AWS 提供的超低成本对象存储服务，专为长期归档和灾难恢复设计。提供多种检索选项以平衡成本和访问速度需求。
 >
-> 相关文档：[[S3 - Object Storage]] | [[存储服务 - Storage Service]]
+> 相关文档：[[S3]] | [[Storage Service]]
 
 ---
 
@@ -21,7 +21,7 @@
 - S3 Glacier 是 **S3 的存储类别**，而非独立服务
 - 通过 S3 API 统一管理，无需切换服务
 - 支持 **S3 生命周期策略**自动将对象转移到 Glacier 存储
-- 相关文档：[[S3 - Object Storage]]
+- 相关文档：[[S3]]
 
 ---
 
@@ -80,7 +80,7 @@
 
 | 特性 | 描述 |
 |------|------|
-| **加密** | 支持 SSE-S3、SSE-KMS 加密（与 [[S3 - Object Storage]] 一致） |
+| **加密** | 支持 SSE-S3、SSE-KMS 加密（与 [[S3]] 一致） |
 | **访问控制** | 通过 IAM 策略和 Vault Policy 控制访问 |
 | **Vault Lock** | 一次性写入策略，防止档案被修改或删除 |
 | **合规性** | 支持 HIPAA、PCI DSS、GDPR 等合规要求 |
@@ -97,7 +97,7 @@
 
 ### S3 生命周期策略
 
-- Glacier 作为 [[S3 - Object Storage]] 生命周期规则的目的地
+- Glacier 作为 [[S3]] 生命周期规则的目的地
 - 自动将旧对象从 Standard 转移到 Glacier
 - 可配置规则：
   - 基于时间的转移（如 30 天后转移到 Glacier）

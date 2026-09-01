@@ -2,7 +2,7 @@
 
 > **Amazon EKS (Elastic Kubernetes Service)** 是 AWS 上的**全托管 Kubernetes 服务**，负责管理 Kubernetes 控制平面（Control Plane）的高可用性、打补丁和升级，让用户专注于运行标准的 K8s 工作负载，同时可与 [[ECS]]、[[AWS Fargate]] 一样选择底层计算方式。
 >
-> 相关文档：[[ECS]] | [[AWS Fargate]] | [[EC2]] | [[Auto Scaling]] | [[AWS Load Balance]] | [[IAM]] | [[虚拟私有云 - VPC]]
+> 相关文档：[[ECS]] | [[AWS Fargate]] | [[EC2]] | [[Auto Scaling]] | [[AWS Load Balance]] | [[IAM]] | [[VPC]]
 
 ---
 
@@ -43,7 +43,7 @@
 
 ## 网络与负载均衡
 
-- **VPC CNI 插件**：EKS 默认使用 Amazon VPC CNI，每个 Pod 获得 [[虚拟私有云 - VPC]] 内的真实私有 IP，而非叠加网络（Overlay），性能更接近原生 EC2 网络
+- **VPC CNI 插件**：EKS 默认使用 Amazon VPC CNI，每个 Pod 获得 [[VPC]] 内的真实私有 IP，而非叠加网络（Overlay），性能更接近原生 EC2 网络
 - **AWS Load Balancer Controller**：在集群内运行的控制器，可根据 Kubernetes Ingress/Service 资源自动创建和配置 [[AWS Load Balance]]（ALB/NLB），实现 K8s 原生的负载均衡声明方式
 - **安全组**：可结合 `awsvpc`-类似的机制，为 Pod 级别关联安全组（Security Groups for Pods），实现细粒度网络隔离
 

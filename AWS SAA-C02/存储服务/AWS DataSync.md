@@ -2,7 +2,7 @@
 
 > **AWS DataSync** 是全托管的**在线数据传输**服务，用于在本地存储系统与 AWS 存储服务之间，或 AWS 存储服务之间，自动化、加速地完成**持续/增量**数据同步，是"网络带宽充足"场景下 [[AWS Snowball]] 的替代方案。
 >
-> 相关文档：[[AWS Snowball]] | [[AWS Storage Gateway]] | [[S3 - Object Storage]] | [[文件储存 - AWS EFS]] | [[文件储存 - AWS FSx]] | [[虚拟私有云 - VPC]]
+> 相关文档：[[AWS Snowball]] | [[AWS Storage Gateway]] | [[S3]] | [[AWS EFS]] | [[AWS FSx]] | [[VPC]]
 
 ---
 
@@ -41,7 +41,7 @@
 | 类型 | 支持的位置 |
 |------|-----------|
 | **本地存储** | NFS、SMB 文件服务器、自建对象存储（Hadoop HDFS 等） |
-| **AWS 存储** | [[S3 - Object Storage]]、[[文件储存 - AWS EFS]]、[[文件储存 - AWS FSx]]（Windows/Lustre/ONTAP/OpenZFS） |
+| **AWS 存储** | [[S3]]、[[AWS EFS]]、[[AWS FSx]]（Windows/Lustre/ONTAP/OpenZFS） |
 | **其他云** | 支持跨云传输（如从其他公有云对象存储迁移到 AWS） |
 
 ### 传输任务（Task）
@@ -58,7 +58,7 @@
 |------|------|
 | **传输加密** | 数据在传输过程中使用 **TLS** 加密 |
 | **静态加密** | 目标端数据落地后遵循目标存储服务自身的加密机制（如 S3 SSE、EFS 静态加密） |
-| **VPC 私有连接** | 支持通过 [[虚拟私有云 - VPC]] Endpoint 私有连接，流量不经过公网 |
+| **VPC 私有连接** | 支持通过 [[VPC]] Endpoint 私有连接，流量不经过公网 |
 | **IAM 权限控制** | 通过 IAM 角色/策略控制 DataSync 任务对源和目标存储的访问权限 |
 
 ---

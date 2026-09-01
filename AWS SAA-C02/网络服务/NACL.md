@@ -2,7 +2,7 @@
 
 > **网络 ACL (Network Access Control List, NACL)** 是 VPC 中的一个可选安全层，充当控制**子网**进出流量的虚拟防火墙。与 [[Security Group]] 不同，NACL 工作在子网级别，且是**无状态**的。
 >
-> 相关文档：[[Security Group]] | [[虚拟私有云 - VPC]] | [[子网和路由表 - Subnet & Route table]] | [[Network Interface]]
+> 相关文档：[[Security Group]] | [[VPC]] | [[Subnet & Route table]] | [[Network Interface]]
 
 ---
 

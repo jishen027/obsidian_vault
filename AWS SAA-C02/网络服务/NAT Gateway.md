@@ -2,7 +2,7 @@ IGW 和 NAT 设备时定义子网性质和控制流量进出VPC 的关键组件
 
 ## 互联网网关 - IGW
 1. 核心功能： IGW为VPC提供连接互联网的的能力，允许实例获取共有IP 并接受来自互联网的请求，同时也允许实例主动访问互联网
-2. 公有子网的定义[[子网和路由表 - Subnet & Route table#^8377ca]] ： 子网中包含一个指向IGW ID 的默认路由
+2. 公有子网的定义[[Subnet & Route table#^8377ca]] ： 子网中包含一个指向IGW ID 的默认路由
 3. 管理特性： 没有物理IP，每个VPC 只能关联一个IGW
 
 ## NAT 设备 - Network Address Translation

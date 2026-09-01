@@ -2,7 +2,7 @@
 
 > **Amazon Cognito** 是 AWS 安全与身份体系中专门为**移动和 Web 应用程序**设计的身份管理服务，通过用户池和身份池分别解决终端用户的**身份验证（Authentication）**和**授权（Authorization）**问题，让应用无需自建用户系统。
 >
-> 相关文档：[[IAM]] | [[Amazon API Gateway]] | [[S3 - Object Storage]] | [[DynamoDB - NoSQL]] | [[虚拟私有云 - VPC]]
+> 相关文档：[[IAM]] | [[Amazon API Gateway]] | [[S3]] | [[DynamoDB]] | [[VPC]]
 
 ---
 
@@ -25,7 +25,7 @@ Cognito 通过两个相对独立又可协同工作的组件，分别解决**身�
 | 组件 | 职责 | 说明 |
 |------|------|------|
 | **用户池（User Pools）** | **身份验证（Authentication）** | 一个可扩展的用户目录，管理用户注册、登录、密码找回、多因素认证（MFA），验证成功后签发 JWT 令牌 |
-| **身份池（Identity Pools）** | **授权（Authorization）** | 将已验证（或未验证的访客）身份**映射到 IAM 角色**，为用户签发**临时 AWS 凭证**，使其能够直接访问 [[S3 - Object Storage]]、[[DynamoDB - NoSQL]] 等 AWS 资源 |
+| **身份池（Identity Pools）** | **授权（Authorization）** | 将已验证（或未验证的访客）身份**映射到 IAM 角色**，为用户签发**临时 AWS 凭证**，使其能够直接访问 [[S3]]、[[DynamoDB]] 等 AWS 资源 |
 
 > **考试陷阱**：**用户池验证"你是谁"，身份池决定"你能访问什么 AWS 资源"**——两者经常配合使用（用户先在用户池登录，再用登录令牌换取身份池签发的临时凭证），但也可以**单独使用**：只需要用户名密码登录、不直接访问 AWS 资源时只用用户池；只需要给匿名访客签发临时凭证访问 S3 时可以单独使用身份池（无需用户池）。
 
@@ -57,7 +57,7 @@ Cognito 通过两个相对独立又可协同工作的组件，分别解决**身�
 ### 精细化权限控制
 
 - 通过将身份池与特定 IAM 角色关联，并在角色的信任策略/权限策略中使用**策略变量**（如 `${cognito-identity.amazonaws.com:sub}`），可以实现"**每个用户只能访问自己的数据**"这类行级/前缀级权限隔离
-- 典型应用：限制用户只能读写 S3 中以自己身份 ID 为前缀的对象路径（如 `bucket/${user-id}/*`），或只能访问 DynamoDB 中分区键等于自己身份 ID 的 Item（类似 [[DynamoDB - NoSQL]] 中 `dynamodb:LeadingKeys` 的思路）
+- 典型应用：限制用户只能读写 S3 中以自己身份 ID 为前缀的对象路径（如 `bucket/${user-id}/*`），或只能访问 DynamoDB 中分区键等于自己身份 ID 的 Item（类似 [[DynamoDB]] 中 `dynamodb:LeadingKeys` 的思路）
 
 ---
 
