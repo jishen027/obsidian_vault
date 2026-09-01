@@ -2,7 +2,7 @@
 
 > **Amazon S3 (Simple Storage Service)** 是 AWS 提供的分布式对象存储服务，为任何规模的数据提供高持久性、高可用性的存储。是 AWS 架构中最基础和最常用的服务之一。
 >
-> 相关文档：[[存储服务 - Storage Service]] | [[S3 Glacier Archive]] | [[块储存 - EBS]]
+> 相关文档：[[存储服务 - Storage Service]] | [[S3 Glacier Archive]] | [[块储存 - EBS]] | [[S3 Security - 访问控制与加密]]
 
 ---
 
