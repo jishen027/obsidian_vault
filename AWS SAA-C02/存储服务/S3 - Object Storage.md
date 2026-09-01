@@ -194,7 +194,7 @@
 | 互联网 + IGW | 通过公网 | 数据传输费 | 较低 |
 | VPC Endpoint | 私有网络 | 无数据传输费 | 高 |
 | CloudFront + Origin Access | CDN 缓存 | 低延迟 | 高 |
-| Storage Gateway | 混合云 | 额外费用 | 高 |
+| [[AWS Storage Gateway]] | 混合云 | 额外费用 | 高 |
 
 ---
 

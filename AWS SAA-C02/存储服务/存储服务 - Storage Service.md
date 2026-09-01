@@ -64,12 +64,13 @@
 ### 3. AWS Storage Gateway
 
 - **类型**：混合存储服务
-- **特点**：将本地环境与 AWS 云存储连接
+- **特点**：将本地环境与 AWS 云存储连接，本地应用持续、实时访问云存储
 - **三种网关模式**：
-  - **文件网关**：S3 兼容的文件接口
-  - **卷网关**：iSCSI 挂载的块存储
-  - **磁带网关**：虚拟磁带库 (VTL)
-- **适用场景**：混合云架构、本地到云的备份
+  - **文件网关**：NFS/SMB 访问 S3
+  - **卷网关**：iSCSI 挂载的块存储，映射为 EBS 快照
+  - **磁带网关**：虚拟磁带库 (VTL)，映射为 Glacier
+- **适用场景**：混合云架构、本地到云的持续集成/备份
+- **相关文档**：[[AWS Storage Gateway]]
 
 ---
 
@@ -79,15 +80,13 @@
 
 | 工具 | 描述 | 适用场景 |
 |------|------|---------|
-| [[AWS Snowball]] | 物理设备，用于大规模数据迁移 |  TB 到 PB 级别的数据迁移，网络不可用或成本过高 |
-| **AWS Snowcone** | 更小的边缘计算设备 | 边缘计算 + 小规模数据迁移 |
-| **AWS Snowmobile** | 40 英尺拖车，单台可达 100 PB | 超大规模数据迁移（Exabyte 级别） |
+| [[AWS Snowball]] | Snow 家族物理设备（Snowcone/Snowball Edge/Snowmobile），一次性大规模数据迁移 | TB 到 Exabyte 级别的一次性迁移，网络不可用或成本过高（详见 [[AWS Snowball]] 家族对比） |
 
 ### 自动化数据迁移
 
 | 工具 | 描述 | 目标存储 |
 |------|------|---------|
-| **AWS DataSync** | 自动化将本地数据迁移到 AWS | S3、EFS、FSx |
+| [[AWS DataSync]] | 自动化、持续/增量同步本地数据到 AWS | S3、EFS、FSx |
 | **AWS Migration Hub** | 集中跟踪迁移项目进度 | 多服务 |
 | **AWS DMS (Database Migration Service)** | 数据库到数据库的迁移 | RDS、DynamoDB 等 |
 
@@ -128,4 +127,4 @@
 3. **跨 AZ 部署关键数据**：EBS 快照、S3 版本控制、EFS 多 AZ
 4. **启用加密**：所有存储服务都支持 KMS 加密
 5. **使用生命周期策略**：自动将旧数据迁移到低成本存储层
-6. **混合云场景**：使用 Storage Gateway 或 DataSync 连接本地和云端
+6. **混合云场景**：持续在线访问用 [[AWS Storage Gateway]]，批量/计划同步用 [[AWS DataSync]]

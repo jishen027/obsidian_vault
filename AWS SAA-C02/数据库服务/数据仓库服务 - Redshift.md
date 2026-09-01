@@ -150,7 +150,7 @@
 |------|------|
 | **AWS DMS** | 将 RDS、DynamoDB 等数据迁移到 Redshift |
 | **AWS Glue** | ETL 服务，数据转换后加载到 Redshift |
-| **AWS DataSync** | 大规模数据传输 |
+| [[AWS DataSync]] | 大规模数据传输 |
 | **Kinesis Data Firehose** | 实时数据流加载 |
 
 ---
