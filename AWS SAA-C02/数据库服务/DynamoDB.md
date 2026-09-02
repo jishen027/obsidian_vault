@@ -2,7 +2,7 @@
 
 > **Amazon DynamoDB** 是完全托管的 **NoSQL** 数据库服务，为键值和文档数据模型提供**单毫秒级延迟**、无固定架构（Schemaless）的存储，并原生支持跨可用区、跨区域的高可用与弹性扩展。
 >
-> 相关文档：[[RDS]] | [[Aurora]] | [[ElastiCache]] | [[AWS Lambda]] | [[SQS]] | [[VPC]] | [[KMS]]
+> 相关文档：[[RDS]] | [[Aurora]] | [[ElastiCache]] | [[Amazon Neptune]] | [[Amazon Keyspaces]] | [[Amazon Timestream]] | [[Amazon DocumentDB]] | [[AWS Lambda]] | [[SQS]] | [[VPC]] | [[KMS]]
 
 ---
 
@@ -24,6 +24,10 @@
 | [[RDS]] / [[Aurora]] | 关系型（SQL） | 支持复杂 JOIN、多表关联查询 | 强 ACID 事务、复杂关系数据的传统业务系统 |
 | [[Redshift]] | 数据仓库（OLAP） | 面向海量数据的复杂分析查询 | BI 报表、跨表聚合分析 |
 | [[ElastiCache]] | 内存缓存 | Key-Value，最快但非持久主存储 | 缓存层，通常置于数据库前 |
+| [[Amazon Neptune]] | 图数据库 | 节点+边，深度关联遍历 | 社交网络、推荐引擎、欺诈检测、知识图谱 |
+| [[Amazon Keyspaces]] | 宽列 NoSQL（Cassandra 兼容） | 兼容 CQL，主键查询 | 已有 Cassandra 应用迁移，宽列高吞吐写入 |
+| [[Amazon Timestream]] | 时序数据库 | 带时间戳，按时间范围查询 | IoT 传感器数据、监控指标、时序分析 |
+| [[Amazon DocumentDB]] | 文档数据库（MongoDB 兼容） | 兼容 MongoDB 驱动，JSON 文档 | 已有 MongoDB 应用迁移，半结构化文档存储 |
 
 > **考试陷阱**：DynamoDB 与 RDS 是**互补关系而非替代关系**——DynamoDB 针对主键查询做了极致优化，能以一致的低延迟处理每秒数万次事务，但**不擅长复杂的多表 JOIN**；题目强调"复杂关联查询/强一致性事务"通常指向 RDS/Aurora，强调"海量并发、按主键访问、弹性扩展"通常指向 DynamoDB。
 

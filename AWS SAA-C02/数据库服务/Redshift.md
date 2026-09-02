@@ -2,7 +2,7 @@
 
 > **Amazon Redshift** 是一种完全托管的、基于 PB 级数据的数据仓库服务，专为联机分析处理（OLAP）场景优化。它针对海量数据集运行复杂、计算密集型查询而设计。
 >
-> 相关文档：[[RDS]] | [[S3]] | [[DynamoDB]]
+> 相关文档：[[RDS]] | [[S3]] | [[DynamoDB]] | [[Amazon Neptune]] | [[Amazon Keyspaces]] | [[Amazon Timestream]] | [[Amazon DocumentDB]] | [[Amazon Athena]] | [[Amazon QuickSight]] | [[AWS Glue]]
 
 ---
 
@@ -15,6 +15,10 @@
 | [[RDS]] | OLTP | 日常事务处理 | 频繁读写，低延迟，行式存储 |
 | **Redshift** | OLAP | 商业智能、数据分析 | 复杂查询，批量分析，列式存储 |
 | [[DynamoDB]] | NoSQL | 键值/文档存储 | 单毫秒延迟，高吞吐，弹性扩展 |
+| [[Amazon Neptune]] | 图数据库 | 节点+边，深度关联遍历 | 社交网络、推荐引擎、欺诈检测 |
+| [[Amazon Keyspaces]] | 宽列 NoSQL（Cassandra 兼容） | 兼容 CQL，主键查询 | 已有 Cassandra 应用迁移，宽列高吞吐写入 |
+| [[Amazon Timestream]] | 时序数据库 | 带时间戳，按时间范围查询 | IoT 传感器数据、监控指标、时序分析 |
+| [[Amazon DocumentDB]] | 文档数据库（MongoDB 兼容） | 兼容 MongoDB 驱动，JSON 文档 | 已有 MongoDB 应用迁移，半结构化文档存储 |
 
 ### OLTP vs OLAP 对比（考试重点）
 
@@ -149,7 +153,7 @@
 | 服务 | 说明 |
 |------|------|
 | **AWS DMS** | 将 RDS、DynamoDB 等数据迁移到 Redshift |
-| **AWS Glue** | ETL 服务，数据转换后加载到 Redshift |
+| [[AWS Glue]] | ETL 服务，数据转换后加载到 Redshift |
 | [[AWS DataSync]] | 大规模数据传输 |
 | **Kinesis Data Firehose** | 实时数据流加载 |
 
@@ -181,6 +185,16 @@
 | 查询速度 | 较慢（需扫描 S3） | 快速（本地 SSD） |
 | 成本 | 按扫描量计费 | 按集群规模计费 |
 | 适用场景 | 低频查询、数据湖 | 高频查询、热数据 |
+
+### Spectrum vs Amazon Athena（考试要点）
+
+| 特性 | Redshift Spectrum | [[Amazon Athena]] |
+|------|-------------------|-----|
+| 前提条件 | 需要一个正在运行的 Redshift 集群 | 完全无服务器，无需任何集群 |
+| 典型场景 | 已有 Redshift 集群，偶尔联合查询 S3 冷数据 | 无现成数仓，对 S3 数据做独立的临时性查询 |
+| 计费 | 按扫描量计费（依赖集群运行） | 按扫描量计费（完全按需，无集群成本） |
+
+> **考试陷阱**：两者都能直接查询 S3 数据且都按扫描量计费，但**判断依据是是否已有 Redshift 集群**——已有集群时偶尔查 S3 冷数据选 Spectrum，复用现有资源；完全没有数仓、只是想对 S3 数据做独立查询则选 Athena，避免为此单独搭建 Redshift 集群。
 
 ---
 
@@ -257,8 +271,8 @@
 
 | 场景 | 推荐配置 |
 |------|---------|
-| **商业智能 (BI)** | Redshift + QuickSight |
-| **数据湖** | S3 + Redshift Spectrum + Glue |
+| **商业智能 (BI)** | Redshift + [[Amazon QuickSight]] |
+| **数据湖** | S3 + Redshift Spectrum + [[AWS Glue]] |
 | **日志分析** | Redshift + Kinesis + Lambda |
 | **客户分析** | Redshift + RDS (数据同步) |
 | **财务报表** | Redshift + 跨区域快照复制 |

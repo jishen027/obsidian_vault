@@ -2,7 +2,7 @@
 
 > **Amazon Kinesis** 是一组用于收集、处理、存储和交付**实时流数据**的全托管服务集合，能够每秒从数千个源摄入千兆字节级数据，适合日志、遥测、点击流、音频和视频等场景。
 >
-> 相关文档：[[SQS]] | [[SNS]] | [[AWS Lambda]] | [[S3]] | [[Redshift]] | [[DynamoDB]]
+> 相关文档：[[SQS]] | [[SNS]] | [[AWS Lambda]] | [[S3]] | [[Redshift]] | [[DynamoDB]] | [[Amazon OpenSearch]] | [[Amazon EMR]] | [[Amazon Managed Service for Apache Flink]] | [[Amazon MSK]] | [[Amazon Rekognition]]
 
 ---
 
@@ -14,7 +14,7 @@
 |------|------|---------|
 | **Kinesis Data Streams (KDS)** | 自定义实时消费的流数据管道 | 需要自己写消费者程序做实时处理的场景 |
 | **Kinesis Data Firehose** | 全托管的流数据交付服务 | 无需自定义消费者，直接近实时落地到 S3/Redshift 等目标 |
-| **Kinesis Data Analytics** | 对流数据做实时 SQL/Apache Flink 分析 | 实时聚合、异常检测、实时仪表盘 |
+| **[[Amazon Managed Service for Apache Flink]]**（原 Kinesis Data Analytics） | 对流数据做实时 SQL/Apache Flink 分析 | 实时聚合、异常检测、实时仪表盘 |
 | **Kinesis Video Streams** | 时间索引的视频流摄入与存储 | 安全摄像头、机器视觉、音视频分析 |
 
 ### Kinesis vs SQS/SNS（考试要点）
@@ -25,7 +25,7 @@
 | [[SQS]] | 拉取（Pull），点对点 | 消息被消费后即删除，不支持重放 | 一条消息通常只被一个消费者取走并删除 |
 | [[SNS]] | 推送（Push），发布/订阅 | 不持久化，未订阅即丢失 | 消息广播给所有订阅端点 |
 
-> **考试陷阱**：题目强调"需要保留历史数据、支持多个应用各自独立重复读取同一份流数据"→ **Kinesis Data Streams**；只需要"一次性异步解耦"或"一对多广播"，用 SQS/SNS 即可，不必上 Kinesis（Kinesis 更复杂、需要管理分片）。
+> **考试陷阱**：题目强调"需要保留历史数据、支持多个应用各自独立重复读取同一份流数据"→ **Kinesis Data Streams**；只需要"一次性异步解耦"或"一对多广播"，用 SQS/SNS 即可，不必上 Kinesis（Kinesis 更复杂、需要管理分片）。若题目强调"**已有基于 Apache Kafka 构建的流数据管道，需要最小改动迁移**"，则应选择协议兼容的 **[[Amazon MSK]]**，而非 Kinesis Data Streams（Kinesis 使用 AWS 专有 API，不兼容 Kafka 客户端）。
 
 ---
 
@@ -68,27 +68,28 @@
 - **定位**：全托管的**交付**服务，专注于将流数据近实时地加载到目标存储/分析服务，**没有"消费者订阅"概念**，数据由 Firehose 自动投递
 - **数据转换**：交付前可调用 **[[AWS Lambda]]** 函数对数据做格式转换（如 JSON 转 Parquet/ORC）或轻量处理
 - **缓冲机制**：数据先按**缓冲大小（Buffer Size，最小 1 MB）**或**缓冲时间（Buffer Interval，最小 60 秒）**中先满足者触发投递，因此是**近实时（Near Real-Time）**而非真正的亚秒级实时
-- **目的地**：[[S3]]、[[Redshift]]、Amazon OpenSearch Service、Splunk、HTTP 端点、第三方服务商
+- **目的地**：[[S3]]、[[Redshift]]、[[Amazon OpenSearch]]、Splunk、HTTP 端点、第三方服务商
 - **自动缩放**：无需管理分片，吞吐量随数据量自动伸缩
 
 > **考试陷阱**：Firehose **不支持自定义消费者程序**，也**不支持消息重放**；若题目要求"多个自定义应用需要各自独立处理同一份流数据"，答案应是 Data Streams 而非 Firehose。
 
 ---
 
-## Kinesis Data Analytics（实时分析）
+## Amazon Managed Service for Apache Flink（实时分析，原 Kinesis Data Analytics）
 
 - 对 Kinesis Data Streams 或 Firehose 中的流数据执行**实时 SQL 查询**或基于 **Apache Flink** 的应用逻辑
 - 典型用途：实时聚合指标、滑动窗口计算、异常检测、实时仪表盘数据源
 - 输入源可以是 Kinesis Data Streams/Firehose，处理结果可再输出到 Firehose（进而落地 S3/Redshift）、Lambda 或另一个 Data Stream
+- **2023 年更名**：该服务原名 "Kinesis Data Analytics"，更名为 **[[Amazon Managed Service for Apache Flink]]**，API、IAM 策略、计费方式均未变化，仅名称更贴近底层技术；详细的编程模型、容错机制（Checkpoint/Savepoint）见独立笔记
 
-> **考试要点**：题目描述"需要对流数据做实时 SQL 聚合/窗口计算，而不是简单地落地存储"→ **Kinesis Data Analytics**。
+> **考试要点**：题目描述"需要对流数据做实时 SQL 聚合/窗口计算，而不是简单地落地存储"→ **[[Amazon Managed Service for Apache Flink]]**（可能仍以旧名称 "Kinesis Data Analytics" 出现在题目中）。
 
 ---
 
 ## Kinesis Video Streams（视频流）
 
 - 专门用于传输和存储**时间索引**的视频及音频数据
-- **应用场景**：安全摄像头、智能手机视频上传、机器视觉、结合 Amazon Rekognition Video 做实时视频分析
+- **应用场景**：安全摄像头、智能手机视频上传、机器视觉、结合 [[Amazon Rekognition]] Video 做实时视频分析
 - **保留期**：默认 24 小时，最长可配置至 **7 天**
 - 每个生产者（如一台摄像头）对应一个独立的流，支持批量设备并发写入
 
@@ -116,7 +117,7 @@
 4. **Enhanced Fan-Out**：多消费者读取吞吐不足时，用 EFO 让每个消费者独享 2 MB/s，而非单纯扩分片
 5. **Firehose 无消费者概念**：数据直接投递到目的地，靠缓冲大小/时间控制延迟，是近实时而非真正实时
 6. **数据转换靠 Lambda**：Firehose 交付前可用 Lambda 做格式转换（JSON → Parquet 等）
-7. **Data Analytics 用于实时聚合**：需要流数据实时 SQL/窗口计算时选它，而非仅落地存储
+7. **Managed Service for Apache Flink 用于实时聚合**：需要流数据实时 SQL/窗口计算时选它，而非仅落地存储；该服务原名 Kinesis Data Analytics，2023 年更名
 8. **按需模式简化容量管理**：流量不可预测时优先用 On-Demand，避免手动管理分片
 9. **分区键决定顺序性**：同一分区键的数据保证进入同一分片、保持顺序，跨分区键不保证全局顺序
 10. **视频流独立于其他三种**：Kinesis Video Streams 专注音视频，不与 Data Streams/Firehose 共享分片机制
@@ -128,7 +129,7 @@
 ├── "需要自定义程序实时处理流数据，且要求可重放历史数据" → Kinesis Data Streams
 ├── "只需把流数据近实时导入 S3/Redshift，无需自己写消费者" → Kinesis Data Firehose
 ├── "需要在数据落地前用 Lambda 做格式转换" → Firehose + Lambda 转换
-├── "需要对流数据做实时 SQL 聚合/窗口分析" → Kinesis Data Analytics
+├── "需要对流数据做实时 SQL 聚合/窗口分析" → Amazon Managed Service for Apache Flink（原 Kinesis Data Analytics）
 ├── "多个消费者应用共享同一数据流，吞吐/延迟不达标" → 启用 Enhanced Fan-Out
 ├── "写入吞吐量不足，出现 ProvisionedThroughputExceeded" → 增加分片数量（Resharding）或改用按需模式
 ├── "需要传输/存储摄像头视频数据" → Kinesis Video Streams

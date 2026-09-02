@@ -2,7 +2,7 @@
 
 > **Amazon RDS (Relational Database Service)** 是一种完全托管的关系型数据库服务，负责处理数据库设置、修补、备份和高可用等基础设施工作，专为联机事务处理（OLTP）场景优化。
 >
-> 相关文档：[[Aurora]] | [[Redshift]] | [[DynamoDB]] | [[KMS]] | [[CloudWatch]]
+> 相关文档：[[Aurora]] | [[Redshift]] | [[DynamoDB]] | [[Amazon Neptune]] | [[Amazon Keyspaces]] | [[Amazon Timestream]] | [[Amazon DocumentDB]] | [[KMS]] | [[CloudWatch]]
 
 ---
 
@@ -15,6 +15,10 @@
 | **RDS** | OLTP | 日常事务处理 | 频繁读写，低延迟，行式存储 |
 | [[Redshift]] | OLAP | 商业智能、数据分析 | 复杂查询，批量分析，列式存储 |
 | [[DynamoDB]] | NoSQL | 键值/文档存储 | 单毫秒延迟，无固定架构，弹性扩展 |
+| [[Amazon Neptune]] | 图数据库 | 深度关联查询 | 节点+边建模，社交网络、推荐引擎、欺诈检测 |
+| [[Amazon Keyspaces]] | 宽列 NoSQL（Cassandra 兼容） | 兼容 CQL，主键查询 | 已有 Cassandra 应用迁移，宽列高吞吐写入 |
+| [[Amazon Timestream]] | 时序数据库 | 带时间戳，按时间范围查询 | IoT 传感器数据、监控指标、时序分析 |
+| [[Amazon DocumentDB]] | 文档数据库（MongoDB 兼容） | 兼容 MongoDB 驱动，JSON 文档 | 已有 MongoDB 应用迁移，半结构化文档存储 |
 
 ### 支持引擎
 
