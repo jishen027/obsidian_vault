@@ -2,7 +2,7 @@
 
 > **AWS Lambda** 是无服务器（Serverless）计算的核心服务，让用户无需预置或管理任何服务器，只需上传代码，函数即可在事件触发时自动运行，并按实际执行时间计费。
 >
-> 相关文档：[[ECS]] | [[EKS]] | [[AWS Fargate]] | [[EC2]] | [[Amazon API Gateway]] | [[SQS]] | [[SNS]] | [[DynamoDB]] | [[IAM]] | [[CloudWatch]]
+> 相关文档：[[ECS]] | [[EKS]] | [[AWS Fargate]] | [[EC2]] | [[Amazon API Gateway]] | [[SQS]] | [[SNS]] | [[DynamoDB]] | [[IAM]] | [[CloudWatch]] | [[Amazon EventBridge]]
 
 ---
 
@@ -67,7 +67,7 @@
 | **异步调用**                        | 调用方不等待结果，Lambda 内部排队处理，失败可配置重试和**死信队列/失败目的地** | [[S3]] 事件通知、[[SNS]]             |
 | **事件源映射（Event Source Mapping）** | Lambda 主动轮询/订阅流式或队列服务，批量拉取记录触发函数              | [[SQS]]、[[Amazon Kinesis]]、DynamoDB Streams      |
 
-- **失败处理（异步调用）**：可配置 **On-Failure Destination**（SQS/SNS/EventBridge/另一个 Lambda）接收失败事件，避免静默丢失
+- **失败处理（异步调用）**：可配置 **On-Failure Destination**（SQS/SNS/[[Amazon EventBridge]]/另一个 Lambda）接收失败事件，避免静默丢失
 - **事件源映射的批处理**：从 SQS/Kinesis/DynamoDB Streams 拉取时可配置批处理大小（Batch Size），一次调用处理多条记录，提升吞吐并降低调用次数
 
 ---
@@ -124,7 +124,7 @@
 | **从后端数据库检索数据** | Lambda + [[Amazon API Gateway]] 构建 REST API |
 | **解析实时数据流** | Lambda + [[SQS]]/[[Amazon Kinesis]] 事件源映射 |
 | **轻量级事务处理** | Lambda + [[DynamoDB]] |
-| **自动化运维任务** | Lambda + CloudWatch Events/EventBridge 定时触发 |
+| **自动化运维任务** | Lambda + [[Amazon EventBridge]] 定时触发 |
 | **图片/文件处理流水线** | S3 事件通知 → Lambda（缩略图生成、格式转换） |
 | **对延迟敏感的高频 API** | Lambda + 预置并发 |
 | **长期运行/执行时间可能超 15 分钟的任务** | 改用 [[AWS Fargate]]/[[ECS]]，而非 Lambda |
@@ -156,7 +156,7 @@
 ├── "需要保证某函数不被其他函数抢占并发资源" → 预留并发（Reserved Concurrency）
 ├── "需要降低高频 API 的首次调用延迟（冷启动）" → 预置并发（Provisioned Concurrency）
 ├── "需要处理 SQS/Kinesis/DynamoDB Streams 中的流式数据" → 事件源映射 + 批处理
-├── "异步调用失败后不想丢失事件" → 配置 On-Failure Destination（SQS/SNS/EventBridge）
+├── "异步调用失败后不想丢失事件" → 配置 On-Failure Destination（SQS/SNS/[[Amazon EventBridge]]）
 ├── "需要访问 VPC 私有子网中的 RDS，同时还要访问公网 API" → Lambda 进 VPC + NAT Gateway
 └── "需要平滑上线新版本、可快速回滚" → 版本 + 别名 + CodeDeploy 加权流量迁移
 ```

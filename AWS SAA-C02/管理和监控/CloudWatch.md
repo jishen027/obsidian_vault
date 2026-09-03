@@ -2,7 +2,7 @@
 
 > **Amazon CloudWatch** 是 AWS 管理和监控体系的**性能中枢**，负责收集指标（Metrics）和日志（Logs）、回答"资源当前运行得怎么样"，并基于阈值触发自动化响应（告警、通知、弹性伸缩）。与专注"谁做了什么"的 [[CloudTrail]]、专注"资源配置长什么样"的 [[AWS Config]] 共同构成 AWS 管理和监控三件套。
 >
-> 相关文档：[[CloudTrail]] | [[AWS Config]] | [[Auto Scaling]] | [[EC2]] | [[SNS]] | [[AWS Lambda]] | [[VPC]] | [[Amazon Kinesis]] | [[KMS]]
+> 相关文档：[[CloudTrail]] | [[AWS Config]] | [[Auto Scaling]] | [[EC2]] | [[SNS]] | [[AWS Lambda]] | [[Amazon EventBridge]] | [[VPC]] | [[Amazon Kinesis]] | [[KMS]]
 
 ---
 
@@ -116,7 +116,7 @@
 
 ## 与 Amazon EventBridge 的关系（考试提示）
 
-- **CloudWatch Events** 是 **Amazon EventBridge** 的前身/子集——EventBridge 在 CloudWatch Events 的基础上扩展了更丰富的事件总线、第三方 SaaS 事件源集成等能力
+- **CloudWatch Events** 是 **[[Amazon EventBridge]]** 的前身/子集——EventBridge 在 CloudWatch Events 的基础上扩展了更丰富的事件总线、第三方 SaaS 事件源集成等能力，完整能力见 [[Amazon EventBridge]] 独立笔记
 - 基于**事件（Event）**的响应式规则（如"某个 EC2 状态变化时触发 Lambda"）现由 EventBridge 承接，而 CloudWatch 告警仍专注于**基于指标阈值**的监控响应
 - **考试要点**：题目描述"基于 AWS 服务状态变化事件触发自动化工作流"通常指向 EventBridge（或历史上的 CloudWatch Events）；题目描述"基于指标数值越过阈值触发响应"是 CloudWatch Alarms 的经典场景，两者机制不同但常被放在一起比较
 
@@ -161,7 +161,7 @@
 5. **Logs Insights 用于探索性查询**：区别于指标筛选器面向的持续监控固定模式场景
 6. **告警三种典型动作**：SNS 通知、Auto Scaling 扩缩容、EC2 自动恢复
 7. **复合告警减少噪音**：多个条件通过 AND/OR 组合，避免单指标抖动导致的误报
-8. **CloudWatch Events 与 EventBridge**：基于事件的自动化响应现由 EventBridge 承接，与基于指标阈值的 CloudWatch Alarms 机制不同
+8. **CloudWatch Events 与 [[Amazon EventBridge]]**：基于事件的自动化响应现由 EventBridge 承接，与基于指标阈值的 CloudWatch Alarms 机制不同
 9. **Synthetics 是主动探测**：金丝雀脚本模拟用户访问，先于真实用户发现可用性问题
 10. **数据保留期随精度分级**：1 分钟精度 15 天、5 分钟精度 63 天、1 小时精度 15 个月
 
@@ -177,7 +177,7 @@
 ├── "多个指标同时异常才需要真正告警，减少噪音" → 复合告警（Composite Alarm）
 ├── "需要主动探测应用端点是否可用" → CloudWatch Synthetics
 ├── "业务指标随时间/季节呈现明显波动模式" → 异常检测（Anomaly Detection）
-├── "需要基于 AWS 服务状态变化事件触发工作流" → Amazon EventBridge（而非 CloudWatch Alarms）
+├── "需要基于 AWS 服务状态变化事件触发工作流" → [[Amazon EventBridge]]（而非 CloudWatch Alarms）
 └── "需要判断这个问题该看 CloudWatch/CloudTrail/Config 哪个" → 性能选 CloudWatch，操作行为选 CloudTrail，配置状态选 Config
 ```
 
@@ -192,5 +192,5 @@
 5. **多指标关联场景使用复合告警**：降低告警噪音，让告警更贴近真实的故障场景
 6. **对波动性强的业务指标启用异常检测**：比固定静态阈值更能适应趋势和季节性变化
 7. **关键用户旅程配置 Synthetics 金丝雀**：主动发现可用性问题，而非被动等待用户投诉或告警触发
-8. **基于事件的自动化响应场景评估 EventBridge**：CloudWatch Alarms 面向指标阈值，事件驱动的复杂路由逻辑更适合用 EventBridge
+8. **基于事件的自动化响应场景评估 [[Amazon EventBridge]]**：CloudWatch Alarms 面向指标阈值，事件驱动的复杂路由逻辑更适合用 EventBridge
 9. **敏感日志数据启用 KMS 加密**：涉及合规要求的日志组应配置客户管理密钥加密

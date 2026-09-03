@@ -2,7 +2,7 @@
 
 > **AWS Step Functions** 是全托管的 **Serverless 工作流编排服务**，通过可视化的状态机（State Machine）协调多个 [[AWS Lambda]] 函数或其他 AWS 服务，按预定逻辑顺序、并行或条件分支执行，并自动处理重试、错误捕获和状态跟踪。
 >
-> 相关文档：[[AWS Lambda]] | [[Amazon SWF]] | [[SQS]] | [[SNS]] | [[DynamoDB]] | [[Amazon API Gateway]] | [[ECS]]
+> 相关文档：[[AWS Lambda]] | [[Amazon SWF]] | [[SQS]] | [[SNS]] | [[DynamoDB]] | [[Amazon API Gateway]] | [[ECS]] | [[Amazon EventBridge]]
 
 ---
 
@@ -81,7 +81,7 @@
 | 触发来源 | 说明 |
 |---------|------|
 | **[[Amazon API Gateway]]** | API 请求直接触发状态机执行，构建 Serverless API 编排后端 |
-| **EventBridge（CloudWatch Events）** | 定时任务或事件驱动触发工作流 |
+| **[[Amazon EventBridge]]（CloudWatch Events）** | 定时任务或事件驱动触发工作流 |
 | **[[AWS Lambda]] / SDK 调用** | 应用代码通过 SDK 调用 `StartExecution` 启动工作流 |
 | **[[SQS]] 集成** | 通过 Lambda 轮询 SQS 或直接的服务集成触发批处理工作流 |
 
@@ -125,7 +125,7 @@
 6. **Map 状态用于批量并行处理**：对数组中每个元素并行执行相同步骤
 7. **人工审批走回调模式（Task Token）**：不是原生 Human Task（那是 SWF 的特色），而是 `waitForTaskToken` + 外部系统回调
 8. **恰好一次 vs 至少一次**：Standard 保证 Exactly-once，Express 异步执行是 At-least-once
-9. **可被 API Gateway/EventBridge/SDK 触发**：多种方式启动执行
+9. **可被 API Gateway/[[Amazon EventBridge]]/SDK 触发**：多种方式启动执行
 10. **执行历史完整保留（Standard）**：便于审计和问题排查，Express 执行历史仅存在 CloudWatch Logs
 
 ### 场景题解题思路
