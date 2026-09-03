@@ -128,14 +128,14 @@
 | **Amazon Rekognition** | 计算机视觉 | 图像/视频中的对象、人脸、文字识别 |
 | **Amazon Comprehend** | NLP | 情感分析、实体提取、PII 检测 |
 | **Amazon Lex** | 对话 AI | 语音/文字聊天机器人（Alexa 商业版） |
-| **Amazon Kendra** | 企业搜索 | 语义搜索引擎 |
-| **Amazon Personalize** | 推荐系统 | 个性化推荐（用户-物品交互） |
+| **[[Amazon Kendra]]** | 企业搜索 | 语义搜索引擎 |
+| **[[Amazon Personalize]]** | 推荐系统 | 个性化推荐（用户-物品交互） |
 | **Amazon Polly** | 文字转语音 | 多语言 TTS，支持 SSML |
-| **Amazon Textract** | 文档处理 | OCR、表单提取、签名检测 |
+| **[[Amazon Textract]]** | 文档处理 | OCR、表单提取、签名检测 |
 | **Amazon Transcribe** | 语音转文字 | 自动语音识别 (ASR) |
 | **Amazon Translate** | 翻译 | 神经网络机器翻译 |
 | **Amazon Fraud Detector** | 欺诈检测 | 实时在线欺诈检测 |
-| **Amazon Q** | AI 助手 | 企业级 AI 聊天助手 |
+| **[[Amazon Q Developer]]** | AI 助手 | 企业级 AI 聊天助手 |
 
 相关笔记：[[AWS AI托管服务]] | [[数据与分析服务]]
 
@@ -160,10 +160,10 @@
 ├── "不想训练模型，直接用 AI" → Amazon Bedrock（基础模型）
 ├── "需要完整 ML 训练流程" → Amazon SageMaker
 ├── "图像识别/人脸识别" → Amazon Rekognition
-├── "文档文字提取/OCR" → Amazon Textract
+├── "文档文字提取/OCR" → [[Amazon Textract]]
 ├── "语言理解/情感分析" → Amazon Comprehend
 ├── "聊天机器人/对话" → Amazon Lex
-├── "企业知识库搜索" → Amazon Kendra
-├── "个性化推荐" → Amazon Personalize
+├── "企业知识库搜索" → [[Amazon Kendra]]
+├── "个性化推荐" → [[Amazon Personalize]]
 └── "语音转文字" → Amazon Transcribe
 ```

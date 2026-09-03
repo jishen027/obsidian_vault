@@ -364,20 +364,20 @@
 | **文本生成** | 生成或改写文本，针对不同受众调整表达 | Amazon Bedrock、Amazon Titan |
 | **文本摘要** | 保留主要思想的前提下生成简短输出 | Amazon Bedrock（LLM 摘要） |
 | **信息提取** | 从非结构化文本中提取特定信息 | Amazon Comprehend |
-| **问答 (Q&A)** | 基于知识库或上下文回答问题 | Amazon Kendra、Bedrock Knowledge Bases |
+| **问答 (Q&A)** | 基于知识库或上下文回答问题 | [[Amazon Kendra]]、Bedrock Knowledge Bases |
 | **分类** | 对文本进行自动分类 | Amazon Comprehend（自定义分类） |
 | **有害内容识别** | 识别和过滤有害、违规、不当内容 | Amazon Bedrock Guardrails |
 | **翻译** | 语言之间的文本转换 | Amazon Translate |
-| **推荐引擎** | 基于用户历史和偏好的个性化推荐 | Amazon Personalize |
+| **推荐引擎** | 基于用户历史和偏好的个性化推荐 | [[Amazon Personalize]] |
 | **个性化营销/广告** | 根据用户特征生成定制化营销内容 | 提升 CLTV 和转化率 |
 | **聊天机器人** | 多轮对话式用户交互 | Amazon Lex + Amazon Bedrock |
 | **客服座席** | 辅助或替代人工客服处理咨询 | Amazon Q Business |
-| **搜索** | 语义搜索和智能文档检索 | Amazon Kendra、Bedrock Knowledge Bases |
-| **代码生成** | 根据自然语言或注释生成代码片段或完整函数 | Amazon Q Developer（前身：CodeWhisperer） |
+| **搜索** | 语义搜索和智能文档检索 | [[Amazon Kendra]]、Bedrock Knowledge Bases |
+| **代码生成** | 根据自然语言或注释生成代码片段或完整函数 | [[Amazon Q Developer]]（前身：CodeWhisperer） |
 
 ### 代码生成（Code Generation）
 
-> **代码生成**是生成式 AI 的重要应用，用于加速软件开发。**Amazon Q Developer** 根据注释和现有代码生成从代码片段到完整函数的实时建议，还支持代码补全和不同语言间的代码翻译。
+> **代码生成**是生成式 AI 的重要应用，用于加速软件开发。**[[Amazon Q Developer]]** 根据注释和现有代码生成从代码片段到完整函数的实时建议，还支持代码补全和不同语言间的代码翻译。
 
 ### 内容创作相关 AWS 服务
 
@@ -386,7 +386,7 @@
 | **Amazon Bedrock** | 文本、图像、音频生成（访问多种基础模型） |
 | **Amazon Titan** | AWS 自研基础模型（文本生成通用选择） |
 | **Amazon SageMaker** | 代码生成、自定义模型训练和部署 |
-| **Amazon Q Developer** | AI 代码生成和建议（前身：Amazon CodeWhisperer） |
+| **[[Amazon Q Developer]]** | AI 代码生成和建议（前身：Amazon CodeWhisperer） |
 | **Amazon Nimble Studio** | 虚拟制作和创意内容创作 |
 | **Amazon Sumerian** | 3D / AR / VR 内容创作 |
 
@@ -573,8 +573,8 @@
 25. **部署模式**：On-Demand vs Provisioned Throughput，自定义模型必须用后者
 
 **使用案例**
-26. **代码生成**：Amazon Q Developer（前身 CodeWhisperer）
-27. **企业搜索**：Amazon Kendra；**推荐**：Amazon Personalize；**聊天机器人**：Amazon Lex
+26. **代码生成**：[[Amazon Q Developer]]（前身 CodeWhisperer）
+27. **企业搜索**：[[Amazon Kendra]]；**推荐**：[[Amazon Personalize]]；**聊天机器人**：Amazon Lex
 
 ### 场景题解题思路
 

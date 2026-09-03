@@ -2,7 +2,7 @@
 
 > **Amazon Route 53** 是一种高可用且可扩展的域名系统（DNS）服务，提供域名注册、DNS 解析、健康检查和多种高级流量路由策略，帮助用户构建高可用、低延迟的全球架构。
 >
-> 相关文档：[[VPC]] | [[CDN - CloudFront]] | [[AWS Load Balance]] | [[CloudWatch]]
+> 相关文档：[[VPC]] | [[CloudFront]] | [[AWS Load Balance]] | [[CloudWatch]]
 
 ---
 

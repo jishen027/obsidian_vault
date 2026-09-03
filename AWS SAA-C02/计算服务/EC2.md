@@ -2,7 +2,7 @@
 
 > **Amazon EC2 (Elastic Compute Cloud)** 是 AWS 的核心计算服务，提供安全、可调整的虚拟服务器容量。它是 AWS 云中最基础和最常用的计算服务。
 >
-> 相关文档：[[EBS]] | [[AWS EFS]] | [[Security Group]] | [[Auto Scaling]] | [[IAM]]
+> 相关文档：[[EBS]] | [[AWS EFS]] | [[Security Group]] | [[Auto Scaling]] | [[IAM]] | [[CloudWatch]]
 
 ---
 
@@ -472,4 +472,4 @@ m5.large
 5. **使用 IAM 角色**：避免硬编码访问密钥
 6. **配置 Auto Scaling**：自动应对流量变化
 7. **定期更新 AMI**：保持系统和应用最新
-8. **监控实例性能**：使用 CloudWatch 监控指标
+8. **监控实例性能**：使用 [[CloudWatch]] 监控指标，内存/磁盘等操作系统层面指标需安装 CloudWatch Agent

@@ -247,7 +247,7 @@
 | **机器翻译 (Translation)** | 语言之间的文本翻译 | Amazon Translate |
 | **语音识别 (ASR)** | 将语音转为文字 | Amazon Transcribe |
 | **文本生成 (Generation)** | 生成连贯的自然语言文本 | Amazon Bedrock (LLM) |
-| **问答 (Q&A)** | 基于上下文回答问题 | Amazon Kendra / Bedrock |
+| **问答 (Q&A)** | 基于上下文回答问题 | [[Amazon Kendra]] / Bedrock |
 
 ### 关键 NLP 术语
 

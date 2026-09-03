@@ -2,7 +2,7 @@
 
 > **Amazon Rekognition** 是全托管的计算机视觉（Computer Vision）服务，基于深度学习模型，为应用添加**图像和视频分析**能力——包括物体/场景识别、人脸检测与分析、文本提取、内容审核等，通过简单的 API 调用即可实现，无需自行训练或运维机器学习模型。
 >
-> 相关文档：[[Amazon SageMaker]] | [[Amazon Transcribe]] | [[Amazon Kinesis]] | [[S3]] | [[AWS Lambda]] | [[Amazon API Gateway]] | [[IAM]] | [[KMS]]
+> 相关文档：[[Amazon SageMaker]] | [[Amazon Textract]] | [[Amazon Transcribe]] | [[Amazon Kinesis]] | [[S3]] | [[AWS Lambda]] | [[Amazon API Gateway]] | [[IAM]] | [[KMS]]
 
 ---
 
@@ -20,7 +20,7 @@
 |------|------|---------|---------|
 | **Rekognition** | 预训练计算机视觉 API | 图像/视频分析：物体识别、人脸分析、文本提取、内容审核 | 需要"开箱即用"的图像/视频智能分析，无需训练自定义模型 |
 | [[Amazon SageMaker]] | 通用机器学习平台 | 自定义模型的训练、调优、部署全生命周期 | 需要针对特有业务数据训练专属模型，非标准视觉任务 |
-| Amazon Textract | 文档分析 API | 从扫描文档中提取结构化文本、表格、表单字段 | 专注于文档（而非通用图像）的结构化数据提取 |
+| [[Amazon Textract]] | 文档分析 API | 从扫描文档中提取结构化文本、表格、表单字段 | 专注于文档（而非通用图像）的结构化数据提取 |
 
 > **考试陷阱**：题目描述**"需要快速为应用添加图像识别/人脸检测/内容审核能力，且没有机器学习专业知识或训练数据"** → 答案是 **Rekognition**；若题目强调**"需要针对特有业务场景训练自定义机器学习模型，涉及模型选择、超参数调优"** → 应考虑 **[[Amazon SageMaker]]** 等通用机器学习平台，而非 Rekognition 这种预训练服务。
 
@@ -128,7 +128,7 @@
 ├── "需要识别特定品牌 Logo/产品缺陷等细分场景" → Rekognition Custom Labels
 ├── "身份核验场景需要防止照片/视频冒充真人" → Rekognition Face Liveness
 ├── "需要针对特有业务训练完全自定义的复杂模型" → 改用 [[Amazon SageMaker]]（而非 Rekognition）
-├── "需要从扫描文档提取结构化文本/表格" → 改用 Amazon Textract（而非 Rekognition）
+├── "需要从扫描文档提取结构化文本/表格" → 改用 [[Amazon Textract]]（而非 Rekognition）
 └── "S3 中新上传的图片需要自动打标签" → S3 事件通知 + Lambda 调用 Rekognition API
 ```
 

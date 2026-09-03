@@ -14,16 +14,16 @@
 |------|------|---------|
 | **计算机视觉** | Amazon Rekognition | 图像/视频对象识别、人脸识别、文字识别、内容审核 |
 | **NLP / 文本分析** | Amazon Comprehend | 情感分析、实体提取、PII 检测、自定义分类 |
-| **文档处理** | Amazon Textract | OCR、表单提取、手写内容、表格、签名检测 |
+| **文档处理** | [[Amazon Textract]] | OCR、表单提取、手写内容、表格、签名检测 |
 | **对话 AI** | Amazon Lex | 聊天机器人（Alexa 的商业版），Voice + Text |
-| **企业搜索** | Amazon Kendra | 语义搜索引擎，自然语言问答 |
-| **个性化推荐** | Amazon Personalize | 用户行为驱动的实时推荐系统 |
+| **企业搜索** | [[Amazon Kendra]] | 语义搜索引擎，自然语言问答 |
+| **个性化推荐** | [[Amazon Personalize]] | 用户行为驱动的实时推荐系统 |
 | **语音转文字** | Amazon Transcribe | 自动语音识别 (ASR)，支持 100+ 语言 |
 | **文字转语音** | Amazon Polly | 多语言深度学习 TTS，支持 SSML |
 | **机器翻译** | Amazon Translate | 神经网络机器翻译，75 种语言 |
 | **时间序列预测** | Amazon Forecast | AI 时间序列预测服务 |
 | **欺诈检测** | Amazon Fraud Detector | 全托管在线欺诈检测 |
-| **AI 编码助手** | Amazon Q / CodeWhisperer | AI 代码生成和建议 |
+| **AI 编码助手** | [[Amazon Q Developer]] / CodeWhisperer | AI 代码生成和建议 |
 
 ---
 
@@ -94,7 +94,7 @@
 ### 常见组合工作流：Textract + Comprehend
 
 ```
-扫描文档/图像 → Amazon Textract（提取文字） → Amazon Comprehend（情感分析/PII检测）→ 结果
+扫描文档/图像 → [[Amazon Textract]]（提取文字） → Amazon Comprehend（情感分析/PII检测）→ 结果
 ```
 - 实际案例：AWS 使用 Amazon Comprehend 分析认证考试评论的情感
 
@@ -106,14 +106,14 @@
 ├── "从合同中提取公司名称和日期" → 实体识别
 ├── "检查文档中是否包含个人信息" → PII 检测（含置信度阈值）
 ├── "将客户支持工单自动分类（自定义类别）" → 自定义分类
-└── "从扫描文档中提取文字后进行情感分析" → Textract + Comprehend 组合
+└── "从扫描文档中提取文字后进行情感分析" → [[Amazon Textract]] + Comprehend 组合
 ```
 
 ---
 
-## Amazon Textract（文档 OCR）
+## [[Amazon Textract]]（文档 OCR）
 
-> **Amazon Textract** 超越传统 OCR，不仅提取文字，还理解文档结构（表单、表格、签名）。
+> **Amazon Textract** 超越传统 OCR，不仅提取文字，还理解文档结构（表单、表格、签名）。五种核心 API（含 AnalyzeExpense/AnalyzeID 等专用 API）、Queries 自定义调优、同步/异步选型等细节见 [[Amazon Textract]] 独立笔记。
 
 ### 核心功能
 
@@ -170,25 +170,18 @@
 
 ---
 
-## Amazon Kendra（企业搜索）
+## [[Amazon Kendra]]（企业搜索）
 
-> **Amazon Kendra** 是企业级机器学习搜索引擎，使用语义和上下文理解（而非简单关键词匹配）进行搜索。
+> **Amazon Kendra** 是企业级机器学习搜索引擎，使用语义和上下文理解（而非简单关键词匹配）进行搜索。**已于 2026-06-30 进入维护模式并于 2026-07-30 起停止新客户接入**，AWS 推荐新项目优先评估 Bedrock Knowledge Bases；完整能力、索引版本、迁移路径见 [[Amazon Kendra]] 独立笔记。
 
 ### 核心特性
 
 | 特性 | 描述 |
 |------|------|
-| **语义搜索** | 理解问题含义，而非关键词匹配 |
+| **语义搜索** | 理解问题含义，而非关键词匹配，例如可理解 "How do I connect my Echo Plus to my network?" 这类自然语言问题 |
 | **自然语言问答** | 直接回答问题，而非返回文档列表 |
 | **多数据源连接** | 支持 S3、SharePoint、Salesforce、数据库等 |
 | **访问控制** | 基于用户权限过滤搜索结果 |
-
-### 核心特性
-
-- 使用 NLP 理解自然语言问题，例如："How do I connect my Echo Plus to my network?"
-- 根据对问题的智能理解返回相关结果（而非简单关键词匹配）
-- 支持多数据源：S3、SharePoint、Salesforce、数据库等
-- 基于用户权限过滤搜索结果
 
 ### 与 RAG（Bedrock Knowledge Bases）对比
 
@@ -200,9 +193,9 @@
 
 ---
 
-## Amazon Personalize（推荐系统）
+## [[Amazon Personalize]]（推荐系统）
 
-> **Amazon Personalize** 是全托管的个性化推荐服务，使用与 Amazon.com 相同的技术。
+> **Amazon Personalize** 是全托管的个性化推荐服务，使用与 Amazon.com 相同的技术。完整的 Domain Dataset Group、推荐器容量限制、v2 架构、批量推荐等细节见 [[Amazon Personalize]] 独立笔记。
 
 ### 核心数据集
 
@@ -317,14 +310,14 @@
 
 ---
 
-## Amazon Q / CodeWhisperer（AI 编码）
+## [[Amazon Q Developer]] / CodeWhisperer（AI 编码）
 
-> **Amazon Q** 是 AWS 的企业 AI 助手，**CodeWhisperer** 是 VS Code / JetBrains 中的 AI 代码建议工具（现已整合入 Amazon Q Developer）。
+> **Amazon Q** 是 AWS 的企业 AI 助手，**CodeWhisperer** 是 VS Code / JetBrains 中的 AI 代码建议工具（现已整合入 Amazon Q Developer）。智能体式编码、代码转换、安全扫描、CLI 等完整能力见 [[Amazon Q Developer]] 独立笔记。
 
 | 产品 | 场景 |
 |------|------|
 | **Amazon Q Business** | 企业内部知识问答助手 |
-| **Amazon Q Developer** | 代码生成、代码审查、bug 修复建议 |
+| **[[Amazon Q Developer]]** | 代码生成、代码审查、bug 修复建议 |
 
 ---
 
@@ -349,13 +342,13 @@
 | ------------------------------------ | --------------------- |
 | "图像识别"、"人脸识别"、"视频分析"、"内容审核"          | Amazon Rekognition    |
 | "情感分析"、"实体提取"、"PII"、"自定义文本分类"        | Amazon Comprehend     |
-| "OCR"、"文档提取"、"发票"、"表单"、"手写内容"        | Amazon Textract       |
+| "OCR"、"文档提取"、"发票"、"表单"、"手写内容"        | [[Amazon Textract]]       |
 | "聊天机器人"、"语音机器人"、"Alexa 企业版"、"IVR 替换" | Amazon Lex            |
-| "企业搜索"、"语义搜索"、"自然语言问答（企业文档）"         | Amazon Kendra         |
-| "个性化推荐"、"用户-物品交互"、"'您可能还喜欢'"         | Amazon Personalize    |
+| "企业搜索"、"语义搜索"、"自然语言问答（企业文档）"         | [[Amazon Kendra]]         |
+| "个性化推荐"、"用户-物品交互"、"'您可能还喜欢'"         | [[Amazon Personalize]]    |
 | "语音转文字"、"实时转录"、"100+ 语言 ASR"         | Amazon Transcribe     |
 | "文字转语音"、"TTS"、"语音合成"                 | Amazon Polly          |
 | "机器翻译"、"75 种语言"、"实时聊天翻译"             | Amazon Translate      |
 | "时间序列预测"、"预测销售/呼叫量/库存"               | Amazon Forecast       |
 | "欺诈检测"、"在线支付欺诈"、"虚假账户检测"             | Amazon Fraud Detector |
-| "代码生成"、"AI 编程助手"                     | Amazon Q Developer    |
+| "代码生成"、"AI 编程助手"                     | [[Amazon Q Developer]]    |
