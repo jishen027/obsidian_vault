@@ -21,7 +21,7 @@
 ### 核心价值
 
 - **可视化工作流**：用 **Amazon States Language（ASL，一种 JSON 格式的状态机定义语言）**描述流程，控制台提供图形化的执行流程和实时状态可视化
-- **直接服务集成**：状态机可**直接调用超过 200 个 AWS 服务的 API**（如 DynamoDB、SNS、SQS、ECS、Glue、SageMaker），无需为每个集成步骤都单独编写 Lambda 胶水代码
+- **直接服务集成**：状态机可**直接调用超过 200 个 AWS 服务的 API**（如 DynamoDB、SNS、SQS、ECS、[[AWS Glue]]、[[Amazon SageMaker]]），无需为每个集成步骤都单独编写 Lambda 胶水代码
 - **内置错误处理**：原生支持**重试（Retry）**和**捕获（Catch）**，无需在应用代码中手写异常处理逻辑
 - **自动状态跟踪**：每次执行自动记录完整的输入/输出和状态历史，便于审计和问题排查
 

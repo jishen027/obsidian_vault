@@ -2,7 +2,7 @@
 
 > **Amazon Aurora** 是 AWS 自研的云原生关系型数据库引擎，兼容 MySQL 和 PostgreSQL，采用存储与计算分离架构，提供比标准 RDS 引擎更高的性能、可用性和弹性。
 >
-> 相关文档：[[RDS]] | [[Redshift]] | [[DynamoDB]] | [[KMS]]
+> 相关文档：[[RDS]] | [[Redshift]] | [[DynamoDB]] | [[Amazon SageMaker]] | [[Amazon Comprehend]] | [[KMS]]
 
 ---
 
@@ -142,7 +142,7 @@
 | **Backtrack**（仅 MySQL 兼容版） | 将数据库集群快速"倒回"到之前的时间点，无需从备份恢复；不能替代常规备份 |
 | **快速数据库克隆** | 基于写时复制（Copy-on-Write），几分钟内创建克隆，不复制底层存储，节省成本 |
 | **并行查询**（Parallel Query，MySQL 兼容版） | 将查询下推到存储层并行执行，加速大规模数据扫描和分析型查询 |
-| **Aurora 机器学习** | 直接在 SQL 语句中调用 SageMaker、Comprehend 等服务进行预测分析 |
+| **Aurora 机器学习** | 直接在 SQL 语句中调用 [[Amazon SageMaker]]、[[Amazon Comprehend]] 等服务进行预测分析 |
 
 ---
 
