@@ -2,7 +2,7 @@
 
 > **Amazon VPC (Virtual Private Cloud)** 让您能在 AWS 云中启动资源在您逻辑定义的虚拟网络中。它是 AWS 网络架构的核心服务，提供网络隔离、安全控制和灵活的网络配置。
 >
-> 相关文档：[[Security Group]] | [[NACL]] | [[S3]] | [[DynamoDB]]
+> 相关文档：[[Security Group]] | [[NACL]] | [[S3]] | [[DynamoDB]] | [[VPC Peering]] | [[Virtual Private Gateway]]
 
 ---
 
@@ -99,8 +99,8 @@
 
 | 服务 | 防护层级 | 防护类型 |
 |------|---------|---------|
-| **AWS WAF** | 第 7 层 | SQL 注入、XSS、HTTP/HTTPS 攻击 |
-| **AWS Shield** | 第 3/4 层 | DDoS 攻击（Standard 免费，Advanced 付费） |
+| **[[AWS WAF]]** | 第 7 层 | SQL 注入、XSS、HTTP/HTTPS 攻击 |
+| **[[AWS Shield]]** | 第 3/4 层 | DDoS 攻击（Standard 免费，Advanced 付费） |
 
 ---
 
@@ -213,7 +213,9 @@
 | **路由** | 需在双方 VPC 添加路由 |
 | **单播** | 不支持多播/广播 |
 | **成本** | 免费（但跨区域有数据传输费） |
-| **限制** | 不支持重叠 CIDR |
+| **限制** | 不支持重叠 CIDR，**不支持传递路由** |
+
+> 完整的限制、DNS 解析配置、安全组互相引用规则及与 Transit Gateway 的对比，见 [[VPC Peering]] 独立笔记
 
 ### 站点到站点 VPN
 
@@ -288,7 +290,7 @@
 6. **PrivateLink**：跨账号服务共享，NLB + 服务提供者模型
 7. **Transit Gateway**：大规模多 VPC 架构
 8. **Direct Connect**：专用物理连接，不走公网
-9. **VPC 对等连接**：不支持重叠 CIDR
+9. **[[VPC Peering]]**：不支持重叠 CIDR，不支持传递路由
 10. **VPC 免费**：VPC 本身和网关终端节点免费
 
 ### 场景题解题思路
@@ -300,9 +302,9 @@
 ├── "私密访问其他 AWS 服务" → 接口终端节点
 ├── "大规模多 VPC 架构" → Transit Gateway
 ├── "本地数据中心连接" → Direct Connect / VPN
-├── "两个 VPC 互访" → VPC 对等连接
+├── "两个 VPC 互访" → [[VPC Peering]]
 ├── "私有子网出站" → NAT 网关
-└── "DDoS 防护" → Shield + WAF
+└── "DDoS 防护" → [[AWS Shield]] + [[AWS WAF]]
 ```
 
 ### 常见考试场景分析
@@ -312,13 +314,13 @@
 | 选项 | 是否正确 | 原因 |
 |------|---------|------|
 | **PrivateLink** | ✅ 正确 | NLB + 跨账号 + 服务提供者模型 |
-| VPC 对等连接 | ❌ 错误 | 需要复杂路由，不适合服务提供者模型 |
+| [[VPC Peering]] | ❌ 错误 | 需要复杂路由，不适合服务提供者模型 |
 | 互联网 | ❌ 错误 | 不安全，流量经过公网 |
 | API Gateway | ❌ 错误 | 主要用于 RESTful API，不是 VPC 内服务共享 |
 
 **关键总结：**
 - **"跨账号 VPC 服务共享"** → PrivateLink
 - **"私密访问 S3"** → 网关终端节点
-- **"两个 VPC 互访"** → VPC 对等连接
+- **"两个 VPC 互访"** → [[VPC Peering]]
 - **"大规模多 VPC"** → Transit Gateway
 - **"不走公网的本地连接"** → Direct Connect

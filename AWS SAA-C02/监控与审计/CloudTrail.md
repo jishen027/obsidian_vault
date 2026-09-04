@@ -2,7 +2,7 @@
 
 > **AWS CloudTrail** 是 AWS 审计与安全策略的核心，负责记录账户内由主体（IAM 用户、角色、AWS 服务）发起的所有 **API 调用**和非 API 操作（如控制台登录），回答"**谁在什么时候做了什么**"。与专注"资源运行得怎么样"的 [[CloudWatch]]、专注"资源配置长什么样"的 [[AWS Config]] 共同构成 AWS 管理和监控三件套。
 >
-> 相关文档：[[CloudWatch]] | [[AWS Config]] | [[AWS Organizations]] | [[S3]] | [[KMS]] | [[IAM]] | [[Amazon EventBridge]]
+> 相关文档：[[CloudWatch]] | [[AWS Config]] | [[AWS Organizations]] | [[Amazon GuardDuty]] | [[S3]] | [[KMS]] | [[IAM]] | [[Amazon EventBridge]]
 
 ---
 
@@ -77,9 +77,9 @@
 
 - CloudTrail 专注于记录"谁在何时做了什么"，AWS Config 则关注这些动作导致的资源"配置状态"变化，两者结合可提供完整的**变更溯源**（操作行为 + 最终状态）
 
-### 威胁检测（Amazon GuardDuty）
+### 威胁检测（[[Amazon GuardDuty]]）
 
-- CloudTrail 是 **Amazon GuardDuty** 的关键数据源之一——GuardDuty 通过分析 CloudTrail 管理事件（及 VPC Flow Logs、DNS 日志）识别凭证被盗、可疑的 API 调用模式或攻击者的侦察行为，实现自动化威胁检测
+- CloudTrail 是 **[[Amazon GuardDuty]]** 的关键数据源之一——GuardDuty 通过分析 CloudTrail 管理事件（及 VPC Flow Logs、DNS 日志）识别凭证被盗、可疑的 API 调用模式或攻击者的侦察行为，实现自动化威胁检测，完整能力见 [[Amazon GuardDuty]] 独立笔记
 
 ---
 
@@ -118,7 +118,7 @@
 | **需要识别异常的 API 调用模式** | CloudTrail Insights |
 | **需要用 SQL 对海量历史事件做分析** | CloudTrail Lake（需确认新客户接入状态） |
 | **检测到特定 API 调用后自动触发响应** | CloudTrail 事件 + EventBridge + Lambda |
-| **威胁检测：识别凭证被盗、可疑 API 调用** | CloudTrail 作为 GuardDuty 的数据源 |
+| **威胁检测：识别凭证被盗、可疑 API 调用** | CloudTrail 作为 [[Amazon GuardDuty]] 的数据源 |
 | **证明日志未被篡改的取证场景** | 启用日志文件完整性验证 |
 
 ---
@@ -134,7 +134,7 @@
 5. **Organization Trail 实现组织级强制审计**：在管理账户创建，自动应用到所有成员账户
 6. **日志完整性验证防篡改**：摘要文件提供加密哈希校验，是安全取证的关键证据保障
 7. **CloudTrail Lake 已停止新客户接入**（2026-05-31 起），已有客户不受影响，需注意规划新架构时的可用性
-8. **CloudTrail 是 GuardDuty 的核心数据源**：管理事件用于识别凭证被盗、异常 API 调用等威胁
+8. **CloudTrail 是 [[Amazon GuardDuty]] 的核心数据源**：管理事件用于识别凭证被盗、异常 API 调用等威胁
 9. **可与 EventBridge 集成实现事件驱动的自动化响应**：检测到特定操作后自动触发处理流程
 10. **CloudTrail Insights 用于异常检测**：基于基线自动识别偏离正常模式的 API 调用量/错误率
 
@@ -150,7 +150,7 @@
 ├── "需要识别异常的 API 调用模式" → CloudTrail Insights
 ├── "需要用 SQL 查询海量历史事件" → CloudTrail Lake（确认新客户接入状态）
 ├── "检测到特定操作后需要自动触发响应" → CloudTrail 事件 + EventBridge
-└── "需要检测凭证被盗/可疑 API 调用等威胁" → 结合 Amazon GuardDuty 分析 CloudTrail 数据
+└── "需要检测凭证被盗/可疑 API 调用等威胁" → 结合 [[Amazon GuardDuty]] 分析 CloudTrail 数据
 ```
 
 ---

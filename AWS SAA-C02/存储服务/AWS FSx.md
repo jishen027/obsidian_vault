@@ -2,7 +2,7 @@
 
 > **Amazon FSx** 是一组**完全托管的第三方文件系统**服务，让用户可以在 AWS 上运行熟悉的商业和开源文件系统（Windows、Lustre、NetApp ONTAP、OpenZFS），而无需自行搭建和维护底层基础设施。
 >
-> 相关文档：[[AWS EFS]] | [[EBS]] | [[S3]] | [[VPC]] | [[Storage Service]]
+> 相关文档：[[AWS EFS]] | [[EBS]] | [[S3]] | [[VPC]] | [[Storage Service]] | [[AWS Directory Service]]
 
 ---
 
@@ -37,7 +37,7 @@
 
 - 提供**原生 Windows 文件系统**，完全兼容 **SMB 协议**和 **NTFS**
 - 与 **Microsoft Active Directory (AD)** 原生集成：
-  - 支持 AWS Managed Microsoft AD 或自建 AD
+  - 支持 [[AWS Directory Service]]（AWS Managed Microsoft AD）或自建 AD
   - 保留 Windows 权限模型（ACL）
 - 支持 Windows 原生功能：
   - **卷影副本 (Shadow Copies)**：文件级时间点恢复，用户可自助还原

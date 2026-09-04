@@ -2,7 +2,7 @@
 
 > **AWS Organizations** 是多账户治理服务，让企业能够将多个 AWS 账户集中管理——统一账单（Consolidated Billing）、通过**服务控制策略（SCP）**和**资源控制策略（RCP）**设置权限护栏、批量管理合规和配置策略，是构建"多账户架构"这一 AWS 最佳实践的核心基础设施。
 >
-> 相关文档：[[IAM]] | [[AWS Config]] | [[CloudTrail]] | [[AWS CloudFormation]] | [[KMS]]
+> 相关文档：[[IAM]] | [[AWS Control Tower]] | [[AWS Config]] | [[CloudTrail]] | [[AWS CloudFormation]] | [[KMS]] | [[AWS Firewall Manager]]
 
 ---
 
@@ -53,7 +53,7 @@
 | **语法支持** | 支持完整的 IAM 策略语言，包括条件（Condition）、具体资源 ARN、`NotAction` 与 `Allow` 组合、Action 字符串开头/中间的通配符 |
 | **不影响管理账户** | SCP **不会限制管理账户本身**的权限，仅约束成员账户 |
 
-> **考试陷阱**：**SCP 是权限的"天花板"而非"授权来源"**——题目描述"某用户的 IAM 策略明明授予了权限，但依然无法执行该操作"，根本原因很可能是**组织的 SCP 限制了该权限**；SCP 不能用来"额外授予"权限，只能限制。
+> **考试陷阱**：**SCP 是权限的"天花板"而非"授权来源"**——题目描述"某用户的 IAM 策略明明授予了权限，但依然无法执行该操作"，根本原因很可能是**组织的 SCP 限制了该权限**；SCP 不能用来"额外授予"权限，只能限制。SCP 与 [[IAM]] 的**权限边界（Permission Boundary）**是同一类"限制型"机制在不同作用范围的体现——SCP 限制整个组织/OU/账户，权限边界限制单个用户/角色，两者可叠加生效，最终有效权限取三者（身份策略 ∩ 权限边界 ∩ SCP）的交集。
 
 ---
 
@@ -87,7 +87,7 @@
 
 ## 委派管理员（Delegated Administrator）
 
-- 允许将特定 AWS 服务（如 [[AWS Config]]、GuardDuty、[[CloudTrail]]）的组织级管理权限**委派给指定的成员账户**，而非必须使用管理账户操作
+- 允许将特定 AWS 服务（如 [[AWS Config]]、[[Amazon GuardDuty]]、[[CloudTrail]]、[[AWS Firewall Manager]]）的组织级管理权限**委派给指定的成员账户**，而非必须使用管理账户操作
 - **价值**：管理账户通常应仅用于账单和组织本身的治理，日常的安全/合规服务管理可下放给专门的安全账户，遵循**最小权限和职责分离**原则
 
 ---
@@ -99,7 +99,7 @@
 | **[[CloudTrail]] Organization Trail** | 在管理账户创建后自动应用到所有成员账户，实现组织级强制审计 |
 | **[[AWS Config]] Conformance Packs** | 可通过 Organizations 一次性部署规则集到整个组织的所有账户 |
 | **[[AWS CloudFormation]] StackSets** | 结合 Organizations 可将同一套 CloudFormation 模板批量部署到组织内多个账户/区域 |
-| **AWS Control Tower** | 构建在 Organizations 之上的"着陆区（Landing Zone）"自动化服务，进一步简化多账户环境的初始搭建和护栏配置 |
+| **[[AWS Control Tower]]** | 构建在 Organizations 之上的"着陆区（Landing Zone）"自动化服务，进一步简化多账户环境的初始搭建和护栏配置，详见 [[AWS Control Tower]] 独立笔记 |
 
 ---
 
@@ -126,7 +126,7 @@
 | **需要标准化组织内的资源标签规范** | 标签策略（Tag Policies） |
 | **需要将安全服务管理权下放到专用安全账户** | 委派管理员（Delegated Administrator） |
 | **需要批量在多账户/区域部署同一套基础设施模板** | CloudFormation StackSets + Organizations |
-| **希望快速搭建符合最佳实践的多账户环境** | AWS Control Tower（构建在 Organizations 之上） |
+| **希望快速搭建符合最佳实践的多账户环境** | [[AWS Control Tower]]（构建在 Organizations 之上） |
 
 ---
 
@@ -143,7 +143,7 @@
 7. **合并账单支持折扣共享**：RI/Savings Plans 等批量折扣可在组织内账户间共享
 8. **Conformance Packs/Organization Trail 依赖 Organizations**：多账户统一合规检测和审计跟踪的组织级部署基础
 9. **委派管理员实现职责分离**：安全/合规服务的组织级管理可下放到专用账户，而非依赖管理账户
-10. **Control Tower 构建在 Organizations 之上**：提供开箱即用的着陆区自动化，而非替代 Organizations 本身
+10. **[[AWS Control Tower]] 构建在 Organizations 之上**：提供开箱即用的着陆区自动化，而非替代 Organizations 本身
 
 ### 场景题解题思路
 
@@ -157,7 +157,7 @@
 ├── "需要标准化组织内的资源标签命名" → 标签策略（Tag Policies）
 ├── "需要把安全服务的管理权委派给专用账户" → 委派管理员（Delegated Administrator）
 ├── "需要批量在多账户部署相同的基础设施模板" → CloudFormation StackSets + Organizations
-└── "需要快速搭建符合最佳实践的多账户环境" → AWS Control Tower
+└── "需要快速搭建符合最佳实践的多账户环境" → [[AWS Control Tower]]
 ```
 
 ---
@@ -171,4 +171,4 @@
 5. **安全/合规类服务的日常管理下放给委派管理员账户**：遵循最小权限和职责分离，减少管理账户的日常操作
 6. **善用声明式策略维护基础设施配置基线**：避免服务新增功能后护栏"失效"，需要持续手动补丁维护
 7. **多账户批量部署优先使用 StackSets 而非逐账户手动操作**：结合 Organizations 目标选择，减少人工操作和配置漂移
-8. **新建多账户环境优先评估 Control Tower**：相比从零手动搭建 Organizations 治理框架，能更快获得符合最佳实践的基线配置
+8. **新建多账户环境优先评估 [[AWS Control Tower]]**：相比从零手动搭建 Organizations 治理框架，能更快获得符合最佳实践的基线配置

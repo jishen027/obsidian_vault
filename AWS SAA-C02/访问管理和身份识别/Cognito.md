@@ -2,7 +2,7 @@
 
 > **Amazon Cognito** 是 AWS 安全与身份体系中专门为**移动和 Web 应用程序**设计的身份管理服务，通过用户池和身份池分别解决终端用户的**身份验证（Authentication）**和**授权（Authorization）**问题，让应用无需自建用户系统。
 >
-> 相关文档：[[IAM]] | [[Amazon API Gateway]] | [[S3]] | [[DynamoDB]] | [[VPC]]
+> 相关文档：[[IAM]] | [[AWS Directory Service]] | [[Amazon API Gateway]] | [[S3]] | [[DynamoDB]] | [[VPC]]
 
 ---
 
@@ -14,7 +14,7 @@
 |------|---------|---------|---------|
 | **Cognito** | 应用的**外部终端用户**（App 注册用户、社交登录用户） | 身份验证 + 临时 AWS 凭证授权 | 移动/Web 应用的用户登录与资源访问 |
 | [[IAM]] | AWS 账户内的**员工/服务/资源** | 管控对 AWS 控制台和 API 的访问权限 | 运维人员、应用服务器、CI/CD 流水线 |
-| Managed Microsoft AD | **企业内部**员工目录 | 将本地 AD 域扩展到云端 VPC | 企业内部系统的目录集成 |
+| [[AWS Directory Service]] | **企业内部**员工目录 | 将本地 AD 域扩展到云端 VPC | 企业内部系统的目录集成 |
 
 > **考试陷阱**：Cognito 与 IAM 面向的用户群体完全不同——**Cognito 管理应用的最终用户（成千上万的外部消费者）**，**IAM 管理 AWS 账户内部的身份（员工、角色、服务）**；题目描述"移动 App 的注册用户登录"应选 Cognito，而非直接为每个用户创建 IAM User（IAM User 数量有限且不适合面向海量消费者）。
 

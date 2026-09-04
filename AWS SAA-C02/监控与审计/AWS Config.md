@@ -2,7 +2,7 @@
 
 > **AWS Config** 在 AWS 的管理和监控体系中扮演"资源时间机器"的角色，持续发现、记录 AWS 资源的**配置状态**及其变化历史，并通过**规则（Rule）**自动评估配置是否符合预定义基准，回答"**资源配置长什么样、如何随时间变化**"。与专注"资源运行得怎么样"的 [[CloudWatch]]、专注"谁做了什么"的 [[CloudTrail]] 共同构成 AWS 管理和监控三件套。
 >
-> 相关文档：[[CloudTrail]] | [[CloudWatch]] | [[SNS]] | [[IAM]] | [[S3]] | [[AWS CloudFormation]] | [[AWS Organizations]]
+> 相关文档：[[CloudTrail]] | [[CloudWatch]] | [[SNS]] | [[IAM]] | [[S3]] | [[AWS CloudFormation]] | [[AWS Organizations]] | [[AWS Systems Manager]]
 
 ---
 
@@ -53,7 +53,7 @@
 
 ### 合规修复（Remediation）
 
-- 检测到非合规资源后，可通过 **AWS Systems Manager Automation 文档**触发**自动修复（Auto Remediation）**，无需人工干预即可将资源修正为合规状态
+- 检测到非合规资源后，可通过 **[[AWS Systems Manager]] Automation 文档**触发**自动修复（Auto Remediation）**，无需人工干预即可将资源修正为合规状态
 - 也可配置为**手动修复**——生成修复操作建议，但等待人工审批后才执行，适合对自动变更较谨慎的关键资源
 - 检测（Config）+ 修复（SSM Automation）的组合是构建"自愈式（Self-Healing）"合规基础设施的标准模式
 
@@ -121,7 +121,7 @@
 2. **配置项 + 配置历史**：每次配置变化生成配置项，汇编成可追溯任意历史时刻状态的配置历史
 3. **关系分析辅助变更影响评估**：修改前先查看资源关联关系，评估变更的影响范围
 4. **检测型规则 vs 主动型规则**：前者评估已部署资源，后者评估部署前的资源，但**主动型规则本身不阻止部署**
-5. **合规修复需结合 SSM Automation**：Config 负责检测，Systems Manager Automation 负责执行修复，二者组合实现自愈式治理
+5. **合规修复需结合 SSM Automation**：Config 负责检测，[[AWS Systems Manager]] Automation 负责执行修复，二者组合实现自愈式治理
 6. **自动修复 vs 手动修复**：自动修复无需人工干预，手动修复生成建议但需人工审批
 7. **合规包（Conformance Packs）简化多账户治理**：规则和修复操作打包后可一次性部署到整个组织
 8. **聚合器实现多账户多区域集中查看**：无需登录每个账户即可统一监控合规状态

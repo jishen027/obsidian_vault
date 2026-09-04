@@ -11,7 +11,7 @@
 ## 重要特性与局限
 - **高可用性：** VGW 内部是冗余设计的。例如，在创建 VPN 时，它通常会提供两条隧道（Tunnel），以防单条路径发生故障
 - **一对一绑定：** 一个传统的 VGW 只能附加（Attach）到**一个** VPC。
-- **不支持传递路由 (Transitive Routing)：** 这是考试中的常见考点。例如，如果 VPC A 通过 VGW 连接了本地机房，即使 VPC A 与 VPC B 建立了对等连接（Peering），本地机房也**不能**通过 VPC A 访问 VPC B
+- **不支持传递路由 (Transitive Routing)：** 这是考试中的常见考点。例如，如果 VPC A 通过 VGW 连接了本地机房，即使 VPC A 与 VPC B 建立了 [[VPC Peering]] 对等连接，本地机房也**不能**通过 VPC A 访问 VPC B（[[VPC Peering]] 本身同样不支持传递路由，两者的限制是一致的逻辑）
 
 ## 架构进阶：VGW vs. Transit Gateway
 随着企业规模扩大，手动管理多个 VGW 会变得非常复杂

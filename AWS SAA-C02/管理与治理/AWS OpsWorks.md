@@ -2,7 +2,7 @@
 
 > **AWS OpsWorks** 是一种受管配置管理服务，专门用于集成 **Chef** 和 **Puppet** 这类自动化平台来配置和运维服务器。
 >
-> 相关文档：[[AWS CloudFormation]]
+> 相关文档：[[AWS CloudFormation]] | [[AWS Systems Manager]]
 
 ---
 
@@ -15,7 +15,7 @@
 | **OpsWorks Stacks** | 基础设施编排 | 使用 Chef/Puppet 配置服务器 | Cookbooks、层管理 |
 | **OpsWorks for Chef Automate** | Chef 服务端 | 全托管 Chef 服务器 | Chef 后端管理 |
 | **AWS CloudFormation** | 基础设施即代码 | 创建和管理 AWS 资源 | 模板化资源部署 |
-| **AWS Systems Manager** | 运维管理 | 大规模服务器管理 | 无代理配置管理 |
+| **[[AWS Systems Manager]]** | 运维管理 | 大规模服务器管理 | 无代理配置管理 |
 
 ### 核心架构组件
 
@@ -112,7 +112,7 @@ Chef Cookbook (Recipes)
 | **OpsWorks Stacks** | ✅ 正确 | 直接使用 Cookbooks 管理堆栈和层，自动编排组件关联 |
 | OpsWorks for Chef Automate | ❌ 错误 | 提供 Chef 服务端，需要自行管理节点配置 |
 | AWS CloudFormation | ❌ 错误 | 侧重于创建基础架构，不是配置运行环境 |
-| AWS Systems Manager | ❌ 错误 | 不支持 Chef Cookbooks 原生集成 |
+| [[AWS Systems Manager]] | ❌ 错误 | 不支持 Chef Cookbooks 原生集成 |
 
 **关键总结：**
 - **"使用 Cookbooks 管理堆栈和层"** → OpsWorks Stacks
@@ -141,7 +141,7 @@ Chef Cookbook (Recipes)
 | **Web 应用部署** | OpsWorks Stacks + Web 层 | 自动配置 Apache/Nginx |
 | **微服务架构** | OpsWorks Stacks + 多层 | 应用层、数据库层分离 |
 | **Chef 服务器管理** | OpsWorks for Chef Automate | 全托管 Chef 后端 |
-| **大规模配置管理** | AWS Systems Manager | 无代理、跨账号管理 |
+| **大规模配置管理** | [[AWS Systems Manager]] | 无代理、跨账号管理 |
 
 ---
 
@@ -192,7 +192,7 @@ Chef Cookbook (Recipes)
 ├── "全托管 Chef 服务器" → OpsWorks for Chef Automate
 ├── "创建 VPC、实例" → CloudFormation
 ├── "软件安装、环境配置" → OpsWorks Stacks
-└── "大规模无代理管理" → Systems Manager
+└── "大规模无代理管理" → [[AWS Systems Manager]]
 ```
 
 ### 常见考试场景分析
@@ -204,7 +204,7 @@ Chef Cookbook (Recipes)
 | **OpsWorks Stacks** | ✅ 正确 | 直接使用 Cookbooks 管理堆栈和层，自动编排组件关联 |
 | OpsWorks for Chef Automate | ❌ 错误 | 提供 Chef 服务端，需要自行管理节点配置 |
 | AWS CloudFormation | ❌ 错误 | 侧重于创建基础架构，不是配置运行环境 |
-| AWS Systems Manager | ❌ 错误 | 不支持 Chef Cookbooks 原生集成 |
+| [[AWS Systems Manager]] | ❌ 错误 | 不支持 Chef Cookbooks 原生集成 |
 
 **关键总结：**
 - **"使用 Cookbooks 管理堆栈和层"** → OpsWorks Stacks

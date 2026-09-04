@@ -2,7 +2,7 @@
 
 > **S3 安全**横跨身份访问控制、资源策略、网络隔离、静态/传输加密和审计合规等多个维度，是 SAA-C02 考试中最高频的主题之一。本笔记深入展开 [[S3]] 中"安全性"一节未详述的机制。
 >
-> 相关文档：[[S3]] | [[IAM]] | [[KMS]] | [[VPC]] | [[CloudTrail]]
+> 相关文档：[[S3]] | [[IAM]] | [[KMS]] | [[VPC]] | [[CloudTrail]] | [[Amazon GuardDuty]] | [[Amazon Macie]]
 
 ---
 
@@ -164,8 +164,8 @@ S3 提供账户级和 Bucket 级的"公共访问阻止"开关，**独立于**任
 | **[[CloudTrail]] 数据事件** | 记录每次对象级 API 调用（GetObject/PutObject 等），默认关闭，需显式启用（产生额外费用） |
 | **S3 Access Logging** | 记录访问 Bucket 的请求日志，存储到另一 Bucket |
 | **IAM Access Analyzer for S3** | 自动检测意外暴露给外部账户或公网的 Bucket |
-| **Amazon Macie** | 使用机器学习自动发现 S3 中的敏感数据（PII、密钥等）并评估风险 |
-| **GuardDuty S3 Protection** | 检测异常 API 调用模式，识别潜在的凭证泄露或恶意访问 |
+| **[[Amazon Macie]]** | 使用机器学习自动发现 S3 中的敏感数据（PII、密钥等）并评估风险，完整能力见 [[Amazon Macie]] 独立笔记 |
+| **[[Amazon GuardDuty]] S3 Protection** | 检测异常 API 调用模式，识别潜在的凭证泄露或恶意访问 |
 
 ---
 
@@ -198,7 +198,7 @@ S3 提供账户级和 Bucket 级的"公共访问阻止"开关，**独立于**任
 ├── "监管要求对象在保留期内任何人都不能删除" → Object Lock 合规模式
 ├── "内部场景允许特殊权限人员紧急删除" → Object Lock 治理模式
 ├── "防止误删除关键数据版本" → MFA Delete
-└── "自动发现存储的敏感数据（PII）" → Amazon Macie
+└── "自动发现存储的敏感数据（PII）" → [[Amazon Macie]]
 ```
 
 ---
@@ -211,5 +211,5 @@ S3 提供账户级和 Bucket 级的"公共访问阻止"开关，**独立于**任
 4. **对合规数据启用 Object Lock 合规模式**：确保保留期内数据不可篡改
 5. **敏感数据场景启用 SSE-KMS 并配合 S3 Bucket Keys**：兼顾审计能力与成本
 6. **跨账户访问优先选择 IAM 角色 AssumeRole**：比 Bucket Policy 更利于审计和临时权限管理
-7. **启用 CloudTrail 数据事件 + Macie**：对存放敏感数据的 Bucket 做持续的访问审计和内容扫描
+7. **启用 CloudTrail 数据事件 + [[Amazon Macie]]**：对存放敏感数据的 Bucket 做持续的访问审计和内容扫描
 8. **定期运行 IAM Access Analyzer for S3**：主动发现意外的公开或跨账户暴露

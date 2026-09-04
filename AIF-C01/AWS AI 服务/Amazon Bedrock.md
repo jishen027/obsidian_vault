@@ -121,18 +121,18 @@
 
 > **AgentCore**（2025-07 预览，2025-10 GA）**不是 Bedrock Agents 的简单更名，而是彻底的重新架构**——Agents Classic 是单智能体框架 + 基础工具调用，AgentCore 支持构建**多智能体系统**，智能体之间可共享记忆、委派任务，并通过统一网关路由。
 
-| AgentCore 组件 | 说明 |
-|----------------|------|
-| **Runtime（运行时）** | 托管的智能体执行环境 |
-| **Gateway（网关）** | 统一网关，路由多智能体间的调用和协作 |
-| **Memory（记忆）** | 跨会话/跨智能体共享的记忆能力 |
-| **Identity（身份管理）** | 智能体身份和权限管理 |
-| **Policy Engine（策略引擎）** | 精确控制智能体可执行的操作（2026-03 GA） |
-| **Code Interpreter** | 智能体可执行代码完成任务 |
-| **Browser Tool** | 智能体可操作浏览器完成网页任务 |
-| **Managed Harness（托管工具集）** | 处理智能体工作负载的部署、伸缩、安全，是 AgentCore 中**最接近 Agents Classic 托管体验**的组件（2026-04 新增） |
-| **Agent Registry / 多智能体编排** | 管理和编排复杂的多智能体流水线 |
-| **Evaluations & Observability** | 智能体评估和可观测性工具 |
+| AgentCore 组件                    | 说明                                                                         |
+| ------------------------------- | -------------------------------------------------------------------------- |
+| **Runtime（运行时）**                | 托管的智能体执行环境                                                                 |
+| **Gateway（网关）**                 | 统一网关，路由多智能体间的调用和协作                                                         |
+| **Memory（记忆）**                  | 跨会话/跨智能体共享的记忆能力                                                            |
+| **Identity（身份管理）**              | 智能体身份和权限管理                                                                 |
+| **Policy Engine（策略引擎）**         | 精确控制智能体可执行的操作（2026-03 GA）                                                  |
+| **Code Interpreter**            | 智能体可执行代码完成任务                                                               |
+| **Browser Tool**                | 智能体可操作浏览器完成网页任务                                                            |
+| **Managed Harness（托管工具集）**      | 处理智能体工作负载的部署、伸缩、安全，是 AgentCore 中**最接近 Agents Classic 托管体验**的组件（2026-04 新增） |
+| **Agent Registry / 多智能体编排**     | 管理和编排复杂的多智能体流水线                                                            |
+| **Evaluations & Observability** | 智能体评估和可观测性工具                                                               |
 
 > **考试陷阱**：题目若问"Bedrock Agents 和 AgentCore 是什么关系" → **AgentCore 并非 Agents 的改名，而是架构上的全面升级**（单智能体 → 多智能体协作系统）；题目强调"新建智能体应用" → 优先考虑 **AgentCore**（Agents Classic 已停止新客户接入）；题目描述"已有 Agents Classic 部署，评估迁移" → 使用 **Import-Agent 工具**转换为 LangGraph 实现。
 

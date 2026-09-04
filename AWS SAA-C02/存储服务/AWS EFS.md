@@ -89,7 +89,7 @@
 
 - 实例通过 **[[VPC]]** 内部连接 EFS，流量不经过公网
 - 通过 **EFS 挂载点 (Mount Target)** 在子网中暴露 NFS 端点
-- 支持 **跨 VPC 挂载**：使用 VPC Peering 或 Transit Gateway 实现
+- 支持 **跨 VPC 挂载**：使用 [[VPC Peering]] 或 Transit Gateway 实现
 - 支持 **混合云架构**：通过 [[AWS DataSync]] 或 **EFS Access Points** 实现本地与云端的文件同步
 
 ### 网络安全

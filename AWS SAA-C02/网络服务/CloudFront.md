@@ -2,7 +2,7 @@
 
 > **Amazon CloudFront** 是 AWS 的全球内容分发网络（CDN），通过遍布全球的边缘节点（Edge Locations）缓存内容，为用户提供低延迟、高传输速度的静态与动态内容分发。
 >
-> 相关文档：[[S3]] | [[AWS Load Balance]] | [[Route 53 DNS]] | [[IAM]]
+> 相关文档：[[S3]] | [[AWS Load Balance]] | [[Route 53 DNS]] | [[IAM]] | [[AWS WAF]] | [[AWS Shield]] | [[AWS Certificate Manager (ACM)]]
 
 ---
 
@@ -90,18 +90,18 @@
 ### 传输加密（HTTPS/ACM）
 
 - 在边缘节点部署 SSL/TLS 证书，实现用户到边缘节点的 HTTPS 加密
-- **考试陷阱**：为 CloudFront 使用 AWS Certificate Manager（ACM）颁发或导入第三方证书时，证书**必须位于 us-east-1（N. Virginia）区域**，无论分发服务的用户在哪个地理区域，否则证书不会出现在 CloudFront 的证书选择列表中
+- **考试陷阱**：为 CloudFront 使用 **[[AWS Certificate Manager (ACM)]]** 颁发或导入第三方证书时，证书**必须位于 us-east-1（N. Virginia）区域**，无论分发服务的用户在哪个地理区域，否则证书不会出现在 CloudFront 的证书选择列表中；完整的证书类型、验证方式、自动续期机制见 [[AWS Certificate Manager (ACM)]] 独立笔记
 
-### DDoS 防护（AWS Shield）
+### DDoS 防护（[[AWS Shield]]）
 
 | 层级 | 说明 |
 |------|------|
 | **Standard** | 所有 CloudFront 用户默认自动开启，免费防御第 3/4 层攻击（如 SYN 洪水） |
-| **Advanced** | 额外付费订阅，提供第 7 层攻击防护（如 HTTP Flood）、实时攻击可视化、DDoS 响应团队（DRT）支持，并附带费用保护 |
+| **Advanced** | 额外付费订阅，提供第 7 层攻击防护（如 HTTP Flood）、实时攻击可视化、DDoS 响应团队（DRT）支持，并附带费用保护，完整能力见 [[AWS Shield]] 独立笔记 |
 
 ### WAF 集成
 
-- 在 CloudFront 边缘层部署 **AWS WAF**，可拦截 SQL 注入、跨站脚本（XSS）等攻击，在流量到达源站之前完成过滤
+- 在 CloudFront 边缘层部署 **[[AWS WAF]]**，可拦截 SQL 注入、跨站脚本（XSS）等攻击，在流量到达源站之前完成过滤，完整规则类型、托管规则组等详见 [[AWS WAF]] 独立笔记
 - WAF 规则可基于 IP 黑白名单、地理位置、速率限制（Rate-based Rule）等条件精细过滤
 
 ---
@@ -150,7 +150,7 @@
 | **视频点播/直播** | MediaPackage/MediaStore + CloudFront |
 | **全球用户高速上传** | S3 Transfer Acceleration（非 CloudFront 分发） |
 | **多语言/个性化网站** | CloudFront 自定义缓存键（Header/Cookie/Query String） |
-| **抵御 Web 攻击** | CloudFront + AWS WAF + Shield Advanced |
+| **抵御 Web 攻击** | CloudFront + [[AWS WAF]] + [[AWS Shield]] Advanced |
 
 ---
 
@@ -160,10 +160,10 @@
 
 1. **定位**：全球 CDN，通过边缘节点缓存降低延迟并减轻源站负载
 2. **OAC 优于 OAI**：新架构应使用 OAC，OAI 是仍可用的遗留机制
-3. **证书区域限制**：CloudFront 使用的 ACM 证书必须在 us-east-1 区域
+3. **证书区域限制**：CloudFront 使用的 [[AWS Certificate Manager (ACM)]] 证书必须在 us-east-1 区域
 4. **默认仅按 URL 缓存**：需要按语言/用户区分内容时必须显式配置缓存键（Query String/Cookie/Header）
 5. **缓存键维度增多会降低命中率**：需要在个性化和缓存效率之间权衡
-6. **Shield Standard 默认免费开启**，Advanced 需额外付费订阅并提供 7 层防护
+6. **[[AWS Shield]] Standard 默认免费开启**，Advanced 需额外付费订阅并提供 7 层防护
 7. **CloudFront ≠ S3 Transfer Acceleration**：前者是下行内容分发，后者是 S3 桶级别的上传加速
 8. **失效请求收费**：优先用带版本号的文件名代替频繁 Invalidation
 9. **多源 + 多缓存行为**：可按路径模式将流量路由到不同源站（S3/ALB 混合架构）
@@ -178,8 +178,8 @@
 ├── "多语言网站，同一 URL 需返回不同语言内容" → 自定义缓存键（Header/Cookie/Query String）
 ├── "证书导入后 CloudFront 找不到" → 检查证书是否在 us-east-1 区域
 ├── "源站内容已更新，边缘节点仍返回旧内容" → 发起 Invalidation，或改用带版本号文件名
-├── "需要防御 SQL 注入/XSS" → CloudFront + AWS WAF
-├── "需要 7 层 DDoS 防护和专家支持" → AWS Shield Advanced
+├── "需要防御 SQL 注入/XSS" → CloudFront + [[AWS WAF]]
+├── "需要 7 层 DDoS 防护和专家支持" → [[AWS Shield]] Advanced
 ├── "全球用户需要更快地向同一 S3 Bucket 上传大文件" → S3 Transfer Acceleration（非 CloudFront）
 └── "希望降低边缘节点覆盖成本，用户集中在北美/欧洲" → Price Class 100
 ```
@@ -192,8 +192,8 @@
 2. **S3 源启用 Block Public Access**：配合 OAC 确保内容只能经由 CloudFront 访问
 3. **按需自定义缓存键**：仅将真正影响内容差异的参数纳入缓存键，避免命中率无谓下降
 4. **静态资源使用版本化文件名**：减少对 Invalidation 的依赖，降低成本
-5. **ACM 证书统一在 us-east-1 申请**：避免证书列表中找不到目标证书的问题
+5. **[[AWS Certificate Manager (ACM)]] 证书统一在 us-east-1 申请**：避免证书列表中找不到目标证书的问题
 6. **启用压缩**：同时提升性能并降低流量费用
 7. **多源架构按路径拆分缓存行为**：静态内容走 S3，动态内容走 ALB，各自应用最优缓存策略
-8. **叠加 WAF + Shield Advanced**：面向公网的关键业务应在边缘层构筑多层防御
+8. **叠加 [[AWS WAF]] + [[AWS Shield]] Advanced**：面向公网的关键业务应在边缘层构筑多层防御
 9. **合理选择 Price Class**：用户地域集中时降低价格类别以节省成本

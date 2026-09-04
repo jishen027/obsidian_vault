@@ -2,7 +2,7 @@
 
 > **Elastic Load Balancing (ELB)** 是 AWS 的托管负载均衡服务，充当流量的"指挥官"，将请求分发到健康的后端资源，并与 [[Auto Scaling]] 紧密集成实现弹性扩展。
 >
-> 相关文档：[[Auto Scaling]] | [[EC2]] | [[Security Group]] | [[VPC]]
+> 相关文档：[[Auto Scaling]] | [[EC2]] | [[Security Group]] | [[VPC]] | [[AWS Certificate Manager (ACM)]]
 
 ---
 
@@ -41,7 +41,7 @@
 | **深入健康检查** | 针对目标组执行 HTTP 健康检查，可检查特定响应代码（通常 200-499），未通过检查的实例自动停止接收流量 |
 | **深度集成 Auto Scaling** | Auto Scaling 启动新实例时自动注册到 ALB 目标组 |
 | **容器化支持** | 原生支持 [[ECS]] 等容器化应用，可灵活管理**动态端口映射** |
-| **SSL/TLS 卸载** | 在 ALB 上集中管理加密证书（通过 **AWS Certificate Manager**），减轻后端服务器计算负担（详见[[#SSL/TLS 与 SNI (Server Name Indication)]]） |
+| **SSL/TLS 卸载** | 在 ALB 上集中管理加密证书（通过 **[[AWS Certificate Manager (ACM)]]**），减轻后端服务器计算负担（详见[[#SSL/TLS 与 SNI (Server Name Indication)]]） |
 | **多证书支持 (SNI)** | 通过 **SNI (Server Name Indication)** 在同一监听器上托管多个域名证书，无需多个 ALB |
 
 ### 目标组支持类型：ALB 目标组可以注册哪些类型的目标
@@ -308,9 +308,9 @@ ELB 通过 **Cookie** 实现粘性会话。最常用、也是最简单的方式�
 
 > **考试要点**：题目描述"需要在**同一个**负载均衡器上托管多个域名的 SSL/TLS 证书，且不想创建多个负载均衡器" → 答案是 **ALB 或 NLB**（利用 SNI），**不是 CLB**。
 
-### 证书管理：AWS Certificate Manager (ACM)
+### 证书管理：[[AWS Certificate Manager (ACM)]]
 
-- 负载均衡器的证书通过 **AWS Certificate Manager (ACM)** 集中签发、部署和**自动续期**，无需手动管理证书生命周期
+- 负载均衡器的证书通过 **[[AWS Certificate Manager (ACM)]]** 集中签发、部署和**自动续期**，无需手动管理证书生命周期，完整的证书类型、验证方式等见 [[AWS Certificate Manager (ACM)]] 独立笔记
 - ACM 颁发的公有证书**免费**，可直接绑定到 ALB/NLB/CLB 的 HTTPS/TLS 监听器
 - 也支持**导入第三方证书**（如自购的商业证书）到 ACM 后再绑定到负载均衡器
 - 证书集中托管在负载均衡器层，后端实例无需处理加解密运算，也无需分发/更新证书
@@ -372,5 +372,5 @@ ELB 通过 **Cookie** 实现粘性会话。最常用、也是最简单的方式�
 4. **开启跨可用区负载均衡**：避免因 AZ 实例数量不均导致负载倾斜（注意 NLB 的额外费用）
 5. **合理配置健康检查阈值**：避免过于敏感（误判）或过于迟钝（故障恢复慢）
 6. **设置合理的注销延迟**：确保缩容/部署更新时不中断用户请求
-7. **集中管理证书**：使用 AWS Certificate Manager 简化证书轮换和多域名支持；多域名场景优先用 ALB/NLB 的 SNI，而非拆分多个负载均衡器
+7. **集中管理证书**：使用 [[AWS Certificate Manager (ACM)]] 简化证书轮换和多域名支持；多域名场景优先用 ALB/NLB 的 SNI，而非拆分多个负载均衡器
 8. **淘汰 CLB**：将遗留的 Classic Load Balancer 迁移到 ALB/NLB

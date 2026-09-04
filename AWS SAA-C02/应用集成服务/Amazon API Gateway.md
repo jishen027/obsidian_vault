@@ -2,7 +2,7 @@
 
 > **Amazon API Gateway** 是一种完全托管的服务，用于创建、发布、维护、监控和保护 REST、HTTP 和 WebSocket API。它是构建 API 驱动的微服务架构和 Serverless 应用的核心服务。
 >
-> 相关文档：[[EC2]] | [[AWS Lambda]] | [[CloudWatch]] | [[DynamoDB]] | [[S3]] | [[Cognito]] | [[VPC]]
+> 相关文档：[[EC2]] | [[AWS Lambda]] | [[CloudWatch]] | [[DynamoDB]] | [[S3]] | [[Cognito]] | [[VPC]] | [[AWS WAF]] | [[AWS Shield]]
 
 ---
 
@@ -144,8 +144,8 @@
 
 | 安全特性 | 说明 |
 |---------|------|
-| **DDoS 保护** | 与 AWS Shield 集成 |
-| **WAF 集成** | 与 AWS WAF 集成，防止 SQL 注入、XSS 等 |
+| **DDoS 保护** | 与 [[AWS Shield]] 集成 |
+| **WAF 集成** | 与 [[AWS WAF]] 集成，防止 SQL 注入、XSS 等 |
 | **TLS 加密** | 传输中数据加密 |
 | **VPC Link** | 私有后端访问，不暴露公网 |
 | **速率限制** | 限制请求频率，防止滥用 |
@@ -272,7 +272,7 @@
 4. **JWT/OIDC**：API Gateway 原生支持，无需 Lambda
 5. **VPC Link**：访问 VPC 内私有资源
 6. **速率限制**：防止 API 滥用
-7. **WAF 集成**：防止 Web 攻击
+7. **[[AWS WAF]] 集成**：防止 Web 攻击
 8. **Stage 和部署**：环境隔离和版本管理
 9. **Lambda 集成**：Serverless 架构核心
 10. **CloudWatch 监控**：延迟、错误数、调用次数
@@ -293,4 +293,4 @@
 ├── "API 只能被公司内部 VPC 访问，不能暴露公网" → Private 端点类型
 ├── "前端调用报 CORS 错误，但 curl/Postman 正常" → 在 API Gateway 启用 CORS
 ├── "需要按不同客户分别限流/计量调用次数" → Usage Plan + API Key
-└── "需要防止 DDoS/SQL 注入" → WAF 集成
+└── "需要防止 DDoS/SQL 注入" → [[AWS WAF]] 集成
