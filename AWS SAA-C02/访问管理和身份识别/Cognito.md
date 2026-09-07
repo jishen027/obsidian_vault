@@ -2,7 +2,7 @@
 
 > **Amazon Cognito** 是 AWS 安全与身份体系中专门为**移动和 Web 应用程序**设计的身份管理服务，通过用户池和身份池分别解决终端用户的**身份验证（Authentication）**和**授权（Authorization）**问题，让应用无需自建用户系统。
 >
-> 相关文档：[[IAM]] | [[AWS Directory Service]] | [[Amazon API Gateway]] | [[S3]] | [[DynamoDB]] | [[VPC]]
+> 相关文档：[[IAM]] | [[AWS Directory Service]] | [[Amazon API Gateway]] | [[S3]] | [[DynamoDB]] | [[VPC]] | [[AWS Amplify]]
 
 ---
 
@@ -79,6 +79,7 @@ Cognito 通过两个相对独立又可协同工作的组件，分别解决**身�
 | **社交账号一键登录** | 用户池 + Google/Facebook/Apple 联合登录 |
 | **允许匿名访客临时访问部分资源** | 身份池的未验证身份角色 |
 | **企业员工访问 AWS 控制台/API** | 改用 [[IAM]]（Cognito 面向的是应用终端用户，而非企业内部员工） |
+| **前端/移动应用希望快速接入认证，不想直接调用 Cognito SDK 细节** | **[[AWS Amplify]]** 的 Auth 类别封装了对 Cognito 的调用，完整能力见 [[AWS Amplify]] 独立笔记 |
 
 ---
 

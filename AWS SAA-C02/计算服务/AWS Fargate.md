@@ -2,7 +2,7 @@
 
 > **AWS Fargate** 是专为容器设计的**无服务器（Serverless）计算引擎**，是 [[ECS]] 和 [[EKS]] 共用的两种运行模式之一，让用户无需管理任何底层服务器即可直接运行容器。
 >
-> 相关文档：[[ECS]] | [[EKS]] | [[EC2]] | [[Auto Scaling]] | [[AWS Lambda]]
+> 相关文档：[[ECS]] | [[EKS]] | [[EC2]] | [[Auto Scaling]] | [[AWS Lambda]] | [[AWS Batch]] | [[Cost Explorer]]
 
 ---
 
@@ -52,7 +52,7 @@
 | 手段 | 说明 |
 |------|------|
 | **Fargate Spot（容量提供程序）** | 使用 AWS 闲置容量运行 Fargate 任务，价格最高可降低 **70%**，适合可容忍中断的批处理/无状态任务 |
-| **Compute Savings Plans** | 承诺 1-3 年的使用量，可比按需价格最高节省 **66%**，适合长期稳定运行的 Fargate 负载 |
+| **Compute Savings Plans** | 承诺 1-3 年的使用量，可比按需价格最高节省 **66%**，适合长期稳定运行的 Fargate 负载，是否该购买可参考 **[[Cost Explorer]]** 的购买建议 |
 
 > **考试陷阱**：**Fargate Spot 与 EC2 Spot 实例是两套独立的竞价容量机制**——Fargate Spot 作用于 Fargate 任务层面，EC2 Spot 实例作用于 ECS EC2 模式下的底层实例层面，两者不能混用概念。
 

@@ -2,7 +2,7 @@
 
 > **Amazon EventBridge** 是无服务器的**事件总线（Event Bus）**服务，用于构建**事件驱动架构（Event-Driven Architecture）**——接收来自 AWS 服务、自建应用、SaaS 合作伙伴的事件，基于**事件模式（Event Pattern）**匹配规则并路由到多个目标（Lambda、Step Functions、SQS 等），实现应用组件之间的松耦合集成。**前身为 CloudWatch Events**，在其基础上扩展了自定义事件总线、Schema Registry、第三方 SaaS 集成等能力。
 >
-> 相关文档：[[CloudWatch]] | [[AWS Lambda]] | [[SQS]] | [[SNS]] | [[AWS Step Functions]] | [[Amazon Kinesis]] | [[Amazon MSK]] | [[IAM]]
+> 相关文档：[[CloudWatch]] | [[AWS Lambda]] | [[SQS]] | [[SNS]] | [[AWS Step Functions]] | [[Amazon Kinesis]] | [[Amazon MSK]] | [[IAM]] | [[Amazon AppFlow]]
 
 ---
 
@@ -33,7 +33,7 @@
 |------|------|
 | **默认事件总线（Default Event Bus）** | 自动接收账户内 **AWS 服务发出的事件**（如 EC2 状态变化、S3 对象创建），每个账户自带一个 |
 | **自定义事件总线（Custom Event Bus）** | 供**自建应用**发布自定义业务事件，需要显式创建，与默认总线相互隔离 |
-| **合作伙伴事件总线（Partner Event Bus）** | 接收来自第三方 SaaS 合作伙伴（如 Zendesk、Datadog、Salesforce 等）的事件，无需自行开发集成 |
+| **合作伙伴事件总线（Partner Event Bus）** | 接收来自第三方 SaaS 合作伙伴（如 Zendesk、Datadog、Salesforce 等）的**离散事件通知**，无需自行开发集成——若需要的是**批量同步 SaaS 应用的业务数据记录**（而非单个事件通知），应改用 **[[Amazon AppFlow]]**，两者的边界详见 [[Amazon AppFlow]] 独立笔记 |
 
 - **跨账户/跨区域事件共享**：可通过**资源策略（Resource Policy）**授权其他账户向本账户的事件总线发布事件，实现跨账户事件聚合（如安全事件集中到审计账户）
 
@@ -112,6 +112,7 @@
 | **AWS 资源状态变化时自动触发响应**（如 EC2 状态变化通知运维） | 默认事件总线 + 事件模式规则 + Lambda/SNS 目标 |
 | **多个下游系统需要按不同条件消费同一类业务事件** | 自定义事件总线 + 多条事件模式规则路由到不同目标 |
 | **集成第三方 SaaS 事件（如 Zendesk 工单创建）** | 合作伙伴事件总线 |
+| **批量/定期同步 SaaS 应用的业务数据记录到 S3/Redshift** | 改用 [[Amazon AppFlow]]（而非 EventBridge） |
 | **简化单一数据源到单一目标的过滤/转换集成** | EventBridge Pipes |
 | **海量、细粒度的定时任务调度（按租户/按用户）** | EventBridge Scheduler |
 | **故障恢复期间重新处理丢失的事件** | Archive & Replay |
@@ -142,6 +143,7 @@
 ├── "AWS 资源状态变化需要触发自动化响应" → EventBridge 默认事件总线 + 事件模式规则
 ├── "自建应用需要发布业务事件供多个下游系统按需消费" → EventBridge 自定义事件总线
 ├── "需要集成第三方 SaaS 平台的事件通知" → EventBridge 合作伙伴事件总线
+├── "需要批量/定期同步 SaaS 应用的业务数据到 S3/Redshift" → 改用 Amazon AppFlow（而非 EventBridge）
 ├── "只需将消息广播给所有订阅者，无需按内容路由" → 改用 SNS（而非 EventBridge）
 ├── "需要简化单一流数据源到单一目标的过滤转换" → EventBridge Pipes
 ├── "需要可靠调度数百万级的细粒度定时任务" → EventBridge Scheduler（而非常规计划规则）

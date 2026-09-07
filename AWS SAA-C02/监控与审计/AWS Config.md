@@ -2,7 +2,7 @@
 
 > **AWS Config** 在 AWS 的管理和监控体系中扮演"资源时间机器"的角色，持续发现、记录 AWS 资源的**配置状态**及其变化历史，并通过**规则（Rule）**自动评估配置是否符合预定义基准，回答"**资源配置长什么样、如何随时间变化**"。与专注"资源运行得怎么样"的 [[CloudWatch]]、专注"谁做了什么"的 [[CloudTrail]] 共同构成 AWS 管理和监控三件套。
 >
-> 相关文档：[[CloudTrail]] | [[CloudWatch]] | [[SNS]] | [[IAM]] | [[S3]] | [[AWS CloudFormation]] | [[AWS Organizations]] | [[AWS Systems Manager]]
+> 相关文档：[[CloudTrail]] | [[CloudWatch]] | [[SNS]] | [[IAM]] | [[S3]] | [[AWS CloudFormation]] | [[AWS Organizations]] | [[AWS Systems Manager]] | [[AWS Well-Architected Framework]] | [[AWS Trusted Advisor]]
 
 ---
 
@@ -15,8 +15,9 @@
 | **AWS Config** | 资源配置长什么样、如何变化？ | 配置项（Configuration Item）快照 | 配置合规、变更管理、关系分析 |
 | [[CloudTrail]] | 谁在什么时候做了什么？ | API 调用事件日志 | 审计、安全取证、合规追溯 |
 | [[CloudWatch]] | 资源运行得怎么样？ | 指标（Metrics）、日志（Logs） | 性能监控、告警、自动化响应 |
+| **[[AWS Trusted Advisor]]** | 是否违反 AWS 通用最佳实践？ | 固定检查项的红/黄/绿状态 | 快速体检，规则**不可自定义**，与 Config 的**自定义**规则+历史追溯形成对比，完整边界见 [[AWS Trusted Advisor]] 独立笔记 |
 
-> **考试陷阱**：三者常在选项中一起出现——题目问"这个安全组上周的配置是什么样、什么时候被修改成现在这样"选 **AWS Config**；问"谁执行了这次修改"选 CloudTrail；问"这个资源当前运行状态如何"选 CloudWatch。CloudTrail 记录**操作行为**，AWS Config 记录这些操作**导致的最终配置状态**，两者结合可提供完整的操作与状态溯源。
+> **考试陷阱**：这几者常在选项中一起出现——题目问"这个安全组上周的配置是什么样、什么时候被修改成现在这样"选 **AWS Config**；问"谁执行了这次修改"选 CloudTrail；问"这个资源当前运行状态如何"选 CloudWatch；问"账户是否存在明显违反通用最佳实践的配置，且不需要自定义规则"选 **[[AWS Trusted Advisor]]**。CloudTrail 记录**操作行为**，AWS Config 记录这些操作**导致的最终配置状态**，两者结合可提供完整的操作与状态溯源；Trusted Advisor 则是不依赖自定义规则的**开箱即用**体检工具。
 
 ---
 
@@ -47,9 +48,9 @@
 | 规则类型 | 评估时机 | 行为 |
 |---------|---------|------|
 | **检测型规则（Detective）** | 资源**部署后**评估 | 持续评估已存在资源的配置是否合规，发现偏离基准的情况 |
-| **主动型规则（Proactive）** | 资源**部署前**评估 | 在资源实际创建前评估其配置（如结合 [[AWS CloudFormation]] 部署前检查），判定合规/非合规，但**不会阻止资源部署**，仍需配合其他机制（如 CloudFormation Hooks）才能真正拦截 |
+| **主动型规则（Proactive）** | 资源**部署前**评估 | 在资源实际创建前评估其配置（如结合 [[AWS CloudFormation]] 部署前检查），判定合规/非合规，但**不会阻止资源部署**，仍需配合其他机制（如 [[AWS CloudFormation#CloudFormation Hooks（部署前拦截，考试提示）|CloudFormation Hooks]]）才能真正拦截 |
 
-> **考试陷阱**：**主动型规则不会自动阻止不合规资源的创建**——它只是提前给出合规判定结果；若题目要求"在资源创建前就拦截不合规的部署"，还需要额外的强制执行机制（如 CloudFormation Hooks 或 [[AWS Organizations]] 的服务控制策略 SCP），而不能仅依赖 Config 主动型规则本身。
+> **考试陷阱**：**主动型规则不会自动阻止不合规资源的创建**——它只是提前给出合规判定结果；若题目要求"在资源创建前就拦截不合规的部署"，还需要额外的强制执行机制（如 [[AWS CloudFormation#CloudFormation Hooks（部署前拦截，考试提示）|CloudFormation Hooks]] 或 [[AWS Organizations]] 的服务控制策略 SCP），而不能仅依赖 Config 主动型规则本身。
 
 ### 合规修复（Remediation）
 
@@ -135,7 +136,7 @@
 ├── "需要追溯资源过去某个时间点的配置状态" → 配置历史
 ├── "需要评估修改某资源会影响哪些关联资源" → 关系分析
 ├── "需要持续检测资源是否符合安全/合规基准" → 检测型 Config 规则
-├── "需要在资源创建前评估合规性" → 主动型 Config 规则（+ CloudFormation Hooks 等强制拦截机制）
+├── "需要在资源创建前评估合规性" → 主动型 Config 规则（+ [[AWS CloudFormation#CloudFormation Hooks（部署前拦截，考试提示）|CloudFormation Hooks]] 等强制拦截机制）
 ├── "发现非合规资源后希望自动修复" → Config 规则 + SSM Automation 自动修复
 ├── "多账户组织需要统一部署相同的合规规则集" → Conformance Packs + [[AWS Organizations]]
 ├── "需要中心化查看多账户多区域的合规状态" → 聚合器（Aggregator）
@@ -152,5 +153,5 @@
 4. **多账户环境使用 Conformance Packs + [[AWS Organizations]]**：统一治理策略，避免各账户配置基准不一致
 5. **搭配聚合器实现集中式合规视图**：中心治理团队无需逐个账户排查，提升治理效率
 6. **变更前善用关系分析评估影响范围**：尤其是安全组、IAM 角色等被广泛引用的核心资源
-7. **主动型规则不能替代真正的部署拦截机制**：需要强制阻止不合规部署时，应结合 CloudFormation Hooks 或 [[AWS Organizations]] SCP 等机制
+7. **主动型规则不能替代真正的部署拦截机制**：需要强制阻止不合规部署时，应结合 [[AWS CloudFormation#CloudFormation Hooks（部署前拦截，考试提示）|CloudFormation Hooks]] 或 [[AWS Organizations]] SCP 等机制
 8. **结合 CloudTrail 构建完整的变更溯源链路**：仅有配置状态历史不足以确定责任人，需要 CloudTrail 的操作记录补全"谁做的"这一环

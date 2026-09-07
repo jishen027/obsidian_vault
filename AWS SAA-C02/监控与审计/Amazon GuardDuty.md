@@ -2,7 +2,7 @@
 
 > **Amazon GuardDuty** 是全托管的**智能威胁检测**服务，持续分析 [[CloudTrail]] 事件、[[VPC Flow Logs|VPC 流日志]]、DNS 日志等多种数据源，结合机器学习、异常检测和威胁情报，自动识别账户内的**凭证被盗、恶意侦察、恶意软件、异常 API 调用**等安全威胁，无需部署或管理任何检测基础设施。
 >
-> 相关文档：[[CloudTrail]] | [[VPC]] | [[VPC Flow Logs]] | [[AWS Config]] | [[AWS WAF]] | [[AWS Shield]] | [[IAM]] | [[AWS Organizations]] | [[EKS]] | [[Amazon Inspector]] | [[Amazon Macie]] | [[AWS Backup]]
+> 相关文档：[[CloudTrail]] | [[VPC]] | [[VPC Flow Logs]] | [[AWS Config]] | [[AWS WAF]] | [[AWS Shield]] | [[IAM]] | [[AWS Organizations]] | [[EKS]] | [[Amazon Inspector]] | [[Amazon Macie]] | [[AWS Backup]] | [[AWS Trusted Advisor]]
 
 ---
 
@@ -24,6 +24,7 @@
 | [[AWS WAF]] / [[AWS Shield]] | 如何**拦截**已知攻击模式/流量？ | 实时流量过滤 | 主动防御，GuardDuty 是**检测**而非拦截 |
 | **[[Amazon Inspector]]** | 资源本身存在哪些**已知漏洞**？ | 软件 CVE、网络可达性、代码缺陷 | 评估已知弱点，与 GuardDuty 的"实时攻击检测"是漏洞管理生命周期中互补的前后阶段，完整对比见 [[Amazon Inspector]] 独立笔记 |
 | **[[Amazon Macie]]** | 我的**数据内容**有多敏感、暴露风险多大？ | S3 对象内容（PII、密钥等） | 数据安全维度，与 GuardDuty 的"行为威胁检测"互补，完整能力见 [[Amazon Macie]] 独立笔记 |
+| **[[AWS Trusted Advisor]]** | 安全相关配置是否符合最佳实践？ | 固定检查项（如根账户 MFA、安全组开放端口） | **静态配置检查**，与 GuardDuty 的**持续威胁行为检测**是不同维度，完整边界见 [[AWS Trusted Advisor]] 独立笔记 |
 
 > **考试陷阱**：**GuardDuty 是检测和告警，不是主动拦截**——题目描述"需要识别账户内是否存在被入侵的迹象、异常 API 调用" → **GuardDuty**；描述"需要主动拦截恶意流量/请求" → WAF/Shield/Security Group 等执行拦截的服务；描述"需要发现资源上是否存在已知 CVE/未打补丁的软件" → [[Amazon Inspector]]（评估弱点）而非 GuardDuty（检测攻击行为）；GuardDuty 发现威胁后通常需要**结合其他机制**（Lambda 自动化响应、安全团队介入）才能实际处置。
 

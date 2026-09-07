@@ -2,7 +2,7 @@
 
 > **AWS Site-to-Site VPN** 在 [[VPC]]（通过 [[Virtual Private Gateway]] 或 [[Transit Gateway]]）与本地数据中心（通过**[[Customer Gateway|客户网关 Customer Gateway, CGW]]**）之间，经**公共互联网**建立**加密的 IPsec 隧道**——相比需要数周部署周期的 [[Direct Connect]] 专线，VPN 可在**几分钟到几小时内**完成配置并投入使用，是"快速、加密、经济"的混合云连接方案。
 >
-> 相关文档：[[Virtual Private Gateway]] | [[Customer Gateway]] | [[Transit Gateway]] | [[Direct Connect]] | [[VPC]] | [[Route Table]] | [[VPC Peering]] | [[CIDR]]
+> 相关文档：[[Virtual Private Gateway]] | [[Customer Gateway]] | [[Transit Gateway]] | [[Direct Connect]] | [[VPC]] | [[Route Table]] | [[VPC Peering]] | [[CIDR]] | [[AWS Outposts]]
 
 ---
 

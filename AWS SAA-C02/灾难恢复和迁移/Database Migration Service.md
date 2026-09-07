@@ -2,7 +2,7 @@
 
 > **AWS Database Migration Service（DMS）**是全托管的数据库迁移服务，支持将数据库迁移到 AWS（或在 AWS 内部的数据库之间迁移），且**源数据库在迁移过程中通常可以继续对外提供服务**，最大限度降低停机时间。DMS 只负责**数据本身**的迁移和持续复制——当源和目标是**不同数据库引擎**（异构迁移）时，还需要搭配 **AWS Schema Conversion Tool（SCT）**先完成表结构、视图、存储过程等**模式（Schema）**层面的转换，两者分工明确、缺一不可。
 >
-> 相关文档：[[RDS]] | [[Aurora]] | [[Redshift]] | [[DynamoDB]] | [[S3]] | [[AWS DataSync]] | [[AWS Elastic Disaster Recovery]] | [[AWS Application Discovery Service]] | [[Disaster Recovery On AWS]]
+> 相关文档：[[RDS]] | [[Aurora]] | [[Redshift]] | [[DynamoDB]] | [[S3]] | [[AWS DataSync]] | [[Amazon AppFlow]] | [[AWS Elastic Disaster Recovery]] | [[AWS Application Discovery Service]] | [[Disaster Recovery On AWS]]
 
 ---
 

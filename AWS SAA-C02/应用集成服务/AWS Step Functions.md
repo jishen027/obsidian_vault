@@ -2,7 +2,7 @@
 
 > **AWS Step Functions** 是全托管的 **Serverless 工作流编排服务**，通过可视化的状态机（State Machine）协调多个 [[AWS Lambda]] 函数或其他 AWS 服务，按预定逻辑顺序、并行或条件分支执行，并自动处理重试、错误捕获和状态跟踪。
 >
-> 相关文档：[[AWS Lambda]] | [[Amazon SWF]] | [[SQS]] | [[SNS]] | [[DynamoDB]] | [[Amazon API Gateway]] | [[ECS]] | [[Amazon EventBridge]]
+> 相关文档：[[AWS Lambda]] | [[Amazon SWF]] | [[SQS]] | [[SNS]] | [[DynamoDB]] | [[Amazon API Gateway]] | [[ECS]] | [[Amazon EventBridge]] | [[AWS Batch]]
 
 ---
 
@@ -21,7 +21,7 @@
 ### 核心价值
 
 - **可视化工作流**：用 **Amazon States Language（ASL，一种 JSON 格式的状态机定义语言）**描述流程，控制台提供图形化的执行流程和实时状态可视化
-- **直接服务集成**：状态机可**直接调用超过 200 个 AWS 服务的 API**（如 DynamoDB、SNS、SQS、ECS、[[AWS Glue]]、[[Amazon SageMaker]]），无需为每个集成步骤都单独编写 Lambda 胶水代码
+- **直接服务集成**：状态机可**直接调用超过 200 个 AWS 服务的 API**（如 DynamoDB、SNS、SQS、ECS、**[[AWS Batch]]**、[[AWS Glue]]、[[Amazon SageMaker]]），无需为每个集成步骤都单独编写 Lambda 胶水代码——提交 [[AWS Batch]] 作业并等待其运行完成后再进入下一步骤，是这种"直接服务集成"最经典的批处理编排范例之一
 - **内置错误处理**：原生支持**重试（Retry）**和**捕获（Catch）**，无需在应用代码中手写异常处理逻辑
 - **自动状态跟踪**：每次执行自动记录完整的输入/输出和状态历史，便于审计和问题排查
 

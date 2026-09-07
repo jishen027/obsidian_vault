@@ -2,7 +2,7 @@
 
 > **Amazon EC2 (Elastic Compute Cloud)** 是 AWS 的核心计算服务，提供安全、可调整的虚拟服务器容量。它是 AWS 云中最基础和最常用的计算服务。
 >
-> 相关文档：[[EBS]] | [[AWS EFS]] | [[Security Group]] | [[Auto Scaling]] | [[IAM]] | [[CloudWatch]] | [[Disaster Recovery On AWS]]
+> 相关文档：[[EBS]] | [[AWS EFS]] | [[Security Group]] | [[Auto Scaling]] | [[IAM]] | [[CloudWatch]] | [[Disaster Recovery On AWS]] | [[AWS Batch]] | [[Cost Explorer]]
 
 ---
 
@@ -171,9 +171,11 @@ m5.large
 | 定价模式 | 灵活性 | 成本 | 适用场景 | 最小单位 |
 |---------|--------|------|---------|---------|
 | **On-Demand** | 最高 | 标准价格 | 短期、不可预测的工作负载 | 秒 |
-| **Spot** | 最低 | 最高 90% 折扣 | 容错性高的任务、批处理 | 秒 |
+| **Spot** | 最低 | 最高 90% 折扣 | 容错性高的任务、批处理（详见 [[AWS Batch]]） | 秒 |
 | **Reserved (RS)** | 低 | 最高 72% 折扣 | 长期稳定运行的应用 | 1 年/3 年 |
 | **Savings Plans** | 中 | 最高 66% 折扣 | 承诺特定金额的使用量 | 1 年/3 年 |
+
+> 是否该购买 Reserved Instance/Savings Plans，可参考 **[[Cost Explorer]]** 基于历史用量给出的购买建议和现有承诺的利用率/覆盖率报告
 
 ### On-Demand 详细说明
 
@@ -351,6 +353,38 @@ m5.large
 - **terminate（终止）**：`running` 或 `stopped` 状态均可触发，进入 `shutting-down → terminated`，为不可逆操作
 - **hibernate（休眠）**：`running → stopping → stopped`，但会将内存 (RAM) 数据保存到 EBS 根卷，下次启动时恢复内存状态，加快启动速度
 
+### 启动失败排查：pending → terminated（考试高频陷阱）
+
+> **实例从 `pending` 直接变为 `terminated`，说明请求已被接受、实例已经开始创建，但在完成引导前失败**——这与"请求本身被拒绝"是两类完全不同的故障，考试常用来混淆。
+
+#### 两类失败的本质区别
+
+| 失败类型 | 发生时机 | 是否会产生实例 ID / 进入 `pending` | 典型报错 |
+|---------|---------|------------------------------|---------|
+| **容量/配额类失败**（On-Demand 容量不足、区域实例数量已达上限） | **API 调用瞬间**，AWS 直接拒绝请求 | ❌ 不会——请求被拒绝，根本不存在实例 | `InsufficientInstanceCapacity`、`InstanceLimitExceeded` |
+| **底层存储类失败**（EBS 卷限额已满、快照损坏、加密卷 KMS 权限不足、Instance Store-backed AMI 缺少组件） | 实例**已进入 `pending`**，在挂载根卷/其他 EBS 卷阶段失败 | ✅ 会——实例已创建，随后终止 | 实例状态直接跳到 `terminated`，无明显 API 报错 |
+
+#### 常见"pending → terminated"原因（对应 [[EBS]]）
+
+| 原因 | 说明 |
+|------|------|
+| **已达 EBS 卷数量/容量限额** | 参见 [[EBS]] 中的区域级限制——账户在该区域的 EBS 卷数量或总容量已达上限，无法为新实例创建根卷 |
+| **EBS 快照损坏** | 用于创建根卷的快照（[[EBS]] 快照）数据损坏，卷无法从快照还原 |
+| **加密根卷但无 KMS 密钥权限** | 根卷已加密，但发起启动的 IAM 主体没有权限使用对应的 KMS 密钥解密 |
+| **Instance Store-backed AMI 缺少必要部件** | 基于 Instance Store 的 AMI 缺失 `image.part.xx` 等文件，无法完整加载镜像 |
+
+#### 判断口诀
+
+```
+选项描述的是"请求被拒绝/报错"（容量不足、达到实例数量上限）
+        → 不会进入 pending，直接被拒绝，不是本场景答案
+
+选项描述的是"实例已经在启动但没启动成功"（EBS 限额、快照损坏、KMS 权限、AMI 缺件）
+        → 会先进入 pending，随后终止，才是 "pending → terminated" 的真正原因
+```
+
+> 相关文档：EBS 区域限额与快照管理详见 [[EBS]]
+
 ### 启动和停止 vs 终止
 
 | 操作 | EBS 卷 | 公网 IP | 计费 | 适用场景 |
@@ -453,7 +487,7 @@ m5.large
 ```
 场景分析 → 选择 EC2 配置
 ├── "短期、不可预测" → On-Demand
-├── "容错性高、批处理" → Spot Instance
+├── "容错性高、批处理" → Spot Instance（大规模批处理作业调度见 [[AWS Batch]]）
 ├── "长期稳定运行" → Reserved Instance
 ├── "极致网络性能" → Cluster 置放群组
 ├── "高可用性" → Spread 置放群组 + 多 AZ

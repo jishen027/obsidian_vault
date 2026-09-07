@@ -2,7 +2,7 @@
 
 > **AWS CloudHSM** 提供**专用（Dedicated）、单租户**的硬件安全模块（HSM）设备，运行在客户自己的 [[VPC]] 内，密钥材料的生成、存储和密码学运算**完全由客户控制**——AWS 对密钥内容**没有任何访问权限或可见性**，满足最严格的合规要求（如需要证明密钥"仅由客户掌控"的行业监管场景）。
 >
-> 相关文档：[[KMS]] | [[AWS Certificate Manager (ACM)]] | [[VPC]] | [[IAM]] | [[RDS]] | [[EC2]] | [[Disaster Recovery On AWS]]
+> 相关文档：[[KMS]] | [[AWS Certificate Manager]] | [[VPC]] | [[IAM]] | [[RDS]] | [[EC2]] | [[Disaster Recovery On AWS]]
 
 ---
 

@@ -2,7 +2,7 @@
 
 > **AWS Lambda** 是无服务器（Serverless）计算的核心服务，让用户无需预置或管理任何服务器，只需上传代码，函数即可在事件触发时自动运行，并按实际执行时间计费。
 >
-> 相关文档：[[ECS]] | [[EKS]] | [[AWS Fargate]] | [[EC2]] | [[Amazon API Gateway]] | [[SQS]] | [[SNS]] | [[DynamoDB]] | [[IAM]] | [[CloudWatch]] | [[Amazon EventBridge]]
+> 相关文档：[[ECS]] | [[EKS]] | [[AWS Fargate]] | [[EC2]] | [[Amazon API Gateway]] | [[SQS]] | [[SNS]] | [[DynamoDB]] | [[IAM]] | [[CloudWatch]] | [[Amazon EventBridge]] | [[AWS Batch]] | [[AWS X-Ray]]
 
 ---
 
@@ -105,7 +105,7 @@
 |------|------|
 | **[[CloudWatch]] Logs** | 自动收集函数的标准输出/错误日志 |
 | **CloudWatch Metrics** | 调用次数、错误数、执行时长、节流次数等内置指标 |
-| **AWS X-Ray** | 分布式追踪，可视化函数在整个调用链路中的耗时分布，定位性能瓶颈 |
+| **[[AWS X-Ray]]** | 分布式追踪，可视化函数在整个调用链路中的耗时分布，定位性能瓶颈，完整能力见 [[AWS X-Ray]] 独立笔记 |
 
 ---
 
@@ -128,6 +128,7 @@
 | **图片/文件处理流水线** | S3 事件通知 → Lambda（缩略图生成、格式转换） |
 | **对延迟敏感的高频 API** | Lambda + 预置并发 |
 | **长期运行/执行时间可能超 15 分钟的任务** | 改用 [[AWS Fargate]]/[[ECS]]，而非 Lambda |
+| **计算量大、可能需要 GPU 的批处理任务** | 改用 **[[AWS Batch]]**（自带作业队列、优先级调度和依赖管理），而非拆分成多个 Lambda 调用 |
 
 ---
 
@@ -152,6 +153,7 @@
 场景分析 → 判断是否用 Lambda
 ├── "自动扩展 + 无需管理服务器 + 间歇性任务成本优化" → Lambda
 ├── "任务执行时间可能超过 15 分钟" → 改用 Fargate/ECS/EC2（而非 Lambda）
+├── "计算量大、可能需要 GPU 的批处理任务" → 改用 [[AWS Batch]]（而非 Lambda）
 ├── "函数执行缓慢，怀疑计算资源不足" → 调高内存分配（CPU 随内存线性增加）
 ├── "需要保证某函数不被其他函数抢占并发资源" → 预留并发（Reserved Concurrency）
 ├── "需要降低高频 API 的首次调用延迟（冷启动）" → 预置并发（Provisioned Concurrency）

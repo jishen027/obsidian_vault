@@ -2,7 +2,7 @@
 
 > **Amazon VPC (Virtual Private Cloud)** 让您能在 AWS 云中启动资源在您逻辑定义的虚拟网络中。它是 AWS 网络架构的核心服务，提供网络隔离、安全控制和灵活的网络配置。
 >
-> 相关文档：[[Security Group]] | [[NACL]] | [[S3]] | [[DynamoDB]] | [[VPC Peering]] | [[Virtual Private Gateway]] | [[Customer Gateway]] | [[ENI]] | [[Subnet]] | [[Route Table]] | [[NAT Gateway]] | [[Internet Gateway]] | [[NAT Instance]] | [[CIDR]] | [[VPC Endpoints]] | [[VPC Flow Logs]] | [[VPC Traffic Mirroring]] | [[Site to Site VPN]] | [[Transit Gateway]] | [[Direct Connect]]
+> 相关文档：[[Security Group]] | [[NACL]] | [[S3]] | [[DynamoDB]] | [[VPC Peering]] | [[Virtual Private Gateway]] | [[Customer Gateway]] | [[ENI]] | [[Subnet]] | [[Route Table]] | [[NAT Gateway]] | [[Internet Gateway]] | [[NAT Instance]] | [[CIDR]] | [[VPC Endpoints]] | [[VPC Flow Logs]] | [[VPC Traffic Mirroring]] | [[Site to Site VPN]] | [[Transit Gateway]] | [[Direct Connect]] | [[AWS Outposts]]
 
 ---
 
@@ -168,6 +168,17 @@
 | **适用场景** | 大规模数据传输、低延迟需求 |
 
 > 专用/托管连接类型、VIF、Direct Connect Gateway、LAG、高可用弹性模型等完整内容见 [[Direct Connect]] 独立笔记
+
+### [[AWS Outposts]]
+
+| 特性 | 说明 |
+|------|------|
+| **本质** | AWS 硬件物理部署在客户自有机房，其上的子网是**现有 VPC 的自然延伸** |
+| **本地网络访问** | 通过**本地网关（Local Gateway）**访问本地站点网络 |
+| **与父区域连接** | 依赖 Direct Connect/Site-to-Site VPN，用于控制平面操作 |
+| **适用场景** | 数据主权/合规要求数据留在本地，或需要对本地系统超低延迟 |
+
+> 与 Local Zones/Wavelength 的对比、支持的服务范围等完整内容见 [[AWS Outposts]] 独立笔记
 
 ---
 

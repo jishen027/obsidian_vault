@@ -1,8 +1,8 @@
 # Disaster Recovery on AWS - AWS 灾难恢复策略
 
-> **灾难恢复（Disaster Recovery, DR）**是指为应对**区域级重大故障**（自然灾害、区域性服务中断、大规模误操作）而提前准备的恢复方案，核心是在**成本**与**恢复速度**之间做权衡。AWS Well-Architected 框架定义了四种由轻到重的标准 DR 策略——**备份恢复（Backup & Restore）→ 引导恢复（Pilot Light）→ 温备份（Warm Standby）→ 多活（Multi-Site Active/Active）**——策略越靠后，**恢复越快、成本越高**。选择哪种策略完全取决于业务能接受的 **RTO（恢复时间目标）**和 **RPO（恢复点目标）**，而非"预算无限就无脑选最贵的"。
+> **灾难恢复（Disaster Recovery, DR）**是指为应对**区域级重大故障**（自然灾害、区域性服务中断、大规模误操作）而提前准备的恢复方案，核心是在**成本**与**恢复速度**之间做权衡。**[[AWS Well-Architected Framework]]**（可靠性支柱）定义了四种由轻到重的标准 DR 策略——**备份恢复（Backup & Restore）→ 引导恢复（Pilot Light）→ 温备份（Warm Standby）→ 多活（Multi-Site Active/Active）**——策略越靠后，**恢复越快、成本越高**。选择哪种策略完全取决于业务能接受的 **RTO（恢复时间目标）**和 **RPO（恢复点目标）**，而非"预算无限就无脑选最贵的"。
 >
-> 相关文档：[[AWS Elastic Disaster Recovery]] | [[AWS Backup]] | [[RDS]] | [[Aurora]] | [[DynamoDB]] | [[ElastiCache]] | [[Redshift]] | [[Amazon DocumentDB]] | [[Amazon Keyspaces]] | [[EBS]] | [[S3]] | [[S3 Glacier Archive]] | [[Route 53 DNS]] | [[EC2]] | [[Auto Scaling]] | [[KMS]] | [[AWS Secrets Manager]] | [[AWS CloudHSM]] | [[AWS Snowball]] | [[AWS Systems Manager]]
+> 相关文档：[[AWS Well-Architected Framework]] | [[AWS Elastic Disaster Recovery]] | [[AWS Backup]] | [[RDS]] | [[Aurora]] | [[DynamoDB]] | [[ElastiCache]] | [[Redshift]] | [[Amazon DocumentDB]] | [[Amazon Keyspaces]] | [[EBS]] | [[S3]] | [[S3 Glacier Archive]] | [[Route 53 DNS]] | [[EC2]] | [[Auto Scaling]] | [[KMS]] | [[AWS Secrets Manager]] | [[AWS CloudHSM]] | [[AWS Snowball]] | [[AWS Systems Manager]]
 
 ---
 

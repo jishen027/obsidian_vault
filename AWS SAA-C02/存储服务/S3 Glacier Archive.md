@@ -52,12 +52,14 @@
 
 ### 检索速度 vs 成本
 
-| 检索类型 | 完成时间 | 费用 | 适用场景 |
-|---------|---------|------|---------|
-| **加速检索** | 1-5 分钟 | 最高 | 需要快速访问的归档数据 |
-| **标准检索** | 3-5 小时 | 适中 | 常规归档数据 |
-| **批量检索** | 5-12 小时 | 最低 | 大规模数据批量导出 |
-| **深度归档检索** | 12-48 小时 | 最低 | 极少访问的冷数据 |
+| 检索类型 | English | 适用存储类别 | 完成时间 | 费用 | 适用场景 |
+|---------|---------|-------------|---------|------|---------|
+| **加速检索** | **Expedited Retrieval** | Glacier Flexible Retrieval | 1-5 分钟 | 最高 | 需要快速访问的归档数据 |
+| **标准检索** | **Standard Retrieval** | Glacier Flexible Retrieval | 3-5 小时 | 适中 | 常规归档数据 |
+| **批量检索** | **Bulk Retrieval** | Glacier Flexible Retrieval | 5-12 小时 | 最低 | 大规模数据批量导出 |
+| **深度归档检索** | **Standard / Bulk Retrieval** | Glacier Deep Archive | 12 小时 / 48 小时 | 最低 | 极少访问的冷数据 |
+
+> **术语提示**：AWS 官方文档中并没有"深度归档检索"这个独立名称——**Glacier Deep Archive** 存储类别本身只有 **Standard**（约 12 小时）和 **Bulk**（约 48 小时）两种检索层级，命名与 Flexible Retrieval 的 Standard/Bulk 相同，只是对应到不同存储类别、耗时更长。答题时看到 "Expedited / Standard / Bulk" 这三个词，要先判断题目问的是 **Glacier Flexible Retrieval** 还是 **Glacier Deep Archive**，因为同一个检索层级名称在两个存储类别下的耗时完全不同（如 Standard：Flexible Retrieval 是 3-5 小时，Deep Archive 是约 12 小时）。
 
 ### 检索注意事项
 

@@ -14,7 +14,7 @@
 |------|------|------|------|
 | **OpsWorks Stacks** | 基础设施编排 | 使用 Chef/Puppet 配置服务器 | Cookbooks、层管理 |
 | **OpsWorks for Chef Automate** | Chef 服务端 | 全托管 Chef 服务器 | Chef 后端管理 |
-| **AWS CloudFormation** | 基础设施即代码 | 创建和管理 AWS 资源 | 模板化资源部署 |
+| **[[AWS CloudFormation]]** | 基础设施即代码 | 创建和管理 AWS 资源 | 模板化资源部署 |
 | **[[AWS Systems Manager]]** | 运维管理 | 大规模服务器管理 | 无代理配置管理 |
 
 ### 核心架构组件
@@ -124,7 +124,7 @@ Chef Cookbook (Recipes)
 
 ## 与其他服务的区别
 
-### OpsWorks vs CloudFormation
+### OpsWorks vs [[AWS CloudFormation]]
 
 | 特性 | OpsWorks | CloudFormation |
 |------|---------|---------------|

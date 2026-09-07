@@ -2,7 +2,7 @@
 
 > **Amazon SNS（Simple Notification Service）** 是全托管的**发布/订阅（Pub/Sub）消息服务**，允许一个发布者将消息**一对多**地推送给多个订阅端点，实现事件通知与系统间的扇出（Fan-out）架构。
 >
-> 相关文档：[[SQS]] | [[AWS Lambda]] | [[CloudWatch]] | [[Amazon Kinesis]] | [[KMS]]
+> 相关文档：[[SQS]] | [[AWS Lambda]] | [[CloudWatch]] | [[Amazon Kinesis]] | [[KMS]] | [[Amazon SES]] | [[Amazon Pinpoint (Deprecated)]]
 
 ---
 
@@ -34,7 +34,7 @@
 | **[[SQS]]** | 消息投递到 SQS 队列 | Fan-out 扇出模式，各下游系统独立异步消费 |
 | **[[AWS Lambda]]** | 直接触发 Lambda 函数执行 | 事件驱动的实时处理逻辑 |
 | **HTTP/HTTPS** | 推送到任意 Web 端点 | Webhook 集成第三方系统 |
-| **Email / Email-JSON** | 发送邮件通知 | 人工告警、运营通知 |
+| **Email / Email-JSON** | 发送邮件通知 | 人工告警、运营通知（大规模/可编程的客户邮件发送应改用 [[Amazon SES]]，完整边界见 [[Amazon SES]] 独立笔记） |
 | **SMS** | 发送短信 | 紧急告警、验证码类通知 |
 | **移动推送（Mobile Push）** | 通过 APNs/FCM 等平台端点推送到移动 App | App 消息推送 |
 
@@ -148,7 +148,8 @@
 ├── "多下游分发场景下要求严格顺序、不能重复" → SNS FIFO 主题 + FIFO SQS 订阅
 ├── "需要给移动 App 用户推送通知" → SNS 移动推送端点
 ├── "需要把事件推给第三方 Webhook" → SNS HTTP/HTTPS 订阅
-└── "多个 Worker 分摊同一批任务，无需广播" → 改用 SQS，而非 SNS
+├── "多个 Worker 分摊同一批任务，无需广播" → 改用 SQS，而非 SNS
+└── "需要向大量客户发送个性化事务性/营销邮件" → 改用 [[Amazon SES]]，而非 SNS Email 端点
 ```
 
 ---

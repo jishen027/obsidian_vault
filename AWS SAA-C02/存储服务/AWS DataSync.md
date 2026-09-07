@@ -2,7 +2,7 @@
 
 > **AWS DataSync** 是全托管的**在线数据传输**服务，用于在本地存储系统与 AWS 存储服务之间，或 AWS 存储服务之间，自动化、加速地完成**持续/增量**数据同步，是"网络带宽充足"场景下 [[AWS Snowball]] 的替代方案。
 >
-> 相关文档：[[AWS Snowball]] | [[AWS Storage Gateway]] | [[S3]] | [[AWS EFS]] | [[AWS FSx]] | [[VPC]] | [[Database Migration Service]]
+> 相关文档：[[AWS Snowball]] | [[AWS Storage Gateway]] | [[S3]] | [[AWS EFS]] | [[AWS FSx]] | [[VPC]] | [[Database Migration Service]] | [[Amazon AppFlow]]
 
 ---
 
@@ -16,8 +16,9 @@
 | [[AWS Snowball]] | 物理设备运输 | 否，一次性迁移 | 数据量巨大、网络带宽不足或不可用 |
 | [[AWS Storage Gateway]] | 混合云网关（持续在线） | 持续在线访问，非批量任务 | 长期、实时的本地应用直接读写云存储 |
 | [[Database Migration Service\|AWS DMS]] | 数据库复制 | 支持持续复制 | 数据库到数据库的迁移/同步，而非文件/对象存储 |
+| **[[Amazon AppFlow]]** | SaaS 应用集成 | 支持按需/计划/事件驱动 | SaaS 应用（如 Salesforce）与 AWS 服务之间的数据同步，而非文件/对象存储或数据库 |
 
-> **考试陷阱**：**DataSync 传输的是文件/对象数据**（本地文件系统 ↔ S3/EFS/FSx）；数据库迁移应使用 **[[Database Migration Service|AWS DMS]]**，两者不可混淆，完整能力见 [[Database Migration Service]] 独立笔记。
+> **考试陷阱**：**DataSync 传输的是文件/对象数据**（本地文件系统 ↔ S3/EFS/FSx）；数据库迁移应使用 **[[Database Migration Service|AWS DMS]]**；SaaS 应用的数据集成应使用 **[[Amazon AppFlow]]**，三者按数据来源形态区分，不可混淆，完整能力分别见 [[Database Migration Service]] 和 [[Amazon AppFlow]] 独立笔记。
 
 ### 核心价值
 

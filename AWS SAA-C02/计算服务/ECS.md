@@ -2,7 +2,7 @@
 
 > **Amazon ECS (Elastic Container Service)** 是一种高度可扩展、高性能的容器管理服务，允许您在 AWS 上轻松运行、停止和管理 Docker 容器。
 >
-> 相关文档：[[EC2]] | [[AWS Fargate]] | [[EKS]] | [[Auto Scaling]] | [[AWS Load Balance]]
+> 相关文档：[[EC2]] | [[AWS Fargate]] | [[EKS]] | [[Auto Scaling]] | [[AWS Load Balance]] | [[AWS Batch]] | [[AWS X-Ray]]
 
 ---
 

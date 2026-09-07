@@ -2,7 +2,7 @@
 
 > **Amazon API Gateway** 是一种完全托管的服务，用于创建、发布、维护、监控和保护 REST、HTTP 和 WebSocket API。它是构建 API 驱动的微服务架构和 Serverless 应用的核心服务。
 >
-> 相关文档：[[EC2]] | [[AWS Lambda]] | [[CloudWatch]] | [[DynamoDB]] | [[S3]] | [[Cognito]] | [[VPC]] | [[AWS WAF]] | [[AWS Shield]]
+> 相关文档：[[EC2]] | [[AWS Lambda]] | [[CloudWatch]] | [[DynamoDB]] | [[S3]] | [[Cognito]] | [[VPC]] | [[AWS WAF]] | [[AWS Shield]] | [[AWS X-Ray]]
 
 ---
 
@@ -176,7 +176,7 @@
 | **访问日志** | 记录每个请求的详细信息 |
 | **追踪日志** | 记录 Lambda 执行细节 |
 | **CloudTrail** | 审计 API Gateway API 调用 |
-| **X-Ray** | 分布式追踪 |
+| **[[AWS X-Ray]]** | 分布式追踪，完整能力见 [[AWS X-Ray]] 独立笔记 |
 
 ---
 

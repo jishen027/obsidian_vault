@@ -2,7 +2,7 @@
 
 > **AWS Organizations** 是多账户治理服务，让企业能够将多个 AWS 账户集中管理——统一账单（Consolidated Billing）、通过**服务控制策略（SCP）**和**资源控制策略（RCP）**设置权限护栏、批量管理合规和配置策略，是构建"多账户架构"这一 AWS 最佳实践的核心基础设施。
 >
-> 相关文档：[[IAM]] | [[AWS Control Tower]] | [[AWS Config]] | [[CloudTrail]] | [[AWS CloudFormation]] | [[KMS]] | [[AWS Firewall Manager]] | [[VPC Flow Logs]] | [[AWS Backup]]
+> 相关文档：[[IAM]] | [[AWS Control Tower]] | [[AWS Config]] | [[CloudTrail]] | [[AWS CloudFormation]] | [[KMS]] | [[AWS Firewall Manager]] | [[VPC Flow Logs]] | [[AWS Backup]] | [[Cost Explorer]]
 
 ---
 
@@ -31,7 +31,7 @@
 
 | 模式 | 说明 |
 |------|------|
-| **合并账单（Consolidated Billing）** | 组织内所有账户的费用汇总到管理账户统一支付一份账单，并能享受**批量折扣**（如 Reserved Instance/Savings Plans 可在账户间共享，达到更高的批量定价层级） |
+| **合并账单（Consolidated Billing）** | 组织内所有账户的费用汇总到管理账户统一支付一份账单，并能享受**批量折扣**（如 Reserved Instance/Savings Plans 可在账户间共享，达到更高的批量定价层级），管理账户可通过 **[[Cost Explorer]]** 统一查看或按成员账户拆分分析整体支出 |
 | **完整功能模式（All Features）** | 在合并账单基础上，进一步启用 **SCP**、**RCP**、标签策略、备份策略等完整的治理能力，是绝大多数生产组织的推荐模式 |
 
 ---
@@ -98,7 +98,7 @@
 |---------|------|
 | **[[CloudTrail]] Organization Trail** | 在管理账户创建后自动应用到所有成员账户，实现组织级强制审计 |
 | **[[AWS Config]] Conformance Packs** | 可通过 Organizations 一次性部署规则集到整个组织的所有账户 |
-| **[[AWS CloudFormation]] StackSets** | 结合 Organizations 可将同一套 CloudFormation 模板批量部署到组织内多个账户/区域 |
+| **[[AWS CloudFormation#嵌套堆栈（Nested Stacks）vs StackSets（考试高频陷阱）\|AWS CloudFormation StackSets]]** | 结合 Organizations 可将同一套 CloudFormation 模板批量部署到组织内多个账户/区域 |
 | **[[AWS Control Tower]]** | 构建在 Organizations 之上的"着陆区（Landing Zone）"自动化服务，进一步简化多账户环境的初始搭建和护栏配置，详见 [[AWS Control Tower]] 独立笔记 |
 
 ---

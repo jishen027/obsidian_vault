@@ -37,7 +37,7 @@
 
 ## 证书部署与集成服务
 
-- ACM 证书**只能绑定到 ACM 集成的 AWS 服务**，包括 [[CloudFront]]、[[AWS Load Balance]]（ALB/NLB/CLB）、[[Amazon API Gateway]]、AWS CloudFormation 部署的资源等
+- ACM 证书**只能绑定到 ACM 集成的 AWS 服务**，包括 [[CloudFront]]、[[AWS Load Balance]]（ALB/NLB/CLB）、[[Amazon API Gateway]]、[[AWS CloudFormation]] 部署的资源等
 - **区域限制（考试高频）**：为 **CloudFront** 使用的 ACM 证书**必须在 us-east-1（N. Virginia）区域申请**，无论 CloudFront 分发服务的用户实际分布在哪些地理区域，否则该证书不会出现在 CloudFront 的证书选择列表中；而绑定到 ALB/API Gateway 的证书需要与这些资源**所在的区域一致**
 
 ---

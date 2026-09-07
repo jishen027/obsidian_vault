@@ -2,7 +2,7 @@
 
 > **Amazon CloudWatch** 是 AWS 管理和监控体系的**性能中枢**，负责收集指标（Metrics）和日志（Logs）、回答"资源当前运行得怎么样"，并基于阈值触发自动化响应（告警、通知、弹性伸缩）。与专注"谁做了什么"的 [[CloudTrail]]、专注"资源配置长什么样"的 [[AWS Config]] 共同构成 AWS 管理和监控三件套。
 >
-> 相关文档：[[CloudTrail]] | [[AWS Config]] | [[Auto Scaling]] | [[EC2]] | [[SNS]] | [[AWS Lambda]] | [[Amazon EventBridge]] | [[VPC]] | [[Amazon Kinesis]] | [[KMS]]
+> 相关文档：[[CloudTrail]] | [[AWS Config]] | [[Auto Scaling]] | [[EC2]] | [[SNS]] | [[AWS Lambda]] | [[Amazon EventBridge]] | [[VPC]] | [[Amazon Kinesis]] | [[KMS]] | [[AWS X-Ray]]
 
 ---
 
@@ -15,8 +15,9 @@
 | **CloudWatch** | 资源运行得怎么样？ | 指标（Metrics）、日志（Logs） | 性能监控、告警、自动化响应 |
 | [[CloudTrail]] | 谁在什么时候做了什么？ | API 调用事件日志 | 审计、安全取证、合规追溯 |
 | [[AWS Config]] | 资源配置长什么样、如何变化？ | 配置项（Configuration Item）快照 | 配置合规、变更管理、关系分析 |
+| **[[AWS X-Ray]]** | 一个请求跨多个服务的调用链耗时/错误分布在哪？ | 请求级别的分布式追踪（Trace） | 微服务架构下的端到端性能瓶颈定位，完整边界见 [[AWS X-Ray]] 独立笔记 |
 
-> **考试陷阱**：三者经常在选项中同时出现，判断依据是题目问的是**性能表现**（CloudWatch）、**操作行为**（CloudTrail）还是**配置状态**（AWS Config）；三者可以组合使用形成完整的可观测性闭环——CloudTrail 记录操作 → CloudWatch Logs 聚合并触发告警 → AWS Config 追溯配置变更的最终结果。
+> **考试陷阱**：这几者经常在选项中同时出现，判断依据是题目问的是**性能表现**（CloudWatch）、**操作行为**（CloudTrail）、**配置状态**（AWS Config）还是**跨服务调用链**（X-Ray）；它们可以组合使用形成完整的可观测性闭环——CloudTrail 记录操作 → CloudWatch Logs 聚合并触发告警 → AWS Config 追溯配置变更的最终结果 → X-Ray 定位跨服务请求链路中的具体瓶颈环节。
 
 ---
 

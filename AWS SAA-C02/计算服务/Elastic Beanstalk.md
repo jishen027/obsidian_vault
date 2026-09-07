@@ -2,7 +2,7 @@
 
 > **AWS Elastic Beanstalk** 是一种面向应用的 PaaS（平台即服务），开发者只需上传代码，Beanstalk 会自动完成底层基础设施（[[EC2]]、[[AWS Load Balance]]、[[Auto Scaling]]、[[CloudWatch]] 等）的配置、部署和管理。
 >
-> 相关文档：[[EC2]] | [[ECS]] | [[AWS Lambda]] | [[Auto Scaling]] | [[AWS CloudFormation]]
+> 相关文档：[[EC2]] | [[ECS]] | [[AWS Lambda]] | [[Auto Scaling]] | [[AWS CloudFormation]] | [[AWS Amplify]] | [[AWS X-Ray]]
 
 ---
 
@@ -88,7 +88,7 @@
 
 - 通过项目中的 **`.ebextensions`** 配置文件（YAML/JSON）自定义底层资源，如安装额外软件包、设置环境变量、修改实例配置
 - 支持挂载已有的 **RDS** 数据库，或在环境内直接创建一个与环境生命周期绑定的 RDS 实例（不推荐用于生产，因为环境删除会连带删除数据库）
-- 底层实际由 **AWS CloudFormation** 驱动资源编排，因此本质上是 CloudFormation 之上的一层易用性封装
+- 底层实际由 **[[AWS CloudFormation]]** 驱动资源编排，因此本质上是 CloudFormation 之上的一层易用性封装
 
 ---
 
@@ -106,6 +106,7 @@
 
 - Beanstalk 面向**传统单体或简单多层应用**的快速部署，构建**微服务架构**时不如 [[ECS]] 灵活（缺乏细粒度的服务发现、任务编排能力）
 - 基础设施持续运行，无法像 [[AWS Lambda]] 一样在无流量时自动缩容至零，成本模型更接近传统 EC2
+- 面向**前端/移动应用**（静态站点、SSR、需要快速接入认证/API 等后端能力）时，**[[AWS Amplify]]** 是比 Beanstalk 更合适的选择——Amplify 提供 Git 驱动的 CI/CD 和无服务器托管，而非 Beanstalk 这种持续运行服务器的模式，完整边界见 [[AWS Amplify]] 独立笔记
 
 ---
 
@@ -120,6 +121,7 @@
 5. **持续运行**：与 Lambda 的按需/缩容至零模式不同，Beanstalk 资源持续运行
 6. **微服务局限**：复杂微服务架构应优先考虑 ECS/Fargate 而非 Beanstalk
 7. **本质是 CloudFormation 封装**：底层通过 CloudFormation 编排资源
+8. **前端/移动应用应优先考虑 AWS Amplify**：Beanstalk 面向传统服务器端应用，两者抽象层次不同
 
 ### 场景题解题思路
 
@@ -131,6 +133,7 @@
 ├── "需要即时切换新旧版本流量" → Blue/Green（CNAME 交换）
 ├── "构建复杂微服务架构" → ECS / Fargate（优于 Beanstalk）
 ├── "完全无服务器、事件驱动、按需付费" → Lambda
+├── "前端/移动应用，希望 Git 推送自动部署并快速接入认证/API" → 改用 AWS Amplify（而非 Beanstalk）
 └── "需要完全掌控底层服务器" → 直接使用 EC2
 ```
 

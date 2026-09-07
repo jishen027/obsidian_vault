@@ -2,7 +2,7 @@
 
 > **AWS Direct Connect（DX）**是本地数据中心与 AWS 之间的**专用物理网络连接**，流量完全绕开公共互联网，提供**稳定、低延迟、高带宽**的混合云连接能力。与 [[Site to Site VPN]] 的"快速但依赖公网、默认加密"形成鲜明对比：Direct Connect **默认不加密**、部署周期长达数周到数月，但延迟更稳定、带宽更大、数据传输成本更低——两者并非互斥的竞品，而是常常组合使用的互补方案。
 >
-> 相关文档：[[VPC]] | [[Virtual Private Gateway]] | [[Transit Gateway]] | [[Site to Site VPN]] | [[Customer Gateway]] | [[ENI]] | [[Route Table]] | [[CIDR]]
+> 相关文档：[[VPC]] | [[Virtual Private Gateway]] | [[Transit Gateway]] | [[Site to Site VPN]] | [[Customer Gateway]] | [[ENI]] | [[Route Table]] | [[CIDR]] | [[AWS Outposts]]
 
 ---
 
@@ -108,6 +108,7 @@
 | **单条连接带宽已达上限** | LAG 捆绑同地点、同带宽的多条连接 |
 | **关键业务不能接受专线单点故障** | Direct Connect Resiliency Toolkit（跨多个 Direct Connect 地点部署冗余连接）+ VPN 故障备份 |
 | **访问 S3/DynamoDB 等公网端点服务但不经过公共互联网** | 公有 VIF |
+| **[[AWS Outposts]] 需要与父区域保持可靠的控制平面连接** | Private VIF（或 Site-to-Site VPN），完整依赖关系见 [[AWS Outposts]] 独立笔记 |
 
 ---
 

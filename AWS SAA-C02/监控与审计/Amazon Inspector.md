@@ -2,7 +2,7 @@
 
 > **Amazon Inspector** 是全托管的**自动化漏洞评估**服务，持续扫描 [[EC2]]、容器镜像（ECR）、[[AWS Lambda]] 函数以及应用源代码，识别**已知软件漏洞（CVE）、网络可达性风险、代码安全缺陷**，并按**风险评分**自动排序，帮助团队聚焦真正需要优先修复的问题，而非人工逐一排查。
 >
-> 相关文档：[[Amazon GuardDuty]] | [[Amazon Macie]] | [[EC2]] | [[AWS Lambda]] | [[AWS Config]] | [[AWS Organizations]] | [[CloudWatch]] | [[IAM]]
+> 相关文档：[[Amazon GuardDuty]] | [[Amazon Macie]] | [[EC2]] | [[AWS Lambda]] | [[AWS Config]] | [[AWS Organizations]] | [[CloudWatch]] | [[IAM]] | [[AWS CloudFormation]]
 
 ---
 
@@ -44,7 +44,7 @@
 |------|------|
 | **静态应用安全测试（SAST）** | 分析应用源代码本身，识别注入漏洞、不安全的加密用法等代码层面的安全缺陷 |
 | **软件成分分析（SCA，Software Composition Analysis）** | 分析代码引用的第三方开源依赖库，识别已知存在漏洞的依赖版本 |
-| **基础设施即代码扫描（IaC Scanning）** | 分析 CloudFormation、Terraform 等 IaC 模板，在资源实际部署前发现不安全的配置（如过度宽松的安全组规则），实现部署前拦截 |
+| **基础设施即代码扫描（IaC Scanning）** | 分析 [[AWS CloudFormation|CloudFormation]]、Terraform 等 IaC 模板，在资源实际部署前发现不安全的配置（如过度宽松的安全组规则），实现部署前拦截 |
 
 - 三项能力通过与 **GitHub/GitLab 原生集成**在开发者的日常工作流（提交、Pull Request）中直接呈现结果，是"**安全左移（Shift Left）**"理念的具体落地——将漏洞发现提前到编码阶段，而非等到资源已部署到生产环境后才通过 EC2/ECR 扫描发现
 

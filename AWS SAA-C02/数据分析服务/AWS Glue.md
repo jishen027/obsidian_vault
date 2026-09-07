@@ -2,7 +2,7 @@
 
 > **AWS Glue** 是无服务器（Serverless）的**数据集成与 ETL（Extract, Transform, Load）**服务，负责发现、编目、清洗、转换和移动数据，是整个 AWS 数据分析生态中**元数据管理和数据准备**的核心枢纽——[[Amazon Athena]]、Redshift Spectrum、[[Amazon EMR]] 等分析服务通常共享同一份 **Glue Data Catalog** 作为统一的元数据目录。
 >
-> 相关文档：[[Amazon Athena]] | [[Amazon EMR]] | [[AWS Lake Formation]] | [[Amazon MSK]] | [[Redshift]] | [[Amazon OpenSearch]] | [[Amazon QuickSight]] | [[S3]] | [[DynamoDB]] | [[RDS]] | [[VPC]]
+> 相关文档：[[Amazon Athena]] | [[Amazon EMR]] | [[AWS Lake Formation]] | [[Amazon MSK]] | [[Redshift]] | [[Amazon OpenSearch]] | [[Amazon QuickSight]] | [[S3]] | [[DynamoDB]] | [[RDS]] | [[VPC]] | [[Amazon AppFlow]]
 
 ---
 
@@ -103,6 +103,7 @@
 | **源数据库到分析目标的近实时同步** | Zero-ETL 集成，避免自建传统 ETL 管道 |
 | **流数据的 Schema 一致性管理** | Glue Schema Registry |
 | **需要精细控制集群、运行复杂自定义大数据逻辑** | 改用 [[Amazon EMR]]，而非 Glue |
+| **SaaS 应用（如 Salesforce）数据需要先落地到 S3 再做 ETL** | **[[Amazon AppFlow]]** 负责落地 + Glue 负责后续清洗转换，完整边界见 [[Amazon AppFlow]] 独立笔记 |
 
 ---
 

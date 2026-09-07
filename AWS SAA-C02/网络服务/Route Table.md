@@ -2,7 +2,7 @@
 
 > **路由表（Route Table）**是 [[VPC]] 中决定网络流量**去向**的核心组件——一组"目标 CIDR → 下一跳目标"的规则集合，[[Subnet]] 通过关联路由表来决定自己是公有还是私有、以及能访问哪些网络。理解路由表的关联规则、路由优先级和常见目标类型，是排查几乎所有"资源无法联网"类考题的第一步。
 >
-> 相关文档：[[VPC]] | [[Subnet]] | [[NAT Gateway]] | [[NAT Instance]] | [[Internet Gateway]] | [[VPC Peering]] | [[Virtual Private Gateway]] | [[Transit Gateway]] | [[Direct Connect]] | [[ENI]] | [[CIDR]] | [[VPC Endpoints]]
+> 相关文档：[[VPC]] | [[Subnet]] | [[NAT Gateway]] | [[NAT Instance]] | [[Internet Gateway]] | [[VPC Peering]] | [[Virtual Private Gateway]] | [[Transit Gateway]] | [[Direct Connect]] | [[AWS Outposts]] | [[ENI]] | [[CIDR]] | [[VPC Endpoints]]
 
 ---
 
@@ -60,6 +60,7 @@
 | **网关型 [[VPC Endpoints\|VPC 终端节点]]（Gateway Endpoint）** | 私密访问 S3/DynamoDB，必须在路由表中显式添加终端节点路由才能生效（接口型终端节点不需要，走 ENI 私有 IP），完整对比见 [[VPC Endpoints]] 独立笔记 |
 | **Egress-Only Internet Gateway** | IPv6 私有子网的仅出站访问，与 IPv4 场景下的 NAT Gateway 对应 |
 | **本地网络接口（ENI）** | 将流量定向到特定实例（如自建的 NAT 实例、软件防火墙、入侵检测设备） |
+| **本地网关（Local Gateway, LGW）** | [[AWS Outposts]] 子网访问本地站点网络的出口，角色类似 IGW 但面向本地局域网而非公网，完整能力见 [[AWS Outposts]] 独立笔记 |
 
 ---
 
