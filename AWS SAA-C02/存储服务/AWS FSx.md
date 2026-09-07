@@ -2,7 +2,7 @@
 
 > **Amazon FSx** 是一组**完全托管的第三方文件系统**服务，让用户可以在 AWS 上运行熟悉的商业和开源文件系统（Windows、Lustre、NetApp ONTAP、OpenZFS），而无需自行搭建和维护底层基础设施。
 >
-> 相关文档：[[AWS EFS]] | [[EBS]] | [[S3]] | [[VPC]] | [[Storage Service]] | [[AWS Directory Service]]
+> 相关文档：[[AWS EFS]] | [[EBS]] | [[S3]] | [[VPC]] | [[Storage Service]] | [[AWS Directory Service]] | [[Disaster Recovery On AWS]]
 
 ---
 
@@ -43,7 +43,7 @@
   - **卷影副本 (Shadow Copies)**：文件级时间点恢复，用户可自助还原
   - **数据去重 (Data Deduplication)**：降低存储成本
   - **DFS 命名空间 (Distributed File System)**：跨多个文件系统整合命名空间
-- 可挂载到 **EC2 (Windows/Linux)**，也可从**本地数据中心**通过 Direct Connect / VPN 访问
+- 可挂载到 **EC2 (Windows/Linux)**，也可从**本地数据中心**通过 [[Direct Connect]] / VPN 访问
 
 ### 存储类型
 
@@ -143,7 +143,7 @@
 - 支持**自动化每日备份**（增量备份），可自定义备份窗口和保留期
 - 支持通过 **AWS Backup** 集中管理 FSx 备份
 - 支持**手动备份**用于关键操作前的快照
-- 备份可用于**跨区域恢复**，实现灾难恢复
+- 备份可用于**跨区域恢复**，实现[[Disaster Recovery On AWS|灾难恢复]]
 
 ---
 

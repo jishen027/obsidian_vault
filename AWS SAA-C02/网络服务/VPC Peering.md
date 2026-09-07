@@ -1,8 +1,8 @@
 # VPC 对等连接 (VPC Peering)
 
-> **VPC 对等连接（VPC Peering）**是两个 [[VPC]] 之间的**一对一**网络连接，通过 AWS 的骨干网络私密路由流量，双方 VPC 内的资源可以像在同一网络中一样使用私有 IP 互相通信。它是最简单、最基础的 VPC 互联方式，但**不支持传递路由**，规模化场景通常改用 Transit Gateway。
+> **VPC 对等连接（VPC Peering）**是两个 [[VPC]] 之间的**一对一**网络连接，通过 AWS 的骨干网络私密路由流量，双方 VPC 内的资源可以像在同一网络中一样使用私有 IP 互相通信。它是最简单、最基础的 VPC 互联方式，但**不支持传递路由**，规模化场景通常改用 [[Transit Gateway]]。
 >
-> 相关文档：[[VPC]] | [[Virtual Private Gateway]] | [[Security Group]] | [[NACL]] | [[Subnet & Route table]] | [[Route 53 DNS]] | [[AWS EFS]]
+> 相关文档：[[VPC]] | [[Virtual Private Gateway]] | [[Transit Gateway]] | [[Security Group]] | [[NACL]] | [[Subnet]] | [[Route Table]] | [[CIDR]] | [[Route 53 DNS]] | [[AWS EFS]]
 
 ---
 
@@ -11,13 +11,13 @@
 ### 为什么需要 VPC Peering
 
 - **VPC 默认相互隔离**：不同 VPC 天生是独立的网络边界，即使属于同一账户，彼此也无法直接通信，这种隔离是安全设计的默认状态
-- **Peering 的核心价值**：在两个 VPC 之间建立**私有的点对点连接**，流量完全走 AWS 内部骨干网络，不经过公网、IGW 或 VPN 网关，实现低延迟、高带宽的跨 VPC 私有通信
+- **Peering 的核心价值**：在两个 VPC 之间建立**私有的点对点连接**，流量完全走 AWS 内部骨干网络，不经过公网、[[Internet Gateway|IGW]] 或 VPN 网关，实现低延迟、高带宽的跨 VPC 私有通信
 
 ### 建立连接的基本流程
 
 1. **发起请求方**在源 VPC 中创建对等连接请求，指定目标 VPC（可以是同账户、跨账户，甚至同一 AWS 组织内的其他账户）
 2. **接受方**在目标 VPC 中**接受**该请求，连接状态变为 Active
-3. 双方分别在各自的**路由表**中添加指向对方 CIDR 的路由条目，**Peering 本身不会自动更新路由表**
+3. 双方分别在各自的 [[Route Table|路由表]] 中添加指向对方 CIDR 的路由条目，**Peering 本身不会自动更新路由表**
 4. 按需调整双方的 [[Security Group]] / [[NACL]] 规则，放行来自对方 VPC CIDR 的流量
 
 ---
@@ -26,13 +26,13 @@
 
 ### 不支持重叠 CIDR
 
-- 两个 VPC 的 **CIDR 范围不能有任何重叠**，否则无法建立对等连接——这是规划多 VPC 架构时必须提前考虑的约束，一旦 CIDR 冲突，唯一解决方式是重新规划其中一方的 IP 地址空间
+- 两个 VPC 的 **[[CIDR]] 范围不能有任何重叠**，否则无法建立对等连接——这是规划多 VPC 架构时必须提前考虑的约束，一旦 CIDR 冲突，唯一解决方式是重新规划其中一方的 IP 地址空间，完整的 CIDR 记法和重叠判断方式见 [[CIDR]] 独立笔记
 
 ### 不支持传递路由（Transitive Routing，最高频考点）
 
 > **考试陷阱**：**VPC Peering 是严格的点对点连接，不具备传递性**——若 VPC A 与 VPC B 建立了对等连接，VPC B 与 VPC C 也建立了对等连接，**VPC A 无法通过 VPC B 访问 VPC C**，必须为 A 和 C 之间**单独建立一条对等连接**。这个限制同样适用于**站点到站点 VPN**场景：若 VPC A 通过 [[Virtual Private Gateway]] 连接了本地数据中心，即使 VPC A 与 VPC B 建立了 Peering，本地数据中心也**不能**经由 VPC A 访问 VPC B（完整的不可传递路由说明见 [[Virtual Private Gateway]] 笔记）。
 
-- **架构影响**：当需要互联的 VPC 数量增多时，点对点特性会导致连接数量呈**平方级增长**（N 个 VPC 全互联需要 N×(N-1)/2 条连接），管理复杂度迅速失控——这正是 **Transit Gateway**（星型枢纽拓扑，原生支持传递路由）被设计用来解决的问题，完整对比见下方"VPC Peering vs Transit Gateway"
+- **架构影响**：当需要互联的 VPC 数量增多时，点对点特性会导致连接数量呈**平方级增长**（N 个 VPC 全互联需要 N×(N-1)/2 条连接），管理复杂度迅速失控——这正是 **[[Transit Gateway]]**（星型枢纽拓扑，原生支持传递路由）被设计用来解决的问题，完整对比见下方"VPC Peering vs Transit Gateway"，以及 [[Transit Gateway]] 独立笔记
 
 ### 不支持多播/广播
 
@@ -69,14 +69,14 @@
 
 ## 安全组引用（考试提示）
 
-- 对等连接的两个 VPC 之间，**同区域场景下可以直接在安全组规则中引用对方 VPC 的安全组 ID**（而非只能用 CIDR），实现更精细、随实例动态变化自动生效的访问控制
+- 对等连接的两个 VPC 之间，**同区域场景下可以直接在 [[Security Group|安全组]] 规则中引用对方 VPC 的安全组 ID**（而非只能用 CIDR），实现更精细、随实例动态变化自动生效的访问控制，完整的安全组规则模型见 [[Security Group]] 独立笔记
 - **跨区域对等连接不支持**这种安全组互相引用，跨区域场景必须使用 CIDR 范围而非安全组 ID 作为规则的源/目标
 
 ---
 
 ## VPC Peering vs Transit Gateway（考试高频）
 
-| 维度 | VPC Peering | Transit Gateway |
+| 维度 | VPC Peering | [[Transit Gateway]] |
 |------|-------------|-----------------|
 | **拓扑** | 点对点（Mesh 需 N² 级连接） | 星型枢纽，中心化管理 |
 | **传递路由** | **不支持** | **原生支持**，可通过 TGW 中转访问其他已连接的 VPC/VPN/DX |
@@ -97,7 +97,7 @@
 | **跨账户共享特定 VPC 内的资源** | VPC Peering（发起方 + 接受方账户批准） |
 | **跨区域灾备架构需要私有互联** | Inter-Region VPC Peering（流量自动加密，无需额外 VPN） |
 | **[[AWS EFS]] 需要被其他 VPC 内的实例挂载** | VPC Peering 或 Transit Gateway（取决于规模），详见 [[AWS EFS]] 笔记 |
-| **大规模多 VPC/多账户/混合云统一互联** | 改用 Transit Gateway（而非维护大量 Peering 连接） |
+| **大规模多 VPC/多账户/混合云统一互联** | 改用 [[Transit Gateway]]（而非维护大量 Peering 连接） |
 | **私有 DNS 名称访问对方 VPC 资源却解析成公网 IP** | 启用对等连接的"私有 DNS 解析"设置 |
 | **需要在安全组规则中动态引用对方 VPC 的实例** | 同区域 Peering + 安全组 ID 互相引用 |
 | **本地数据中心需要访问已 Peering 的另一 VPC** | 不支持传递路由，需为本地网络与目标 VPC 单独建立连接（VPN/DX） |

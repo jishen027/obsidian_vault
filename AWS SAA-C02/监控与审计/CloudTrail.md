@@ -79,7 +79,7 @@
 
 ### 威胁检测（[[Amazon GuardDuty]]）
 
-- CloudTrail 是 **[[Amazon GuardDuty]]** 的关键数据源之一——GuardDuty 通过分析 CloudTrail 管理事件（及 VPC Flow Logs、DNS 日志）识别凭证被盗、可疑的 API 调用模式或攻击者的侦察行为，实现自动化威胁检测，完整能力见 [[Amazon GuardDuty]] 独立笔记
+- CloudTrail 是 **[[Amazon GuardDuty]]** 的关键数据源之一——GuardDuty 通过分析 CloudTrail 管理事件（及 [[VPC Flow Logs]]、DNS 日志）识别凭证被盗、可疑的 API 调用模式或攻击者的侦察行为，实现自动化威胁检测，完整能力见 [[Amazon GuardDuty]] 独立笔记
 
 ---
 

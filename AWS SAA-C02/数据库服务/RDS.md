@@ -2,7 +2,7 @@
 
 > **Amazon RDS (Relational Database Service)** 是一种完全托管的关系型数据库服务，负责处理数据库设置、修补、备份和高可用等基础设施工作，专为联机事务处理（OLTP）场景优化。
 >
-> 相关文档：[[Aurora]] | [[Redshift]] | [[DynamoDB]] | [[Amazon Neptune]] | [[Amazon Keyspaces]] | [[Amazon Timestream]] | [[Amazon DocumentDB]] | [[KMS]] | [[CloudWatch]]
+> 相关文档：[[Aurora]] | [[Redshift]] | [[DynamoDB]] | [[Amazon Neptune]] | [[Amazon Keyspaces]] | [[Amazon Timestream]] | [[Amazon DocumentDB]] | [[KMS]] | [[CloudWatch]] | [[Disaster Recovery On AWS]]
 
 ---
 
@@ -70,7 +70,7 @@
 | **复制方式** | 异步复制，存在一定延迟 |
 | **用途** | 分担读取流量、报表查询，不用于故障转移 |
 | **可读写** | 可直接读取，部分引擎支持提升为独立可写实例 |
-| **跨区域** | 支持跨 AWS 区域创建，用于灾难恢复或降低跨区域读取延迟 |
+| **跨区域** | 支持跨 AWS 区域创建，用于[[Disaster Recovery On AWS|灾难恢复]]或降低跨区域读取延迟 |
 | **前提条件** | 源实例必须开启自动备份 |
 
 ---

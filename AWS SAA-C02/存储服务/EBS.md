@@ -2,7 +2,7 @@
 
 > **EBS (Elastic Block Store)** 是一种为 EC2 实例提供的高性能、持久化块级存储设备。数据持久存储在独立于实例的存储后端，即使实例停止或终止，数据依然保留。
 >
-> 相关文档：[[Storage Service]] | [[AWS EFS]] | [[S3]] | [[VPC]]
+> 相关文档：[[Storage Service]] | [[AWS EFS]] | [[S3]] | [[VPC]] | [[Disaster Recovery On AWS]]
 
 ---
 
@@ -202,7 +202,7 @@ EBS 限制是**区域级别**的，包括：
 2. **使用 DLM 自动化快照**：减少手动管理成本
 3. **启用加密**：默认启用 EBS 加密，确保所有新卷自动加密
 4. **监控性能指标**：通过 CloudWatch 及时发现性能瓶颈
-5. **跨 AZ/区域备份**：利用快照复制实现灾难恢复
+5. **跨 AZ/区域备份**：利用快照复制实现[[Disaster Recovery On AWS|灾难恢复]]
 
 ### 与 AWS Snowball 的数据迁移
 

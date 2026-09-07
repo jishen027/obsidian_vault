@@ -53,7 +53,7 @@
 ### 核心概念
 
 - **日志组（Log Group）/ 日志流（Log Stream）**：日志组是逻辑容器（通常对应一个应用/资源），日志流是其中来自单一来源的连续日志序列
-- **日志来源**：[[EC2]] 实例（需 CloudWatch Agent）、[[AWS Lambda]]（自动集成）、[[VPC]] 流日志（Flow Logs）、[[CloudTrail]] 事件、API Gateway 访问日志等
+- **日志来源**：[[EC2]] 实例（需 CloudWatch Agent）、[[AWS Lambda]]（自动集成）、[[VPC Flow Logs|VPC 流日志（Flow Logs）]]、[[CloudTrail]] 事件、API Gateway 访问日志等
 - **保留期**：可按日志组配置保留期（1 天到永久），默认永久保留，需主动配置以控制存储成本
 
 ### 指标筛选器（Metric Filters）
@@ -129,7 +129,7 @@
 | **IAM 策略** | 控制哪些身份可以发布指标、创建告警、读取日志 |
 | **静态加密** | CloudWatch Logs 可使用 [[KMS]] 客户管理密钥加密日志组数据 |
 | **传输加密** | API 调用默认通过 HTTPS/TLS |
-| **VPC Endpoint** | 支持通过接口终端节点在 VPC 内私有访问 CloudWatch API，无需经过公网 |
+| **[[VPC Endpoints\|VPC Endpoint]]** | 支持通过接口终端节点在 VPC 内私有访问 CloudWatch API，无需经过公网 |
 
 ---
 

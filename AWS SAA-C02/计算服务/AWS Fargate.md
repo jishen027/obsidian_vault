@@ -30,7 +30,7 @@
 
 - 在任务定义（Task Definition）的 JSON 中通过 `requiresCompatibilities: ["FARGATE"]` 指定该任务运行在 Fargate 上
 - 必须显式声明任务级别的 **CPU（如 0.25 vCPU）**和**内存（如 0.5 GB）**，AWS 按声明值分配资源并计费
-- **强制使用 `awsvpc` 网络模式**：每个 Fargate 任务拥有独立的弹性网络接口（ENI）和私有 IP，可绑定任务级安全组，实现细粒度网络隔离
+- **强制使用 `awsvpc` 网络模式**：每个 Fargate 任务拥有独立的 [[ENI|弹性网络接口（ENI）]]和私有 IP，可绑定任务级安全组，实现细粒度网络隔离
 - 配合 [[Auto Scaling]]（ECS Service Auto Scaling），可根据 CPU/内存利用率或自定义 CloudWatch 指标秒级启动新任务，响应突发负载
 
 ---

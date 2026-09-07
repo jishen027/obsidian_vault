@@ -2,7 +2,7 @@
 
 > **Amazon Redshift** 是一种完全托管的、基于 PB 级数据的数据仓库服务，专为联机分析处理（OLAP）场景优化。它针对海量数据集运行复杂、计算密集型查询而设计。
 >
-> 相关文档：[[RDS]] | [[S3]] | [[DynamoDB]] | [[Amazon Neptune]] | [[Amazon Keyspaces]] | [[Amazon Timestream]] | [[Amazon DocumentDB]] | [[Amazon Athena]] | [[Amazon QuickSight]] | [[AWS Glue]]
+> 相关文档：[[RDS]] | [[S3]] | [[DynamoDB]] | [[Amazon Neptune]] | [[Amazon Keyspaces]] | [[Amazon Timestream]] | [[Amazon DocumentDB]] | [[Amazon Athena]] | [[Amazon QuickSight]] | [[AWS Glue]] | [[Disaster Recovery On AWS]]
 
 ---
 
@@ -225,7 +225,7 @@
 
 ---
 
-## 高可用和灾难恢复
+## 高可用和[[Disaster Recovery On AWS|灾难恢复]]
 
 ### 备份和恢复
 

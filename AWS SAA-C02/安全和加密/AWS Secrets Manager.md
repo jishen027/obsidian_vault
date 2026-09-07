@@ -2,7 +2,7 @@
 
 > **AWS Secrets Manager** 是专为**凭证类密钥**（数据库密码、API 密钥、第三方服务令牌等）设计的托管服务，核心差异化能力是**内置的自动轮换（Automatic Rotation）**——无需人工介入即可周期性更换凭证并同步给所有依赖方，从根源上减少长期静态凭证泄露的风险。
 >
-> 相关文档：[[KMS]] | [[AWS Systems Manager]] | [[RDS Proxy]] | [[RDS]] | [[IAM]] | [[AWS Lambda]] | [[VPC]]
+> 相关文档：[[KMS]] | [[AWS Systems Manager]] | [[RDS Proxy]] | [[RDS]] | [[IAM]] | [[AWS Lambda]] | [[VPC]] | [[Disaster Recovery On AWS]]
 
 ---
 
@@ -63,7 +63,7 @@
 ## 多区域复制（Multi-Region Replication，考试要点）
 
 - Secrets Manager 支持将 Secret **自动复制**到多个 AWS 区域，且**即使主区域的 Secret 因轮换而更新，副本区域也会保持同步**
-- **典型场景**：全球分布式应用需要在多个区域读取同一份数据库凭证；灾难恢复场景下，次要区域可直接使用已同步的凭证副本，无需等待手动复制
+- **典型场景**：全球分布式应用需要在多个区域读取同一份数据库凭证；[[Disaster Recovery On AWS|灾难恢复]]场景下，次要区域可直接使用已同步的凭证副本，无需等待手动复制
 - 2025 年更新进一步降低了跨区域复制延迟（多数区域可做到亚秒级同步），并增强了自动故障转移能力
 
 > **考试陷阱**：**多区域复制是 Secrets Manager 相较于 Parameter Store 的差异化能力之一**——Parameter Store 本身不提供跨区域自动同步凭证值的原生机制；题目强调"全球应用需要在多个区域访问同一份自动同步的数据库凭证"应识别为 Secrets Manager 的多区域复制特性。
@@ -94,7 +94,7 @@
 |------|------|
 | **静态加密** | 所有 Secret 值默认使用 [[KMS]] 加密存储 |
 | **传输加密** | API 调用默认通过 HTTPS/TLS |
-| **VPC Endpoint** | 支持通过接口终端节点在 [[VPC]] 内私有访问 Secrets Manager API，无需经过公网 |
+| **[[VPC Endpoints\|VPC Endpoint]]** | 支持通过接口终端节点在 [[VPC]] 内私有访问 Secrets Manager API，无需经过公网 |
 | **审计** | 可与 CloudTrail 集成，记录每一次 Secret 的访问和轮换操作 |
 | **细粒度资源策略** | 支持基于条件的跨账户/跨角色精细授权 |
 

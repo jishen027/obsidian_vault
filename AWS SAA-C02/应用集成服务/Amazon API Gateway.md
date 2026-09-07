@@ -31,7 +31,7 @@
 |------|------|---------|
 | **Edge-Optimized（边缘优化）** | 请求通过 CloudFront 全球边缘网络路由到最近节点，再转发到 API Gateway | 客户端分布在全球各地的公网 API，默认类型 |
 | **Regional（区域）** | 请求直接进入部署所在区域，不经过 CloudFront | 客户端与 API 同区域，或希望自行在前面搭配自定义 CloudFront 分发以获得更精细控制 |
-| **Private（私有）** | 只能通过 [[VPC]] 内的**接口终端节点（Interface VPC Endpoint）**访问，完全不暴露公网 | 内部企业 API、仅供 VPC 内部服务调用 |
+| **Private（私有）** | 只能通过 [[VPC]] 内的**接口终端节点（[[VPC Endpoints\|Interface VPC Endpoint]]）**访问，完全不暴露公网 | 内部企业 API、仅供 VPC 内部服务调用 |
 
 > **考试陷阱**：题目描述"API 只能被公司内部 VPC 访问，绝不能暴露在公网"→ **Private 端点类型** + 配套的资源策略（Resource Policy）限制来源 VPC/VPC Endpoint；不要误选 Regional（Regional 仍然是公网可达，只是不经过 CloudFront）。
 

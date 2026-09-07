@@ -2,7 +2,7 @@
 
 > **AWS Organizations** 是多账户治理服务，让企业能够将多个 AWS 账户集中管理——统一账单（Consolidated Billing）、通过**服务控制策略（SCP）**和**资源控制策略（RCP）**设置权限护栏、批量管理合规和配置策略，是构建"多账户架构"这一 AWS 最佳实践的核心基础设施。
 >
-> 相关文档：[[IAM]] | [[AWS Control Tower]] | [[AWS Config]] | [[CloudTrail]] | [[AWS CloudFormation]] | [[KMS]] | [[AWS Firewall Manager]]
+> 相关文档：[[IAM]] | [[AWS Control Tower]] | [[AWS Config]] | [[CloudTrail]] | [[AWS CloudFormation]] | [[KMS]] | [[AWS Firewall Manager]] | [[VPC Flow Logs]]
 
 ---
 
@@ -69,7 +69,7 @@
 
 ## 声明式策略（Declarative Policies）
 
-- 用于**集中声明并强制执行**某个 AWS 服务在整个组织范围内的**期望配置状态**（如"所有账户的 EC2 实例必须禁止公网 IP"、"所有 VPC 必须启用 Flow Logs"）
+- 用于**集中声明并强制执行**某个 AWS 服务在整个组织范围内的**期望配置状态**（如"所有账户的 EC2 实例必须禁止公网 IP"、"所有 VPC 必须启用 [[VPC Flow Logs|Flow Logs]]"）
 - **核心优势**：配置一旦声明即**持续生效**——即使该服务后续新增了功能或 API，声明式策略仍会自动维持既定的配置期望，无需手动追加新规则
 - 目前主要覆盖 EC2、EBS、VPC 等基础设施类服务的配置基线
 

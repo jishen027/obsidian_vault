@@ -2,7 +2,7 @@
 
 > **Amazon VPC (Virtual Private Cloud)** 让您能在 AWS 云中启动资源在您逻辑定义的虚拟网络中。它是 AWS 网络架构的核心服务，提供网络隔离、安全控制和灵活的网络配置。
 >
-> 相关文档：[[Security Group]] | [[NACL]] | [[S3]] | [[DynamoDB]] | [[VPC Peering]] | [[Virtual Private Gateway]]
+> 相关文档：[[Security Group]] | [[NACL]] | [[S3]] | [[DynamoDB]] | [[VPC Peering]] | [[Virtual Private Gateway]] | [[Customer Gateway]] | [[ENI]] | [[Subnet]] | [[Route Table]] | [[NAT Gateway]] | [[Internet Gateway]] | [[NAT Instance]] | [[CIDR]] | [[VPC Endpoints]] | [[VPC Flow Logs]] | [[VPC Traffic Mirroring]] | [[Site to Site VPN]] | [[Transit Gateway]] | [[Direct Connect]]
 
 ---
 
@@ -13,9 +13,9 @@
 | 特性 | 说明 |
 |------|------|
 | **区域性** | VPC 是区域级服务，无法跨区域 |
-| **CIDR 范围** | `/16` 到 `/28`（65,536 到 256 个 IP） |
-| **主 CIDR** | 创建时指定，不可修改 |
-| **次级 CIDR** | 可添加，但不可删除 |
+| **[[CIDR]] 范围** | `/16` 到 `/28`（65,536 到 16 个 IP） |
+| **主 CIDR** | 创建时指定，不可修改，且**永久不可删除**（除非删除整个 VPC） |
+| **次级 CIDR** | 可随时追加为 VPC 扩容地址空间，**在其中没有资源占用地址时可以移除**；完整规则和重叠限制见 [[CIDR]] 独立笔记 |
 
 ### 子网 IP 预留规则
 
@@ -34,8 +34,12 @@
 
 | 类型 | 特点 | 路由表 |
 |------|------|--------|
-| **公有子网** | 有到 IGW 的路由 | `0.0.0.0/0 → IGW` |
-| **私有子网** | 无直接 IGW 访问 | 通过 NAT 网关出站 |
+| **公有子网** | 有到 [[Internet Gateway|IGW]] 的路由 | `0.0.0.0/0 → IGW` |
+| **私有子网** | 无直接 IGW 访问 | 通过 [[NAT Gateway|NAT 网关]]出站 |
+
+> [[Internet Gateway]] 的完整特性、公有子网"四件套"判定条件及与 NAT 网关/[[Virtual Private Gateway|VGW]] 的对比见 [[Internet Gateway]] 独立笔记
+
+> 子网的公私判定逻辑、路由表关联规则、IPv6 子网、与 NACL/Security Group 的关系等完整内容见 [[Subnet]] 独立笔记
 
 ---
 
@@ -47,9 +51,11 @@
 - 默认路由表自动创建，可修改
 - 路由表可以关联多个子网，但一个子网只能关联一个路由表
 
+> 路由表的完整目标类型、最长前缀匹配、路由传播机制等见 [[Route Table]] 独立笔记
+
 ### 出站技术对比（考试重点）
 
-| 特性 | NAT 网关 | NAT 实例 |
+| 特性 | [[NAT Gateway|NAT 网关]] | [[NAT Instance|NAT 实例]] |
 |------|---------|---------|
 | **管理方式** | 完全托管 | 自行管理 EC2 |
 | **带宽扩展** | 自动（100 Gbps） | 手动（取决于实例类型） |
@@ -58,10 +64,12 @@
 | **成本** | 按使用量计费 | EC2 + EIP 费用 |
 | **位置要求** | 必须在公有子网 | 可在任意子网 |
 
+> 完整对比（安全组支持、端口转发、堡垒机复用等）及高可用部署方式见 [[NAT Gateway]] 独立笔记
+
 ### 网络组件关系
 
 ```
-私有子网实例 → NAT 网关 (公有子网) → 弹性 IP (EIP) → IGW → 互联网
+私有子网实例 → [[NAT Gateway|NAT 网关]] (公有子网) → 弹性 IP (EIP) → IGW → 互联网
 ```
 
 ---
@@ -104,106 +112,17 @@
 
 ---
 
-## 4. VPC 终端节点
+## 4. VPC 终端节点与 PrivateLink
 
-### 终端节点类型对比
+- **网关终端节点（Gateway）**：仅支持 S3/DynamoDB，基于路由表条目，完全免费
+- **接口终端节点（Interface）**：基于 **PrivateLink** 技术，覆盖大多数服务，创建 [[ENI]]，按小时+数据处理量计费
+- **PrivateLink（VPC Endpoint Service）**：可反过来将自有 NLB 服务私密共享给其他账号，是"仅暴露单一服务"而非"打通整个网络"的跨账号共享方案
 
-| 类型 | 接口终端节点 (Interface) | 网关终端节点 (Gateway) |
-|------|----------------------|---------------------|
-| **技术** | PrivateLink | 路由表条目 |
-| **支持的 service** | 大多数 AWS 服务（Lambda、SSM、STS 等） | **仅 S3 和 DynamoDB** |
-| **网络类型** | ENI（私有 IP） | 路由表更新 |
-| **可用性** | 跨多 AZ | 无 AZ 概念 |
-| **成本** | 按小时 + 数据处理 | **免费** |
-
-### 终端节点优势
-
-- **私密访问**：无需 IGW/NAT 即可访问 AWS 服务
-- **安全性**：流量不经过公网
-- **VPC 内访问**：通过私有 IP 访问
-- **可配置策略**：通过终端节点策略控制访问权限
+> 完整的两种终端节点对比、私有 DNS 配置、终端节点策略、PrivateLink 架构及与 API Gateway/VPC Peering 的对比见 [[VPC Endpoints]] 独立笔记
 
 ---
 
-## 5. PrivateLink (VPC Endpoint Service)
-
-### 核心概念
-
-> **AWS PrivateLink (VPC Endpoint Service)** 用于在不同账号之间安全地共享 VPC 内的服务。
-
-#### 架构组成
-
-| 组件 | 角色 | 说明 |
-|------|------|------|
-| **网络负载均衡器 (NLB)** | 服务提供者 | 指向 VPC 内的应用实例 |
-| **终端节点服务 (Endpoint Service)** | 服务发布 | 基于 NLB 创建，暴露给消费者 |
-| **接口终端节点 (Interface Endpoint)** | 服务消费者 | 在消费者 VPC 内创建，连接服务 |
-
-#### PrivateLink 工作流程
-
-```
-服务提供者 VPC                    AWS 网络                    服务消费者 VPC
-┌──────────────────┐                                    ┌──────────────────┐
-│  NLB             │                                    │  Interface       │
-│  (Endpoint       │←──────────────────────────────────→│  Endpoint        │
-│   Service)       │                                    │                  │
-│  ↓               │                                    │  ↓               │
-│  应用实例         │                                    │  消费者应用       │
-└──────────────────┘                                    └──────────────────┘
-```
-
-#### 核心优势
-
-| 优势 | 说明 |
-|------|------|
-| **私密性** | 流量完全通过 AWS 内部网络传输，不经过公网 |
-| **跨账号共享** | 不同 AWS 账号可安全访问服务 |
-| **无需复杂配置** | 不需要 VPC 对等连接、NAT 网关或复杂路由 |
-| **天然容错** | PrivateLink 服务自带高可用性 |
-| **安全访问** | 可通过服务策略控制哪些账号可以访问 |
-
-#### PrivateLink vs API Gateway 对比（考试重点）
-
-| 特性 | PrivateLink | API Gateway |
-|------|-----------|-------------|
-| **主要用途** | VPC 内服务跨账号共享 | RESTful/WebSocket API 发布 |
-| **网络层级** | 网络层（L4） | 应用层（L7） |
-| **后端集成** | NLB/ALB | Lambda、HTTP、EC2、ECS 等 |
-| **安全特性** | 服务策略、VPC Endpoint | API Key、IAM、Cognito、限流 |
-| **适用场景** | NLB + 跨账号 + 服务提供者模型 | 客户端 API 调用、协议转换 |
-| **考试关键词** | "NLB"、"服务提供者"、"跨账号 VPC" | "REST API"、"身份验证"、"限流" |
-
-#### 场景题解题思路
-
-```
-场景分析 → 选择跨账号共享方案
-├── "NLB + 跨账号 + 提供服务" → PrivateLink
-├── "VPC 内服务暴露给其他账号" → PrivateLink
-├── "RESTful API + 身份验证" → API Gateway
-├── "协议转换 + 限流" → API Gateway
-└── "流量不走公网" → PrivateLink
-```
-
-#### 常见考试场景分析
-
-**场景：公司需要在不同 AWS 账号之间安全地共享 VPC 内运行的 NLB 应用，属于"服务提供者模型"，最佳方案？**
-
-| 选项 | 是否正确 | 原因 |
-|------|---------|------|
-| **AWS PrivateLink** | ✅ 正确 | NLB + 跨账号 + 服务提供者模型 = PrivateLink 典型用例 |
-| API Gateway | ❌ 错误 | 主要用于 RESTful API，涉及身份验证、限流和协议转换 |
-| VPC 对等连接 | ❌ 错误 | 需要复杂路由配置，不适合服务提供者模型 |
-| 互联网 + IGW | ❌ 错误 | 流量经过公网，不安全 |
-
-**关键总结：**
-- **"NLB + 跨账号 + 提供服务"** → PrivateLink
-- **"VPC 内服务暴露给其他账号"** → PrivateLink
-- **"REST API + 身份验证"** → API Gateway
-- **"流量完全在 AWS 内部网络"** → PrivateLink
-
----
-
-## 6. 高级连接
+## 5. 高级连接
 
 ### VPC 对等连接
 
@@ -221,9 +140,11 @@
 
 | 组件 | 说明 |
 |------|------|
-| **VGW** | AWS 侧的 VPN 集中器 |
-| **CGW** | 用户本地数据中心的物理设备或软件 |
+| **[[Virtual Private Gateway\|VGW]]** | AWS 侧的 VPN 集中器 |
+| **[[Customer Gateway\|CGW]]** | 用户本地数据中心的物理设备或软件 |
 | **类型** | 基于路由 (Route-based) 或基于目标 (Target-based) |
+
+> 隧道冗余、静态/动态（BGP）路由、ECMP 聚合带宽、Accelerated VPN、VPN CloudHub 及与 Direct Connect 的对比见 [[Site to Site VPN]] 独立笔记
 
 ### Transit Gateway
 
@@ -234,7 +155,9 @@
 | **路由** | 支持传递性路由 |
 | **适用场景** | 大规模多 VPC 架构 |
 
-### Direct Connect (DX)
+> 附件类型、专属路由表与网络分段、跨账号共享（AWS RAM）、跨区域 Peering 等完整内容见 [[Transit Gateway]] 独立笔记
+
+### [[Direct Connect]] (DX)
 
 | 特性 | 说明 |
 |------|------|
@@ -244,20 +167,22 @@
 | **加密** | 默认不加密，需结合 VPN |
 | **适用场景** | 大规模数据传输、低延迟需求 |
 
+> 专用/托管连接类型、VIF、Direct Connect Gateway、LAG、高可用弹性模型等完整内容见 [[Direct Connect]] 独立笔记
+
 ---
 
-## 7. 限制和配额
+## 6. 限制和配额
 
 | 限制项 | 默认值 |
 |--------|--------|
 | **每个区域的 VPC 数量** | 1（可申请提升到 100） |
 | **每个 VPC 的子网数量** | 无硬限制 |
 | **每个子网的实例数量** | 取决于可用 IP 数量 |
-| **每个路由表的路由数** | 最多 50 条 |
+| **每个[[Route Table\|路由表]]的路由数** | 最多 50 条 |
 
 ---
 
-## 8. 定价模型
+## 7. 定价模型
 
 ### 计费项
 
@@ -265,31 +190,31 @@
 |--------|------|
 | **VPC** | **免费** |
 | **公有子网** | **免费** |
-| **NAT 网关** | 按运行时间 + 数据处理量 |
-| **NAT 实例** | EC2 + EIP 费用 |
+| **[[NAT Gateway|NAT 网关]]** | 按运行时间 + 数据处理量 |
+| **[[NAT Instance|NAT 实例]]** | EC2 + EIP 费用 |
 | **VPC 对等连接** | 跨区域数据传输费 |
-| **Transit Gateway** | 按连接数 + 数据处理量 |
-| **Direct Connect** | 端口带宽费用 |
-| **网关终端节点** | **免费** |
-| **接口终端节点** | 按小时 + 数据处理量 |
+| **[[Transit Gateway]]** | 按连接数 + 数据处理量 |
+| **[[Direct Connect]]** | 端口带宽费用 |
+| **[[VPC Endpoints\|网关终端节点]]** | **免费** |
+| **[[VPC Endpoints\|接口终端节点]]** | 按小时 + 数据处理量 |
 | **PrivateLink** | 按小时 + 数据处理量 |
 
 > **重要**：VPC 本身和网关终端节点是免费的！
 
 ---
 
-## 9. 考试重点总结
+## 8. 考试重点总结
 
 ### SAA-C02 高频考点
 
 1. **VPC 区域性**：VPC 是区域级服务，无法跨区域
 2. **子网预留 IP**：每个子网预留 5 个 IP
-3. **NAT 网关 vs 实例**：NAT 网关自动扩展，需禁用源/目的地检查
+3. **[[NAT Gateway|NAT 网关]] vs 实例**：[[NAT Gateway|NAT 网关]]自动扩展，需禁用源/目的地检查
 4. **安全组 vs NACL**：有状态 vs 无状态，允许 vs 允许+拒绝
-5. **VPC 终端节点**：接口（大多数服务）vs 网关（仅 S3/DynamoDB，免费）
-6. **PrivateLink**：跨账号服务共享，NLB + 服务提供者模型
-7. **Transit Gateway**：大规模多 VPC 架构
-8. **Direct Connect**：专用物理连接，不走公网
+5. **[[VPC Endpoints|VPC 终端节点]]**：接口（大多数服务）vs 网关（仅 S3/DynamoDB，免费）
+6. **PrivateLink**：跨账号服务共享，NLB + 服务提供者模型，完整对比见 [[VPC Endpoints]] 独立笔记
+7. **[[Transit Gateway]]**：大规模多 VPC 架构
+8. **[[Direct Connect]]**：专用物理连接，不走公网
 9. **[[VPC Peering]]**：不支持重叠 CIDR，不支持传递路由
 10. **VPC 免费**：VPC 本身和网关终端节点免费
 
@@ -297,13 +222,13 @@
 
 ```
 场景分析 → 选择网络方案
-├── "跨账号 VPC 服务共享" → PrivateLink
+├── "跨账号 VPC 服务共享" → PrivateLink（详见 [[VPC Endpoints]]）
 ├── "私密访问 S3/DynamoDB" → 网关终端节点
 ├── "私密访问其他 AWS 服务" → 接口终端节点
-├── "大规模多 VPC 架构" → Transit Gateway
-├── "本地数据中心连接" → Direct Connect / VPN
+├── "大规模多 VPC 架构" → [[Transit Gateway]]
+├── "本地数据中心连接" → [[Direct Connect]] / VPN
 ├── "两个 VPC 互访" → [[VPC Peering]]
-├── "私有子网出站" → NAT 网关
+├── "私有子网出站" → [[NAT Gateway|NAT 网关]]
 └── "DDoS 防护" → [[AWS Shield]] + [[AWS WAF]]
 ```
 
@@ -322,5 +247,5 @@
 - **"跨账号 VPC 服务共享"** → PrivateLink
 - **"私密访问 S3"** → 网关终端节点
 - **"两个 VPC 互访"** → [[VPC Peering]]
-- **"大规模多 VPC"** → Transit Gateway
-- **"不走公网的本地连接"** → Direct Connect
+- **"大规模多 VPC"** → [[Transit Gateway]]
+- **"不走公网的本地连接"** → [[Direct Connect]]

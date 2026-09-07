@@ -109,7 +109,7 @@ S3 提供账户级和 Bucket 级的"公共访问阻止"开关，**独立于**任
 
 ### VPC Endpoint + Bucket Policy 组合限制
 
-- 通过 **Gateway VPC Endpoint** 让 VPC 内资源私有访问 S3，不经过公网
+- 通过 **Gateway [[VPC Endpoints|VPC Endpoint]]** 让 VPC 内资源私有访问 S3，不经过公网
 - 配合 Bucket Policy 的 `aws:SourceVpce` 条件，可实现"**仅允许通过该 VPC Endpoint 的请求访问 Bucket**"，即使凭证泄露，公网发起的请求依然会被拒绝
 
 > **考试要点**：这是"限制 S3 Bucket 仅能被特定 VPC 内的 EC2 实例访问，即使拥有正确凭证也不能从公网访问"这类场景题的标准答案组合。

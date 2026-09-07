@@ -2,7 +2,7 @@
 
 > **Amazon Keyspaces（for Apache Cassandra）** 是完全托管、无服务器（Serverless）的宽列（Wide-Column）NoSQL 数据库服务，与 **Apache Cassandra** 完全兼容——可直接使用现有的 **CQL（Cassandra Query Language）** 代码、开源驱动和运维工具，无需重写应用即可将本地 Cassandra 工作负载迁移上云。
 >
-> 相关文档：[[DynamoDB]] | [[RDS]] | [[Aurora]] | [[Amazon Neptune]] | [[Amazon Timestream]] | [[Amazon DocumentDB]] | [[ElastiCache]] | [[KMS]] | [[VPC]]
+> 相关文档：[[DynamoDB]] | [[RDS]] | [[Aurora]] | [[Amazon Neptune]] | [[Amazon Timestream]] | [[Amazon DocumentDB]] | [[ElastiCache]] | [[KMS]] | [[VPC]] | [[Disaster Recovery On AWS]]
 
 ---
 
@@ -77,14 +77,14 @@
 | **IAM 身份验证** | 支持使用 IAM 角色/用户进行身份验证，无需管理独立的 Cassandra 用户名密码体系 |
 | **静态加密** | 默认使用 AWS 拥有的密钥加密，也可选择客户管理的 [[KMS]] 密钥 |
 | **传输加密** | 客户端与服务的连接默认通过 TLS |
-| **VPC Endpoint** | 支持通过接口终端节点在 [[VPC]] 内私有访问，无需经过公网 |
+| **[[VPC Endpoints\|VPC Endpoint]]** | 支持通过接口终端节点在 [[VPC]] 内私有访问，无需经过公网 |
 | **IPv6 双栈** | 支持 IPv4/IPv6 双栈端点，满足新一代网络合规要求 |
 
 ---
 
 ## 多区域复制（Multi-Region Replication）
 
-- 支持将表配置为**多区域复制表**，在多个 AWS 区域间自动同步数据，实现全球低延迟读写和跨区域灾难恢复
+- 支持将表配置为**多区域复制表**，在多个 AWS 区域间自动同步数据，实现全球低延迟读写和跨区域[[Disaster Recovery On AWS|灾难恢复]]
 - 支持在**已有 Keyspace 基础上追加新区域**，无需重建整个数据集
 - **用户自定义类型（UDT, User Defined Types）**支持多区域一致性，全球化应用可在不同区域保持相同的数据结构定义
 

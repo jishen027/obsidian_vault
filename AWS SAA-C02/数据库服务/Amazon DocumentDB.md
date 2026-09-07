@@ -2,7 +2,7 @@
 
 > **Amazon DocumentDB（with MongoDB compatibility）** 是完全托管、与 **MongoDB** 兼容的**文档数据库**服务，支持现有 MongoDB 驱动、工具和应用代码，让 JSON 风格的半结构化文档数据获得云原生的可扩展性、高可用性和运维托管能力，而无需自建和运维 MongoDB 集群。
 >
-> 相关文档：[[DynamoDB]] | [[Amazon Keyspaces]] | [[Amazon Neptune]] | [[Amazon Timestream]] | [[RDS]] | [[Aurora]] | [[KMS]] | [[VPC]]
+> 相关文档：[[DynamoDB]] | [[Amazon Keyspaces]] | [[Amazon Neptune]] | [[Amazon Timestream]] | [[RDS]] | [[Aurora]] | [[KMS]] | [[VPC]] | [[Disaster Recovery On AWS]]
 
 ---
 
@@ -58,7 +58,7 @@
 
 ---
 
-## 高可用与灾难恢复
+## 高可用与[[Disaster Recovery On AWS|灾难恢复]]
 
 | 机制 | 说明 |
 |------|------|

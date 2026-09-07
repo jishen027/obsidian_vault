@@ -2,7 +2,7 @@
 
 > **Amazon ElastiCache** 是一种完全托管的内存数据存储服务，支持 **Valkey** 和 **Memcached** 两种引擎，用于在应用与数据库之间加入缓存层，降低延迟并减轻后端数据库压力。
 >
-> 相关文档：[[RDS]] | [[Aurora]] | [[DynamoDB]] | [[Amazon Kinesis]]
+> 相关文档：[[RDS]] | [[Aurora]] | [[DynamoDB]] | [[Amazon Kinesis]] | [[Disaster Recovery On AWS]]
 
 > **背景说明**：Redis 商业授权变更后，AWS 与 Linux Foundation 联合推出开源分支 **Valkey**，作为 ElastiCache 上与 Redis 命令/协议兼容的推荐引擎；ElastiCache 已不再提供 Redis OSS 作为新引擎选项，考试和实际部署中应以 Valkey 为准。
 
@@ -48,7 +48,7 @@
 ### Valkey 高可用
 
 - **Multi-AZ + 自动故障转移**：主节点故障时自动将只读副本提升为新主节点
-- **Global Datastore**：跨区域异步复制，用于灾难恢复和降低全球读取延迟（延迟通常为秒级）
+- **Global Datastore**：跨区域异步复制，用于[[Disaster Recovery On AWS|灾难恢复]]和降低全球读取延迟（延迟通常为秒级）
 
 ### Memcached：水平扩展
 

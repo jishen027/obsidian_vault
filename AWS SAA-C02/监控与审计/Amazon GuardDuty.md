@@ -1,8 +1,8 @@
 # Amazon GuardDuty - 智能威胁检测
 
-> **Amazon GuardDuty** 是全托管的**智能威胁检测**服务，持续分析 [[CloudTrail]] 事件、[[VPC]] 流日志、DNS 日志等多种数据源，结合机器学习、异常检测和威胁情报，自动识别账户内的**凭证被盗、恶意侦察、恶意软件、异常 API 调用**等安全威胁，无需部署或管理任何检测基础设施。
+> **Amazon GuardDuty** 是全托管的**智能威胁检测**服务，持续分析 [[CloudTrail]] 事件、[[VPC Flow Logs|VPC 流日志]]、DNS 日志等多种数据源，结合机器学习、异常检测和威胁情报，自动识别账户内的**凭证被盗、恶意侦察、恶意软件、异常 API 调用**等安全威胁，无需部署或管理任何检测基础设施。
 >
-> 相关文档：[[CloudTrail]] | [[VPC]] | [[AWS Config]] | [[AWS WAF]] | [[AWS Shield]] | [[IAM]] | [[AWS Organizations]] | [[EKS]] | [[Amazon Inspector]] | [[Amazon Macie]]
+> 相关文档：[[CloudTrail]] | [[VPC]] | [[VPC Flow Logs]] | [[AWS Config]] | [[AWS WAF]] | [[AWS Shield]] | [[IAM]] | [[AWS Organizations]] | [[EKS]] | [[Amazon Inspector]] | [[Amazon Macie]]
 
 ---
 
@@ -10,7 +10,7 @@
 
 ### 为什么需要 GuardDuty
 
-- **人工审查日志的局限**：CloudTrail/VPC Flow Logs 等原始日志量巨大，人工排查异常几乎不可能覆盖全部攻击面，且许多攻击模式（凭证被盗后的横向移动、恶意软件通信）需要跨多个数据源关联分析才能识别
+- **人工审查日志的局限**：CloudTrail/[[VPC Flow Logs]] 等原始日志量巨大，人工排查异常几乎不可能覆盖全部攻击面，且许多攻击模式（凭证被盗后的横向移动、恶意软件通信）需要跨多个数据源关联分析才能识别
 - **GuardDuty 的核心价值**：**无需部署代理、无需管理基础设施**，直接分析账户已有的日志和网络流数据，结合 AWS 安全团队维护的**威胁情报**（已知恶意 IP、域名）和**机器学习异常检测**模型，自动生成带严重程度评级的安全发现（Findings）
 - **开箱即用**：启用后立即开始分析历史可用数据，无需预先配置规则或训练模型，是"零基础设施"的威胁检测方案
 
@@ -35,7 +35,7 @@
 |--------|---------|
 | **[[CloudTrail]] 管理事件** | 异常的账户级 API 调用行为（如异地登录、权限提升尝试） |
 | **[[CloudTrail]] S3 数据事件** | S3 对象级别的异常访问模式，识别潜在的数据泄露或凭证滥用（S3 Protection） |
-| **[[VPC]] 流日志** | 网络层面的异常流量，如与已知恶意 IP 的通信、端口扫描 |
+| **[[VPC Flow Logs\|VPC 流日志]]** | 网络层面的异常流量，如与已知恶意 IP 的通信、端口扫描 |
 | **DNS 日志** | 恶意域名查询、命令与控制（C2）通信特征 |
 | **EKS 审计日志 + 运行时监控** | Kubernetes 集群的异常操作和容器运行时的可疑进程/恶意软件执行（EKS Protection） |
 | **RDS 登录活动** | 数据库异常登录尝试，识别潜在的凭证滥用（RDS Protection） |
@@ -49,7 +49,7 @@
 
 | 模块 | 说明 |
 |------|------|
-| **基础威胁检测** | 分析 CloudTrail/VPC Flow Logs/DNS 日志，识别异常 API 调用、可疑网络通信等基础威胁模式 |
+| **基础威胁检测** | 分析 CloudTrail/[[VPC Flow Logs]]/DNS 日志，识别异常 API 调用、可疑网络通信等基础威胁模式 |
 | **S3 Protection** | 检测 S3 对象级 API 调用中的异常模式，识别潜在的凭证泄露或恶意访问 |
 | **EKS Protection** | 分析 EKS 审计日志识别 Kubernetes 层面的可疑操作；结合**运行时监控（Runtime Monitoring）**进一步获得容器级可见性，检测恶意进程和运行时行为 |
 | **RDS Protection** | 监控数据库登录活动，识别异常或暴力破解式的登录尝试 |
@@ -131,7 +131,7 @@
 
 1. **核心定位**：全托管智能威胁检测服务，分析多数据源识别安全威胁，检测而非主动拦截
 2. **判断依据**：需要"发现是否存在威胁/入侵迹象"选 GuardDuty；需要"主动拦截攻击"选 WAF/Shield
-3. **无需部署基础设施**：直接分析已有的 CloudTrail/VPC Flow Logs/DNS 日志，开箱即用
+3. **无需部署基础设施**：直接分析已有的 CloudTrail/[[VPC Flow Logs]]/DNS 日志，开箱即用
 4. **多个防护模块按需启用**：S3/EKS/RDS/Lambda Protection 分别针对不同资源类型的威胁，并非全部默认开启
 5. **Malware Protection 覆盖 EC2/S3/备份**：扫描 EBS 卷和 S3 对象，还可在恢复前扫描备份数据
 6. **Extended Threat Detection 自动启用且免费**：识别跨数据源、跨时间线的多阶段攻击链，是核心差异化能力

@@ -2,7 +2,7 @@
 
 > **AWS Snowball** 是 AWS Snow 家族的核心成员，通过**物理存储设备**在本地环境与 AWS 之间安全地迁移大规模（TB 到 PB 级）数据，专为网络带宽受限或成本过高的场景设计。
 >
-> 相关文档：[[Storage Service]] | [[AWS DataSync]] | [[AWS Storage Gateway]] | [[S3]] | [[EBS]] | [[AWS EFS]] | [[KMS]]
+> 相关文档：[[Storage Service]] | [[AWS DataSync]] | [[AWS Storage Gateway]] | [[S3]] | [[EBS]] | [[AWS EFS]] | [[KMS]] | [[Disaster Recovery On AWS]]
 
 ---
 
@@ -71,7 +71,7 @@
 | **Snowmobile**          | 集装箱卡车运输     | 单次迁移达 **Exabyte** 级别的超大规模数据中心迁移                                                       |
 | [[AWS DataSync]]        | 网络自动化传输     | 有可用网络带宽，需要持续/增量同步本地与 [[S3]]/[[AWS EFS]]/[[AWS FSx]] 数据 |
 | [[AWS Storage Gateway]] | 混合云网关（持续在线） | 长期、持续的本地与云存储集成，而非一次性迁移                                                                |
-| **AWS Direct Connect**  | 专线网络连接      | 需要长期稳定、低延迟的本地到 AWS 专线，带宽充足时的更优选择                                                      |
+| **[[Direct Connect]]**  | 专线网络连接      | 需要长期稳定、低延迟的本地到 AWS 专线，带宽充足时的更优选择                                                      |
 
 > **考试陷阱**：**一次性大规模迁移用 Snowball/Snowmobile；持续/增量同步用 DataSync**；题目若强调"每天/每周持续同步本地文件系统改动到云端"，答案通常是 **DataSync** 而非 Snowball（Snowball 是一次性物理搬运，不适合持续同步场景）。
 
@@ -87,7 +87,7 @@
 | **空间受限、只需小规模数据采集** | Snowcone / Snowcone SE |
 | **持续增量同步本地文件到 S3/EFS/FSx** | AWS DataSync（非 Snowball） |
 | **长期混合云存储集成** | [[AWS Storage Gateway]]（非 Snowball） |
-| **灾难恢复场景下需要快速导出云上数据到本地** | Snowball Edge 导出任务 |
+| **[[Disaster Recovery On AWS\|灾难恢复]]场景下需要快速导出云上数据到本地** | Snowball Edge 导出任务 |
 
 ---
 
@@ -117,7 +117,7 @@
 ├── "需要每天/持续同步本地文件到 S3/EFS/FSx" → [[AWS DataSync]]（非 Snowball）
 ├── "需要长期、持续的本地与云存储混合集成" → [[AWS Storage Gateway]]（非 Snowball）
 ├── "需要把云上数据快速导出到本地" → Snowball Edge 导出任务
-└── "网络带宽充足且需长期低延迟专线" → AWS Direct Connect（非 Snowball）
+└── "网络带宽充足且需长期低延迟专线" → [[Direct Connect]]（非 Snowball）
 ```
 
 ---

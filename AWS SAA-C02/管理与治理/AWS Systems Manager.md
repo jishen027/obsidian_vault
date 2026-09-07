@@ -1,8 +1,8 @@
 # AWS Systems Manager (SSM) - 统一运维管理中枢
 
-> **AWS Systems Manager（SSM）** 是大规模服务器和资源的**统一运维管理**服务，覆盖安全远程访问、命令执行、补丁管理、配置合规、参数/密钥存储等运维全场景，核心优势是**无需堡垒机、无需开放 SSH/RDP 端口**即可安全管理海量 EC2 实例乃至本地/多云服务器。
+> **AWS Systems Manager（SSM）** 是大规模服务器和资源的**统一运维管理**服务，覆盖安全远程访问、命令执行、补丁管理、配置合规、参数/密钥存储等运维全场景，核心优势是**无需[[Bastion Hosts|堡垒机]]、无需开放 SSH/RDP 端口**即可安全管理海量 EC2 实例乃至本地/多云服务器。
 >
-> 相关文档：[[EC2]] | [[AWS Config]] | [[AWS CloudFormation]] | [[AWS OpsWorks]] | [[AWS Secrets Manager]] | [[IAM]] | [[CloudWatch]] | [[KMS]] | [[VPC]]
+> 相关文档：[[EC2]] | [[AWS Config]] | [[AWS CloudFormation]] | [[AWS OpsWorks]] | [[AWS Secrets Manager]] | [[IAM]] | [[CloudWatch]] | [[KMS]] | [[VPC]] | [[Bastion Hosts]] | [[Disaster Recovery On AWS]]
 
 ---
 
@@ -10,7 +10,7 @@
 
 ### 为什么需要 Systems Manager
 
-- **传统运维方式的痛点**：管理大规模服务器队列需要 SSH 密钥分发、堡垒机维护、开放特定端口，带来安全风险和运维复杂度；批量执行命令、打补丁、检查配置漂移更是缺乏统一工具
+- **传统运维方式的痛点**：管理大规模服务器队列需要 SSH 密钥分发、[[Bastion Hosts|堡垒机]]维护、开放特定端口，带来安全风险和运维复杂度；批量执行命令、打补丁、检查配置漂移更是缺乏统一工具
 - **Systems Manager 的核心价值**：通过安装在实例上的 **SSM Agent** 建立与 AWS 的**出站**连接（无需开放入站端口），所有操作通过 IAM 权限控制并记录审计日志，将命令执行、补丁、配置管理、参数存储统一到一套工具链中
 - **托管节点范围**：不局限于 EC2，也支持**本地数据中心服务器**和**其他云的实例**（通过混合激活 Hybrid Activations 注册），实现跨环境的统一运维视图
 
@@ -18,7 +18,7 @@
 
 | 服务 | 类型 | 场景 | 特点 |
 |------|------|------|------|
-| **Systems Manager** | 无代理式统一运维管理 | 大规模服务器的安全访问、命令执行、补丁、配置管理 | 无需堡垒机/SSH，IAM 权限控制，跨云跨环境 |
+| **Systems Manager** | 无代理式统一运维管理 | 大规模服务器的安全访问、命令执行、补丁、配置管理 | 无需[[Bastion Hosts\|堡垒机]]/SSH，IAM 权限控制，跨云跨环境 |
 | [[AWS OpsWorks]] | 基于 Chef/Puppet 的配置管理 | 已有 Chef/Puppet Cookbook 资产的团队 | 依赖第三方配置管理工具生态 |
 | [[AWS CloudFormation]] | 基础设施即代码 | 资源的声明式创建和管理 | 面向"资源本身"而非"资源运行后的运维" |
 
@@ -28,9 +28,9 @@
 
 ## Session Manager（会话管理器）
 
-- 无需开放 **SSH（22）/RDP（3389）**入站端口、无需管理 SSH 密钥或堡垒机，即可通过浏览器/CLI 直接获得实例的交互式 Shell
+- 无需开放 **SSH（22）/RDP（3389）**入站端口、无需管理 SSH 密钥或[[Bastion Hosts|堡垒机]]，即可通过浏览器/CLI 直接获得实例的交互式 Shell
 - 访问权限完全由 **IAM 策略**控制，会话活动可记录到 [[CloudWatch]] Logs 或 [[S3]]，满足审计要求
-- **考试要点**：题目描述"需要安全地远程访问私有子网中的 EC2 实例，且不希望开放任何入站端口" → **Session Manager** 是标准答案，彻底消除了传统堡垒机方案的攻击面
+- **考试要点**：题目描述"需要安全地远程访问私有子网中的 EC2 实例，且不希望开放任何入站端口" → **Session Manager** 是标准答案，彻底消除了传统堡垒机方案的攻击面，完整的堡垒机加固要求和三方案对比见 [[Bastion Hosts]] 独立笔记
 
 ### Just-in-Time 节点访问（新特性）
 
@@ -63,7 +63,7 @@
 
 ## Automation（自动化运维）
 
-- 使用预定义或自定义的 **Automation 文档（Runbook）**，编排跨多个步骤的复杂运维任务（如 AMI 构建、资源修复、灾难恢复演练）
+- 使用预定义或自定义的 **Automation 文档（Runbook）**，编排跨多个步骤的复杂运维任务（如 AMI 构建、资源修复、[[Disaster Recovery On AWS|灾难恢复]]演练），是 [[Disaster Recovery On AWS]] 笔记中"故障转移流程自动化"的标准实现
 - **与 [[AWS Config]] 的标准组合**：Config 检测到资源配置违反合规规则后，可触发 SSM Automation 文档自动修复，实现"检测 + 修复"的自愈式治理闭环（详见 [[AWS Config]] 笔记）
 
 ---
@@ -135,7 +135,7 @@
 ### SAA-C02 高频考点
 
 1. **核心定位**：无代理式统一运维管理，覆盖安全访问、命令执行、补丁、配置管理、参数存储
-2. **Session Manager 消除堡垒机需求**：无需开放 SSH/RDP 入站端口，权限完全由 IAM 控制
+2. **Session Manager 消除[[Bastion Hosts|堡垒机]]需求**：无需开放 SSH/RDP 入站端口，权限完全由 IAM 控制
 3. **Run Command 用于批量异步命令执行**：无需逐台登录实例
 4. **Patch Manager + Maintenance Windows**：自动化补丁管理并限定在业务低峰期执行
 5. **State Manager vs AWS Config**：前者主动强制维持目标状态，后者检测并记录配置合规状态
@@ -165,7 +165,7 @@
 
 ## 最佳实践
 
-1. **默认使用 Session Manager 替代传统堡垒机**：消除 SSH 端口暴露的攻击面，同时获得完整的会话审计记录
+1. **默认使用 Session Manager 替代传统[[Bastion Hosts|堡垒机]]**：消除 SSH 端口暴露的攻击面，同时获得完整的会话审计记录
 2. **高危运维访问启用 Just-in-Time 访问**：贯彻零常驻权限，降低长期持有访问权限的风险
 3. **补丁安装结合 Maintenance Windows 避开业务高峰**：减少补丁操作对生产流量的影响
 4. **State Manager 与 Config 分工协作**：State Manager 主动维持状态，Config 负责检测合规并触发修复

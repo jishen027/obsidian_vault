@@ -93,7 +93,7 @@
 | **SQS 访问策略（Access Policy）** | 附加在队列上的资源策略，类似 S3 Bucket Policy，支持跨账户授权其他账户直接向队列发送消息 |
 | **传输加密** | 所有 API 调用默认通过 HTTPS |
 | **静态加密（SSE）** | 可选启用，使用 [[KMS]] 管理的密钥对队列中的消息内容加密 |
-| **VPC Endpoint（接口终端节点）** | 让 VPC 内资源通过私有网络访问 SQS，无需经过公网/NAT 网关 |
+| **[[VPC Endpoints\|VPC Endpoint]]（接口终端节点）** | 让 VPC 内资源通过私有网络访问 SQS，无需经过公网/[[NAT Gateway\|NAT 网关]] |
 
 ---
 

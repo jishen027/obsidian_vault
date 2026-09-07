@@ -2,7 +2,7 @@
 
 > **Amazon MSK（Managed Streaming for Apache Kafka）** 是全托管的 **Apache Kafka** 服务，让用户能够构建和运行基于开源 Kafka 的实时流数据管道，兼容标准 Kafka API、客户端和生态工具（Kafka Connect、Kafka Streams 等），无需自行部署、运维和修补 Kafka/ZooKeeper 集群。
 >
-> 相关文档：[[Amazon Kinesis]] | [[Amazon Managed Service for Apache Flink]] | [[Amazon EMR]] | [[AWS Glue]] | [[S3]] | [[Redshift]] | [[VPC]] | [[KMS]]
+> 相关文档：[[Amazon Kinesis]] | [[Amazon Managed Service for Apache Flink]] | [[Amazon EMR]] | [[AWS Glue]] | [[S3]] | [[Redshift]] | [[VPC]] | [[KMS]] | [[Disaster Recovery On AWS]]
 
 ---
 
@@ -65,7 +65,7 @@
 ## MSK Replicator
 
 - 托管的跨区域/同区域数据复制能力，替代自建 **MirrorMaker 2**，简化 Kafka 集群间的数据复制配置
-- 典型用途：跨区域灾难恢复、多区域低延迟读取、将本地 Kafka 集群数据持续复制到 AWS 云端
+- 典型用途：跨区域[[Disaster Recovery On AWS|灾难恢复]]、多区域低延迟读取、将本地 Kafka 集群数据持续复制到 AWS 云端
 
 ---
 

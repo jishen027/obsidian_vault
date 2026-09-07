@@ -2,7 +2,7 @@
 
 > **AWS Key Management Service (KMS)** 是集中管理加密密钥的核心托管服务，负责密钥的创建、轮换、禁用、删除全生命周期管理，并与几乎所有 AWS 存储/数据库服务深度集成，为静态数据提供透明的加密保护，是 AWS 安全体系中"数据加密"这一维度的基础设施。
 >
-> 相关文档：[[S3]] | [[S3 Security]] | [[EBS]] | [[AWS EFS]] | [[RDS]] | [[DynamoDB]] | [[IAM]] | [[CloudTrail]] | [[AWS Secrets Manager]] | [[AWS CloudHSM]]
+> 相关文档：[[S3]] | [[S3 Security]] | [[EBS]] | [[AWS EFS]] | [[RDS]] | [[DynamoDB]] | [[IAM]] | [[CloudTrail]] | [[AWS Secrets Manager]] | [[AWS CloudHSM]] | [[Disaster Recovery On AWS]]
 
 ---
 
@@ -72,7 +72,7 @@
 ## 多区域密钥（Multi-Region Keys）
 
 - 支持创建**密钥材料相同**的主密钥副本并分发到多个区域，应用可在不同区域用各自的区域密钥加解密**同一份数据**，无需跨区域调用 KMS API
-- **典型场景**：[[DynamoDB]] 全球表（Global Tables）、Aurora 全球数据库等跨区域复制架构的静态加密需求，以及跨区域灾难恢复场景下避免"数据在异地却无法解密"的问题
+- **典型场景**：[[DynamoDB]] 全球表（Global Tables）、Aurora 全球数据库等跨区域复制架构的静态加密需求，以及 [[Disaster Recovery On AWS|跨区域灾难恢复]]场景下避免"数据在异地却无法解密"的问题
 - 多区域密钥仍是**独立的 KMS 资源**（各区域各自计费和管理），只是共享密钥材料，而非单一的全局密钥
 
 ---

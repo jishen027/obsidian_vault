@@ -2,7 +2,7 @@
 
 > **Elastic Load Balancing (ELB)** 是 AWS 的托管负载均衡服务，充当流量的"指挥官"，将请求分发到健康的后端资源，并与 [[Auto Scaling]] 紧密集成实现弹性扩展。
 >
-> 相关文档：[[Auto Scaling]] | [[EC2]] | [[Security Group]] | [[VPC]] | [[AWS Certificate Manager (ACM)]]
+> 相关文档：[[Auto Scaling]] | [[EC2]] | [[Security Group]] | [[VPC]] | [[AWS Certificate Manager (ACM)]] | [[VPC Traffic Mirroring]]
 
 ---
 
@@ -68,7 +68,7 @@ ALB 的**目标组 (Target Group)** 在创建时需要指定**目标类型 (Targ
 - 可注册的 IP 范围包括：
   - **本 VPC 内**的资源（EC2 实例私有 IP、ENI）
   - **对等 (Peered) VPC** 中的资源
-  - 通过 **Direct Connect / Site-to-Site VPN** 连接的**本地数据中心 (on-premises)** 服务器 IP，实现**混合云负载均衡**
+  - 通过 **[[Direct Connect]] / Site-to-Site VPN** 连接的**本地数据中心 (on-premises)** 服务器 IP，实现**混合云负载均衡**
   - **容器化应用**（如 [[ECS]] 任务的私有 IP，尤其是 `awsvpc` 网络模式下每个任务拥有独立 IP）
 - 不能注册以下类型 IP：EC2 实例的公有 IP、部分 AWS 托管服务的 IP 段
 
@@ -217,6 +217,8 @@ ELB 通过 **Cookie** 实现粘性会话。最常用、也是最简单的方式�
 - 部署第三方**防火墙 / IDS / IPS** 虚拟设备集群
 - 需要对**所有进出 VPC 的流量**进行统一安全检测
 
+> **考试陷阱**：**GWLB 是在线（Inline）方案，能主动拦截/修改流量**——不要与带外（Out-of-Band）复制流量、只能被动分析且**无法拦截**的 **[[VPC Traffic Mirroring]]** 混淆；题目描述"需要主动阻断检测到的恶意流量" → GWLB，题目描述"只需被动分析/取证，绝不能影响生产流量路径" → Traffic Mirroring，完整对比见 [[VPC Traffic Mirroring]] 独立笔记。
+
 ---
 
 ## Classic Load Balancer (CLB)
@@ -332,7 +334,7 @@ ELB 通过 **Cookie** 实现粘性会话。最常用、也是最简单的方式�
 ├── "HTTP/HTTPS + 基于路径/主机名/HTTP 头/方法/查询字符串/源 IP 路由" → ALB
 ├── "微服务架构 / 容器化应用（ECS）" → ALB
 ├── "需要将请求路由到 Lambda" → ALB（目标组类型选 Lambda）
-├── "需要负载均衡跨对等 VPC / 本地数据中心（Direct Connect/VPN）的服务器" → ALB（目标组类型选 IP）
+├── "需要负载均衡跨对等 VPC / 本地数据中心（[[Direct Connect]]/VPN）的服务器" → ALB（目标组类型选 IP）
 ├── "极致性能 + 百万级请求/秒" → NLB
 ├── "需要固定/静态 IP 对接白名单" → NLB
 ├── "需要保留客户端真实源 IP" → NLB

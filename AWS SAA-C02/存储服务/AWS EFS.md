@@ -2,7 +2,7 @@
 
 > **EFS (Elastic File System)** 是一种基于 **NFS (Network File System)** 协议的无服务器、弹性可扩展的分布式文件存储服务。专为需要共享文件访问的跨实例协作场景设计。
 >
-> 相关文档：[[Storage Service]] | [[EBS]] | [[S3]] | [[AWS FSx]] | [[VPC]]
+> 相关文档：[[Storage Service]] | [[EBS]] | [[S3]] | [[AWS FSx]] | [[VPC]] | [[Disaster Recovery On AWS]]
 
 ---
 
@@ -89,14 +89,14 @@
 
 - 实例通过 **[[VPC]]** 内部连接 EFS，流量不经过公网
 - 通过 **EFS 挂载点 (Mount Target)** 在子网中暴露 NFS 端点
-- 支持 **跨 VPC 挂载**：使用 [[VPC Peering]] 或 Transit Gateway 实现
+- 支持 **跨 VPC 挂载**：使用 [[VPC Peering]] 或 [[Transit Gateway]] 实现
 - 支持 **混合云架构**：通过 [[AWS DataSync]] 或 **EFS Access Points** 实现本地与云端的文件同步
 
 ### 网络安全
 
 - 通过 **安全组** 控制对 EFS 挂载点的访问（参考 [[Security Group]] 和 [[NACL]]）
 - 仅允许来自特定安全组或子网的 NFS 流量（端口 2049）
-- 支持 **VPC Endpoints (Interface Endpoint)**：通过私有网络访问 EFS，不经过公网
+- 支持 **[[VPC Endpoints]] (Interface Endpoint)**：通过私有网络访问 EFS，不经过公网
 
 ### 数据加密
 
@@ -154,7 +154,7 @@
 1. **跨多 AZ 部署**：利用多可用区实现高可用
 2. **使用 Access Points**：简化应用访问，增强安全性
 3. **启用自动数据分层**：降低冷数据存储成本
-4. **配置 AWS Backup**：实现自动化备份和灾难恢复
+4. **配置 AWS Backup**：实现自动化备份和[[Disaster Recovery On AWS|灾难恢复]]
 5. **通过安全组限制访问**：仅允许必要的 NFS 流量（参考 [[Security Group]]）
 
 ### 与 AWS Snowball 的数据迁移

@@ -2,7 +2,7 @@
 
 > **Amazon EC2 (Elastic Compute Cloud)** 是 AWS 的核心计算服务，提供安全、可调整的虚拟服务器容量。它是 AWS 云中最基础和最常用的计算服务。
 >
-> 相关文档：[[EBS]] | [[AWS EFS]] | [[Security Group]] | [[Auto Scaling]] | [[IAM]] | [[CloudWatch]]
+> 相关文档：[[EBS]] | [[AWS EFS]] | [[Security Group]] | [[Auto Scaling]] | [[IAM]] | [[CloudWatch]] | [[Disaster Recovery On AWS]]
 
 ---
 
@@ -427,8 +427,8 @@ m5.large
 
 ### 跨区域部署
 
-- 在**多个区域**部署实例实现灾难恢复
-- 使用 **Route 53** 实现 DNS 级别故障转移
+- 在**多个区域**部署实例实现[[Disaster Recovery On AWS|灾难恢复]]，完整的策略选择（备份恢复/引导恢复/温备份/多活）见 [[Disaster Recovery On AWS]] 独立笔记
+- 使用 **[[Route 53 DNS|Route 53]]** 实现 DNS 级别故障转移
 - 使用 **S3 Cross-Region Replication** 同步数据
 
 ---

@@ -83,7 +83,7 @@
 
 - Lambda 默认运行在 AWS 托管的网络环境中，可直接访问公网服务和大多数 AWS 服务
 - 若函数需要访问 [[VPC]] 内的私有资源（如 RDS 私有子网中的数据库），需将 Lambda **配置进 VPC**（指定子网和安全组）
-- **考试陷阱**：Lambda 配置进 VPC 私有子网后，若还需要访问公网/其他 AWS 服务，必须通过 **NAT Gateway** 或对应的 **VPC Endpoint**，否则会因缺少出网路径而调用超时
+- **考试陷阱**：Lambda 配置进 VPC 私有子网后，若还需要访问公网/其他 AWS 服务，必须通过 **[[NAT Gateway]]** 或对应的 **[[VPC Endpoints|VPC Endpoint]]**，否则会因缺少出网路径而调用超时
 
 ---
 
@@ -140,7 +140,7 @@
 3. **CPU 算力由内存决定**：无独立 CPU 配置项，性能不足时应调高内存
 4. **预留并发 vs 预置并发**：前者保证/限制并发配额，后者消除冷启动延迟，二者机制不同
 5. **三种触发模式**：同步（API Gateway）、异步（S3/SNS，可配置失败目的地）、事件源映射（SQS/Kinesis/DynamoDB Streams，支持批处理）
-6. **VPC 内资源访问需显式配置**：进入私有子网后仍需 NAT Gateway/VPC Endpoint 才能访问公网或其他 AWS 服务
+6. **VPC 内资源访问需显式配置**：进入私有子网后仍需 [[NAT Gateway]]/[[VPC Endpoints|VPC Endpoint]] 才能访问公网或其他 AWS 服务
 7. **执行角色遵循最小权限**：函数通过 IAM 执行角色获得访问其他服务的权限，而非硬编码密钥
 8. **版本 + 别名实现灰度发布**：结合 CodeDeploy 加权别名做金丝雀/线性部署
 9. **支持容器镜像部署**：最大 10 GB，兼容现有 Docker 工具链
@@ -157,7 +157,7 @@
 ├── "需要降低高频 API 的首次调用延迟（冷启动）" → 预置并发（Provisioned Concurrency）
 ├── "需要处理 SQS/Kinesis/DynamoDB Streams 中的流式数据" → 事件源映射 + 批处理
 ├── "异步调用失败后不想丢失事件" → 配置 On-Failure Destination（SQS/SNS/[[Amazon EventBridge]]）
-├── "需要访问 VPC 私有子网中的 RDS，同时还要访问公网 API" → Lambda 进 VPC + NAT Gateway
+├── "需要访问 VPC 私有子网中的 RDS，同时还要访问公网 API" → Lambda 进 VPC + [[NAT Gateway]]
 └── "需要平滑上线新版本、可快速回滚" → 版本 + 别名 + CodeDeploy 加权流量迁移
 ```
 

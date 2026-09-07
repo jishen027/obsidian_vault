@@ -77,7 +77,7 @@
 | **IAM 权限控制** | 通过 IAM 策略控制对 Timestream 数据库/表的访问 |
 | **静态加密** | 默认启用，使用 [[KMS]] 管理的密钥加密存储数据 |
 | **传输加密** | 客户端与服务的连接默认通过 TLS |
-| **VPC Endpoint** | 支持通过接口终端节点在 VPC 内私有访问 Timestream API |
+| **[[VPC Endpoints\|VPC Endpoint]]** | 支持通过接口终端节点在 VPC 内私有访问 Timestream API |
 
 ---
 

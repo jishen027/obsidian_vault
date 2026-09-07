@@ -2,7 +2,7 @@
 
 > **Amazon DynamoDB** 是完全托管的 **NoSQL** 数据库服务，为键值和文档数据模型提供**单毫秒级延迟**、无固定架构（Schemaless）的存储，并原生支持跨可用区、跨区域的高可用与弹性扩展。
 >
-> 相关文档：[[RDS]] | [[Aurora]] | [[ElastiCache]] | [[Amazon Neptune]] | [[Amazon Keyspaces]] | [[Amazon Timestream]] | [[Amazon DocumentDB]] | [[AWS Lambda]] | [[SQS]] | [[VPC]] | [[KMS]]
+> 相关文档：[[RDS]] | [[Aurora]] | [[ElastiCache]] | [[Amazon Neptune]] | [[Amazon Keyspaces]] | [[Amazon Timestream]] | [[Amazon DocumentDB]] | [[AWS Lambda]] | [[SQS]] | [[VPC]] | [[KMS]] | [[Disaster Recovery On AWS]]
 
 ---
 
@@ -96,7 +96,7 @@
 
 - 通过 **Global Tables** 功能，可在**多个 AWS 区域之间自动进行多主（Multi-Master）双向复制**
 - 每个区域的表都可读可写，冲突通过"最后写入者获胜（Last Writer Wins）"策略自动解决
-- 适用于需要**低延迟全球访问**或**跨区域灾难恢复**的应用
+- 适用于需要**低延迟全球访问**或**跨区域[[Disaster Recovery On AWS|灾难恢复]]**的应用——是 [[Disaster Recovery On AWS]] 笔记中"多活（Multi-Site Active/Active）"策略的典型数据层实现，写冲突通过 Last Writer Wins 自动解决
 
 ---
 
@@ -118,7 +118,7 @@
 | **静态加密** | 默认启用，使用 AWS 拥有的密钥或客户管理的 [[KMS]] 密钥 |
 | **传输加密** | 所有 API 调用默认通过 HTTPS/TLS |
 | **IAM 精细授权（Fine-Grained Access Control）** | 通过 IAM Policy 的 `dynamodb:LeadingKeys` 条件键，限制用户只能访问**分区键与其身份标识匹配**的 Item，实现多租户场景下的行级隔离 |
-| **VPC Endpoint（网关终端节点）** | DynamoDB 是少数支持**网关终端节点**的服务之一（与 S3 同类），VPC 内资源可免费、私有地访问 DynamoDB，无需 NAT 网关 |
+| **VPC Endpoint（[[VPC Endpoints|网关终端节点]]）** | DynamoDB 是少数支持**[[VPC Endpoints|网关终端节点]]**的服务之一（与 S3 同类），VPC 内资源可免费、私有地访问 DynamoDB，无需 [[NAT Gateway|NAT 网关]] |
 
 ---
 
@@ -165,7 +165,7 @@
 7. **DynamoDB Streams + Lambda**：构建事件驱动架构和实时数据处理的标准组合
 8. **Global Tables 是多主复制**：跨区域可读可写，冲突用"最后写入者获胜"解决
 9. **事务 vs 批量操作**：需要原子性用 Transactions，只求吞吐效率用 Batch 操作
-10. **网关终端节点免费私有访问**：DynamoDB 与 S3 同属可用网关终端节点的服务，VPC 内访问无需 NAT
+10. **[[VPC Endpoints|网关终端节点]]免费私有访问**：DynamoDB 与 S3 同属可用[[VPC Endpoints|网关终端节点]]的服务，VPC 内访问无需 NAT
 11. **IAM LeadingKeys 实现行级权限**：多租户场景下限制用户只能访问自己的 Item
 12. **PITR 恢复窗口 35 天**：与 RDS 自动备份的恢复能力类似
 
@@ -181,7 +181,7 @@
 ├── "需要根据数据变更实时触发处理逻辑" → DynamoDB Streams + Lambda
 ├── "需要全球多区域低延迟读写" → Global Tables
 ├── "需要跨多个 Item 保证原子性" → Transactions API（而非 BatchWriteItem）
-├── "VPC 内需要私有、免费访问 DynamoDB" → 网关终端节点
+├── "VPC 内需要私有、免费访问 DynamoDB" → [[VPC Endpoints|网关终端节点]]
 └── "多租户应用需要行级数据隔离" → IAM Policy + dynamodb:LeadingKeys
 ```
 
@@ -196,5 +196,5 @@
 5. **善用 DynamoDB Streams 构建事件驱动架构**：替代轮询式的变更检测
 6. **需要跨 Item 原子性时使用 Transactions**：不要用普通写入 + 应用层补偿逻辑模拟事务
 7. **启用 PITR 应对误删除/误写入**：作为按需备份之外的额外保障
-8. **VPC 内资源访问 DynamoDB 走网关终端节点**：避免不必要的公网出口流量和 NAT 网关费用
+8. **VPC 内资源访问 DynamoDB 走[[VPC Endpoints|网关终端节点]]**：避免不必要的公网出口流量和 [[NAT Gateway|NAT 网关]]费用
 9. **多租户场景使用 IAM LeadingKeys**：在基础设施层面而非仅靠应用逻辑做数据隔离

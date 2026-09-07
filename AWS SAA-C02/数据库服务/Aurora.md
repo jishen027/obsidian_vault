@@ -2,7 +2,7 @@
 
 > **Amazon Aurora** 是 AWS 自研的云原生关系型数据库引擎，兼容 MySQL 和 PostgreSQL，采用存储与计算分离架构，提供比标准 RDS 引擎更高的性能、可用性和弹性。
 >
-> 相关文档：[[RDS]] | [[Redshift]] | [[DynamoDB]] | [[Amazon SageMaker]] | [[Amazon Comprehend]] | [[KMS]]
+> 相关文档：[[RDS]] | [[Redshift]] | [[DynamoDB]] | [[Amazon SageMaker]] | [[Amazon Comprehend]] | [[KMS]] | [[Disaster Recovery On AWS]]
 
 ---
 
@@ -99,7 +99,7 @@
 |------|---------|------|---------|
 | **Aurora Replica（区域内）** | 共享存储卷 | 个位数毫秒 | 区域内读取扩展、快速故障转移 |
 | **跨区域 MySQL 只读副本（旧方案）** | 基于 binlog 的逻辑复制 | 秒级 | Aurora Global Database 出现前的跨区域方案，现较少使用 |
-| **Aurora Global Database** | 存储层物理复制 | 通常 < 1 秒 | 跨区域灾难恢复、全球低延迟读取（推荐） |
+| **Aurora Global Database** | 存储层物理复制 | 通常 < 1 秒 | 跨区域[[Disaster Recovery On AWS\|灾难恢复]]、全球低延迟读取（推荐） |
 
 ### 监控与连接管理
 
@@ -117,7 +117,7 @@
 
 ### Aurora Global Database
 
-- 面向跨区域灾难恢复和全球低延迟读取
+- 面向跨区域[[Disaster Recovery On AWS|灾难恢复]]和全球低延迟读取，是 [[Disaster Recovery On AWS]] 笔记中"引导恢复/温备份"数据层的标准实现之一
 - 一个主区域（读写）+ 最多 **5 个次要区域**（只读）
 - 基于存储层的跨区域复制，延迟通常**低于 1 秒**，不占用数据库计算资源
 - 支持托管的计划性故障转移（Managed Planned Failover），用于区域级灾难恢复演练或真实切换

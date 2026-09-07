@@ -47,7 +47,7 @@
 | 要求 | 说明 |
 |------|------|
 | **VPC 内部署** | RDS Proxy 必须与目标数据库位于同一 VPC（或通过 [[VPC Peering]] 对等连接可达） |
-| **不可公网直接访问** | 只能从 VPC 内部或通过 VPN/Direct Connect 等方式访问，无公网端点 |
+| **不可公网直接访问** | 只能从 VPC 内部或通过 VPN/[[Direct Connect]] 等方式访问，无公网端点 |
 | **支持的数据库** | RDS（MySQL、PostgreSQL、MariaDB）和 Aurora（MySQL/PostgreSQL 兼容版） |
 | **应用改动** | 仅需将连接字符串指向 Proxy 端点，无需修改业务代码逻辑 |
 
