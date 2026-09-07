@@ -2,7 +2,7 @@
 
 > **EFS (Elastic File System)** 是一种基于 **NFS (Network File System)** 协议的无服务器、弹性可扩展的分布式文件存储服务。专为需要共享文件访问的跨实例协作场景设计。
 >
-> 相关文档：[[Storage Service]] | [[EBS]] | [[S3]] | [[AWS FSx]] | [[VPC]] | [[Disaster Recovery On AWS]]
+> 相关文档：[[Storage Service]] | [[EBS]] | [[S3]] | [[AWS FSx]] | [[VPC]] | [[Disaster Recovery On AWS]] | [[AWS Backup]]
 
 ---
 
@@ -116,7 +116,7 @@
 
 ### EFS 备份
 
-- 使用 **AWS Backup** 实现自动化备份策略
+- 使用 **[[AWS Backup]]** 实现自动化备份策略，完整能力见 [[AWS Backup]] 独立笔记
 - 支持：
   - 全量备份和增量备份
   - 跨区域备份复制
@@ -127,7 +127,7 @@
 ### 数据保护最佳实践
 
 1. **启用加密**：创建文件系统时启用 KMS 加密
-2. **配置备份计划**：使用 AWS Backup 定期备份
+2. **配置备份计划**：使用 [[AWS Backup]] 定期备份
 3. **多 AZ 部署**：确保跨可用区冗余
 4. **监控存储容量**：设置 CloudWatch 告警监控存储使用量
 
@@ -154,7 +154,7 @@
 1. **跨多 AZ 部署**：利用多可用区实现高可用
 2. **使用 Access Points**：简化应用访问，增强安全性
 3. **启用自动数据分层**：降低冷数据存储成本
-4. **配置 AWS Backup**：实现自动化备份和[[Disaster Recovery On AWS|灾难恢复]]
+4. **配置 [[AWS Backup]]**：实现自动化备份和[[Disaster Recovery On AWS|灾难恢复]]
 5. **通过安全组限制访问**：仅允许必要的 NFS 流量（参考 [[Security Group]]）
 
 ### 与 AWS Snowball 的数据迁移

@@ -2,7 +2,7 @@
 
 > **Amazon RDS (Relational Database Service)** 是一种完全托管的关系型数据库服务，负责处理数据库设置、修补、备份和高可用等基础设施工作，专为联机事务处理（OLTP）场景优化。
 >
-> 相关文档：[[Aurora]] | [[Redshift]] | [[DynamoDB]] | [[Amazon Neptune]] | [[Amazon Keyspaces]] | [[Amazon Timestream]] | [[Amazon DocumentDB]] | [[KMS]] | [[CloudWatch]] | [[Disaster Recovery On AWS]]
+> 相关文档：[[Aurora]] | [[Redshift]] | [[DynamoDB]] | [[Amazon Neptune]] | [[Amazon Keyspaces]] | [[Amazon Timestream]] | [[Amazon DocumentDB]] | [[KMS]] | [[CloudWatch]] | [[Disaster Recovery On AWS]] | [[Database Migration Service]]
 
 ---
 
@@ -158,7 +158,7 @@
 - **OLTP 优化**：RDS 专为联机事务处理场景（OLTP）优化，适用于需要频繁读取、写入和预定义模式的应用
 - **与 Redshift 对比**：RDS 处理日常事务，[[Redshift]] 是托管数据仓库服务，针对复杂的联机分析处理（OLAP）优化
 - **与 DynamoDB 对比**：RDS 处理结构化数据并遵循 ACID 事务，[[DynamoDB]] 是非关系型数据库，可处理每秒数万次的事务并保持低延迟
-- **数据迁移**：利用 AWS Database Migration Service（DMS），用户可以在不同引擎之间无缝迁移数据
+- **数据迁移**：利用 **[[Database Migration Service|AWS Database Migration Service（DMS）]]**，用户可以在不同引擎之间无缝迁移数据，完整的迁移模式和 Schema 转换流程见 [[Database Migration Service]] 独立笔记
 
 ---
 
@@ -184,7 +184,7 @@
 ├── "需要跨区域灾难恢复" → 跨区域读取副本 / Aurora Global Database
 ├── "需要极致弹性存储和最高可用性" → Aurora
 ├── "需要免密码数据库登录" → IAM 数据库认证
-└── "需要在不同数据库引擎间迁移数据" → AWS DMS
+└── "需要在不同数据库引擎间迁移数据" → [[Database Migration Service|AWS DMS]]
 ```
 
 ---

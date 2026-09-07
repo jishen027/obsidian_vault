@@ -2,7 +2,7 @@
 
 > **AWS DataSync** 是全托管的**在线数据传输**服务，用于在本地存储系统与 AWS 存储服务之间，或 AWS 存储服务之间，自动化、加速地完成**持续/增量**数据同步，是"网络带宽充足"场景下 [[AWS Snowball]] 的替代方案。
 >
-> 相关文档：[[AWS Snowball]] | [[AWS Storage Gateway]] | [[S3]] | [[AWS EFS]] | [[AWS FSx]] | [[VPC]]
+> 相关文档：[[AWS Snowball]] | [[AWS Storage Gateway]] | [[S3]] | [[AWS EFS]] | [[AWS FSx]] | [[VPC]] | [[Database Migration Service]]
 
 ---
 
@@ -15,9 +15,9 @@
 | **AWS DataSync** | 网络自动化传输 | **支持**，可按计划任务重复执行 | 有可用网络带宽，需要持续/增量同步本地与云端存储 |
 | [[AWS Snowball]] | 物理设备运输 | 否，一次性迁移 | 数据量巨大、网络带宽不足或不可用 |
 | [[AWS Storage Gateway]] | 混合云网关（持续在线） | 持续在线访问，非批量任务 | 长期、实时的本地应用直接读写云存储 |
-| AWS DMS | 数据库复制 | 支持持续复制 | 数据库到数据库的迁移/同步，而非文件/对象存储 |
+| [[Database Migration Service\|AWS DMS]] | 数据库复制 | 支持持续复制 | 数据库到数据库的迁移/同步，而非文件/对象存储 |
 
-> **考试陷阱**：**DataSync 传输的是文件/对象数据**（本地文件系统 ↔ S3/EFS/FSx）；数据库迁移应使用 **AWS DMS**，两者不可混淆。
+> **考试陷阱**：**DataSync 传输的是文件/对象数据**（本地文件系统 ↔ S3/EFS/FSx）；数据库迁移应使用 **[[Database Migration Service|AWS DMS]]**，两者不可混淆，完整能力见 [[Database Migration Service]] 独立笔记。
 
 ### 核心价值
 
@@ -82,7 +82,7 @@
 
 1. **核心定位**：网络自动化传输，适合有带宽、需要持续/增量同步的场景
 2. **DataSync vs Snowball**：有可用网络带宽用 DataSync；网络不可用/成本过高/数据量巨大用 Snowball
-3. **传输对象是文件/对象数据**：本地文件系统 ↔ S3/EFS/FSx；数据库迁移应使用 AWS DMS，而非 DataSync
+3. **传输对象是文件/对象数据**：本地文件系统 ↔ S3/EFS/FSx；数据库迁移应使用 [[Database Migration Service|AWS DMS]]，而非 DataSync
 4. **本地源需要部署 Agent**：以虚拟机镜像或 EC2 实例形式运行，AWS 内部传输（如 EFS→S3）无需 Agent
 5. **增量同步是核心优势**：重复执行的任务只传输变化的数据，降低时间和成本
 6. **传输速度可达开源工具的 10 倍**：得益于 AWS 专有传输协议对带宽的高效利用
@@ -97,7 +97,7 @@
 场景分析 → 选择传输方案
 ├── "本地文件服务器需要持续/定期同步到 S3 或 EFS" → AWS DataSync
 ├── "数据量巨大或网络带宽不足，一次性迁移" → AWS Snowball（而非 DataSync）
-├── "需要迁移的是数据库而非文件/对象数据" → AWS DMS（而非 DataSync）
+├── "需要迁移的是数据库而非文件/对象数据" → [[Database Migration Service|AWS DMS]]（而非 DataSync）
 ├── "EFS 与 S3 之间，或跨区域存储之间同步，均在 AWS 内部" → DataSync，无需部署 Agent
 ├── "希望减少重复同步时的传输量和时间" → DataSync 增量同步
 ├── "同步任务不能占满本地网络出口带宽" → 配置 DataSync 带宽限速
@@ -114,4 +114,4 @@
 4. **迁移前先用 DataSync 预热同步**：大规模迁移前先同步大部分数据，减少最终割接窗口的数据量
 5. **敏感数据传输走 [[VPC Endpoints|VPC Endpoint]]**：避免流量经过公网
 6. **合理设置限速**：与本地网络管理员协调带宽占用，避免影响生产网络
-7. **数据库场景改用 AWS DMS**：不要用 DataSync 处理数据库层面的迁移或复制
+7. **数据库场景改用 [[Database Migration Service|AWS DMS]]**：不要用 DataSync 处理数据库层面的迁移或复制

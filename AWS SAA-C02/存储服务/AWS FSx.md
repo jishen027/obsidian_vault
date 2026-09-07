@@ -2,7 +2,7 @@
 
 > **Amazon FSx** 是一组**完全托管的第三方文件系统**服务，让用户可以在 AWS 上运行熟悉的商业和开源文件系统（Windows、Lustre、NetApp ONTAP、OpenZFS），而无需自行搭建和维护底层基础设施。
 >
-> 相关文档：[[AWS EFS]] | [[EBS]] | [[S3]] | [[VPC]] | [[Storage Service]] | [[AWS Directory Service]] | [[Disaster Recovery On AWS]]
+> 相关文档：[[AWS EFS]] | [[EBS]] | [[S3]] | [[VPC]] | [[Storage Service]] | [[AWS Directory Service]] | [[Disaster Recovery On AWS]] | [[AWS Backup]]
 
 ---
 
@@ -141,7 +141,7 @@
 ## 数据保护与备份
 
 - 支持**自动化每日备份**（增量备份），可自定义备份窗口和保留期
-- 支持通过 **AWS Backup** 集中管理 FSx 备份
+- 支持通过 **[[AWS Backup]]** 集中管理 FSx 备份，完整能力见 [[AWS Backup]] 独立笔记
 - 支持**手动备份**用于关键操作前的快照
 - 备份可用于**跨区域恢复**，实现[[Disaster Recovery On AWS|灾难恢复]]
 
@@ -174,5 +174,5 @@
 2. **HPC/ML 场景直接对接 S3**：使用 FSx for Lustre 避免额外的数据搬运步骤
 3. **生产环境使用 Multi-AZ 部署**：避免单点故障
 4. **合理选择 Lustre 部署类型**：临时计算用 Scratch 降低成本，长期任务用 Persistent 保证可靠性
-5. **启用自动化备份**：结合 AWS Backup 实现统一的备份策略管理
+5. **启用自动化备份**：结合 [[AWS Backup]] 实现统一的备份策略管理
 6. **通过安全组和 KMS 加密**：保障传输与静态数据安全

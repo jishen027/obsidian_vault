@@ -2,7 +2,7 @@
 
 > **AWS Organizations** 是多账户治理服务，让企业能够将多个 AWS 账户集中管理——统一账单（Consolidated Billing）、通过**服务控制策略（SCP）**和**资源控制策略（RCP）**设置权限护栏、批量管理合规和配置策略，是构建"多账户架构"这一 AWS 最佳实践的核心基础设施。
 >
-> 相关文档：[[IAM]] | [[AWS Control Tower]] | [[AWS Config]] | [[CloudTrail]] | [[AWS CloudFormation]] | [[KMS]] | [[AWS Firewall Manager]] | [[VPC Flow Logs]]
+> 相关文档：[[IAM]] | [[AWS Control Tower]] | [[AWS Config]] | [[CloudTrail]] | [[AWS CloudFormation]] | [[KMS]] | [[AWS Firewall Manager]] | [[VPC Flow Logs]] | [[AWS Backup]]
 
 ---
 
@@ -80,7 +80,7 @@
 | 策略类型 | 说明 |
 |---------|------|
 | **标签策略（Tag Policies）** | 标准化组织内资源标签的键值命名规范，防止各账户标签格式混乱，便于统一的成本分摊和资源管理 |
-| **备份策略（Backup Policies）** | 通过 AWS Backup 在组织级别集中定义和强制执行备份计划，确保成员账户的关键资源按统一标准备份 |
+| **备份策略（Backup Policies）** | 通过 **[[AWS Backup]]** 在组织级别集中定义和强制执行备份计划，确保成员账户的关键资源按统一标准备份，完整能力见 [[AWS Backup]] 独立笔记 |
 | **AI 服务选择退出策略** | 控制组织内账户是否允许 AI 相关服务使用客户数据用于服务改进等目的 |
 
 ---

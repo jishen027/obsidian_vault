@@ -2,7 +2,7 @@
 
 > **Amazon Neptune** 是完全托管的**图数据库（Graph Database）**服务，专为存储和查询高度关联的数据（如社交网络、推荐引擎、欺诈检测、知识图谱）设计，原生支持 **属性图（Property Graph）** 与 **RDF** 两种图模型，可分别用 Gremlin/openCypher 与 SPARQL 查询。
 >
-> 相关文档：[[RDS]] | [[Aurora]] | [[DynamoDB]] | [[Redshift]] | [[Amazon Keyspaces]] | [[Amazon Timestream]] | [[Amazon DocumentDB]] | [[ElastiCache]] | [[KMS]] | [[VPC]]
+> 相关文档：[[RDS]] | [[Aurora]] | [[DynamoDB]] | [[Redshift]] | [[Amazon Keyspaces]] | [[Amazon Timestream]] | [[Amazon DocumentDB]] | [[ElastiCache]] | [[KMS]] | [[VPC]] | [[AWS Backup]]
 
 ---
 
@@ -87,7 +87,7 @@
 |------|------|
 | **自动快照** | 默认启用，保留期内可做时间点恢复（Point-in-Time Recovery） |
 | **手动快照** | 用户手动触发，可长期保留、跨区域复制 |
-| **AWS Backup 集成** | 支持通过 AWS Backup 统一管理 Neptune 备份策略，包括**逻辑气隙保管库（Logically Air-Gapped Vault）**，为勒索软件等场景提供额外隔离的恢复点 |
+| **[[AWS Backup]] 集成** | 支持通过 AWS Backup 统一管理 Neptune 备份策略，包括**逻辑气隙保管库（Logically Air-Gapped Vault）**，为勒索软件等场景提供额外隔离的恢复点，完整能力见 [[AWS Backup]] 独立笔记 |
 
 ---
 
@@ -168,5 +168,5 @@
 4. **创建集群时就启用静态加密**：加密无法对已有集群事后追加
 5. **负载不可预测时优先 Neptune Serverless**：避免过度配置或频繁手动调整实例规格
 6. **只读副本用于读扩展和高可用**：结合应用层读写分离，将读流量分散到只读副本
-7. **结合 AWS Backup 统一管理备份策略**：对关键图数据考虑启用逻辑气隙保管库，提升勒索软件等场景下的恢复韧性
+7. **结合 [[AWS Backup]] 统一管理备份策略**：对关键图数据考虑启用逻辑气隙保管库，提升勒索软件等场景下的恢复韧性
 8. **生成式 AI 场景优先评估 GraphRAG**：相比纯向量检索，图谱关系能提升 RAG 答案的准确性和可解释性

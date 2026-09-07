@@ -2,7 +2,7 @@
 
 > **Amazon GuardDuty** 是全托管的**智能威胁检测**服务，持续分析 [[CloudTrail]] 事件、[[VPC Flow Logs|VPC 流日志]]、DNS 日志等多种数据源，结合机器学习、异常检测和威胁情报，自动识别账户内的**凭证被盗、恶意侦察、恶意软件、异常 API 调用**等安全威胁，无需部署或管理任何检测基础设施。
 >
-> 相关文档：[[CloudTrail]] | [[VPC]] | [[VPC Flow Logs]] | [[AWS Config]] | [[AWS WAF]] | [[AWS Shield]] | [[IAM]] | [[AWS Organizations]] | [[EKS]] | [[Amazon Inspector]] | [[Amazon Macie]]
+> 相关文档：[[CloudTrail]] | [[VPC]] | [[VPC Flow Logs]] | [[AWS Config]] | [[AWS WAF]] | [[AWS Shield]] | [[IAM]] | [[AWS Organizations]] | [[EKS]] | [[Amazon Inspector]] | [[Amazon Macie]] | [[AWS Backup]]
 
 ---
 
@@ -54,7 +54,7 @@
 | **EKS Protection** | 分析 EKS 审计日志识别 Kubernetes 层面的可疑操作；结合**运行时监控（Runtime Monitoring）**进一步获得容器级可见性，检测恶意进程和运行时行为 |
 | **RDS Protection** | 监控数据库登录活动，识别异常或暴力破解式的登录尝试 |
 | **Lambda Protection** | 检测 Lambda 函数网络活动中的异常连接模式 |
-| **Malware Protection** | 扫描 EBS 卷和 S3 对象，识别 EC2 实例、容器工作负载、S3 存储桶中的恶意软件；**Malware Protection for AWS Backup** 进一步在恢复前扫描备份数据，确保恢复内容不包含恶意软件 |
+| **Malware Protection** | 扫描 EBS 卷和 S3 对象，识别 EC2 实例、容器工作负载、S3 存储桶中的恶意软件；**Malware Protection for [[AWS Backup]]** 进一步在恢复前扫描备份数据，确保恢复内容不包含恶意软件，完整能力见 [[AWS Backup]] 独立笔记 |
 
 > **考试要点**：题目提到具体资源类型的威胁检测（"S3 异常访问"、"EKS 容器恶意进程"、"RDS 异常登录"、"Lambda 异常网络连接"）时，应对应到相应的**防护模块**，而非笼统地回答"GuardDuty"——这些模块可**按需独立启用**，并非全部默认开启。
 
@@ -116,7 +116,7 @@
 | **检测 RDS 数据库的异常/暴力破解登录** | RDS Protection |
 | **检测 Lambda 函数的异常网络连接** | Lambda Protection |
 | **扫描 EC2/S3 中的恶意软件** | Malware Protection |
-| **确保恢复的备份数据不含恶意软件** | Malware Protection for AWS Backup |
+| **确保恢复的备份数据不含恶意软件** | Malware Protection for [[AWS Backup]] |
 | **识别跨多阶段、多信号的复杂攻击链** | Extended Threat Detection（自动启用） |
 | **组织级集中管理多账户的威胁检测** | 委派管理员 + AWS Organizations |
 | **检测到威胁后自动触发响应动作** | GuardDuty + EventBridge + Lambda |
@@ -147,7 +147,7 @@
 ├── "需要检测账户内的异常 API 调用/凭证被盗迹象" → GuardDuty 基础威胁检测
 ├── "需要检测 S3/EKS/RDS/Lambda 特定资源的异常行为" → 对应的 Protection 模块
 ├── "需要扫描 EC2/S3 中的恶意软件" → Malware Protection
-├── "需要确保恢复的备份数据安全" → Malware Protection for AWS Backup
+├── "需要确保恢复的备份数据安全" → Malware Protection for [[AWS Backup]]
 ├── "需要识别跨多阶段、多信号的复杂攻击链" → Extended Threat Detection
 ├── "需要组织级集中管理多账户威胁检测" → 委派管理员 + Organizations
 ├── "检测到威胁后需要自动化响应（如隔离实例）" → GuardDuty + EventBridge + Lambda

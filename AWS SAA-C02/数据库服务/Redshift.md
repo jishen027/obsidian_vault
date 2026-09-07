@@ -2,7 +2,7 @@
 
 > **Amazon Redshift** 是一种完全托管的、基于 PB 级数据的数据仓库服务，专为联机分析处理（OLAP）场景优化。它针对海量数据集运行复杂、计算密集型查询而设计。
 >
-> 相关文档：[[RDS]] | [[S3]] | [[DynamoDB]] | [[Amazon Neptune]] | [[Amazon Keyspaces]] | [[Amazon Timestream]] | [[Amazon DocumentDB]] | [[Amazon Athena]] | [[Amazon QuickSight]] | [[AWS Glue]] | [[Disaster Recovery On AWS]]
+> 相关文档：[[RDS]] | [[S3]] | [[DynamoDB]] | [[Amazon Neptune]] | [[Amazon Keyspaces]] | [[Amazon Timestream]] | [[Amazon DocumentDB]] | [[Amazon Athena]] | [[Amazon QuickSight]] | [[AWS Glue]] | [[Disaster Recovery On AWS]] | [[Database Migration Service]]
 
 ---
 
@@ -152,7 +152,7 @@
 
 | 服务 | 说明 |
 |------|------|
-| **AWS DMS** | 将 RDS、DynamoDB 等数据迁移到 Redshift |
+| **[[Database Migration Service\|AWS DMS]]** | 将 RDS、DynamoDB 等数据迁移/持续复制到 Redshift |
 | [[AWS Glue]] | ETL 服务，数据转换后加载到 Redshift |
 | [[AWS DataSync]] | 大规模数据传输 |
 | **Kinesis Data Firehose** | 实时数据流加载 |

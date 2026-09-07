@@ -87,8 +87,9 @@
 | 工具 | 描述 | 目标存储 |
 |------|------|---------|
 | [[AWS DataSync]] | 自动化、持续/增量同步本地数据到 AWS | S3、EFS、FSx |
-| **AWS Migration Hub** | 集中跟踪迁移项目进度 | 多服务 |
-| **AWS DMS (Database Migration Service)** | 数据库到数据库的迁移 | RDS、DynamoDB 等 |
+| **AWS Migration Hub** | 集中跟踪迁移项目进度，汇总 [[AWS Application Discovery Service]] 的发现数据 | 多服务 |
+| **[[AWS Application Discovery Service]]** | 迁移前发现本地服务器资产和应用依赖关系（规划阶段，不迁移数据） | 本地物理机/VMware 虚拟机 |
+| **[[Database Migration Service\|AWS DMS (Database Migration Service)]]** | 数据库到数据库的迁移 | RDS、DynamoDB 等 |
 
 ---
 
