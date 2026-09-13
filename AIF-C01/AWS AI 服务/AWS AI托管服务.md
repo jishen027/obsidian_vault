@@ -10,20 +10,20 @@
 
 > 对于许多常见使用案例，无需构建自定义模型——AWS 提供可通过 **API** 访问的预先训练 AI 服务。在投入成本构建自定义模型之前，应先调查是否有现成服务适用。
 
-| 类别 | 服务 | 核心功能 |
-|------|------|---------|
-| **计算机视觉** | Amazon Rekognition | 图像/视频对象识别、人脸识别、文字识别、内容审核 |
-| **NLP / 文本分析** | Amazon Comprehend | 情感分析、实体提取、PII 检测、自定义分类 |
-| **文档处理** | [[Amazon Textract]] | OCR、表单提取、手写内容、表格、签名检测 |
-| **对话 AI** | Amazon Lex | 聊天机器人（Alexa 的商业版），Voice + Text |
-| **企业搜索** | [[Amazon Kendra]] | 语义搜索引擎，自然语言问答 |
-| **个性化推荐** | [[Amazon Personalize]] | 用户行为驱动的实时推荐系统 |
-| **语音转文字** | Amazon Transcribe | 自动语音识别 (ASR)，支持 100+ 语言 |
-| **文字转语音** | Amazon Polly | 多语言深度学习 TTS，支持 SSML |
-| **机器翻译** | Amazon Translate | 神经网络机器翻译，75 种语言 |
-| **时间序列预测** | Amazon Forecast | AI 时间序列预测服务 |
-| **欺诈检测** | Amazon Fraud Detector | 全托管在线欺诈检测 |
-| **AI 编码助手** | [[Amazon Q Developer]] / CodeWhisperer | AI 代码生成和建议 |
+| 类别             | 服务                                     | 核心功能                           |
+| -------------- | -------------------------------------- | ------------------------------ |
+| **计算机视觉**      | [[Amazon Rekognition]]                 | 图像/视频对象识别、人脸识别、文字识别、内容审核       |
+| **NLP / 文本分析** | [[Amazon Comprehend]]                  | 情感分析、实体提取、PII 检测、自定义分类         |
+| **文档处理**       | [[Amazon Textract]]                    | OCR、表单提取、手写内容、表格、签名检测          |
+| **对话 AI**      | Amazon Lex                             | 聊天机器人（Alexa 的商业版），Voice + Text |
+| **企业搜索**       | [[Amazon Kendra]]                      | 语义搜索引擎，自然语言问答                  |
+| **个性化推荐**      | [[Amazon Personalize]]                 | 用户行为驱动的实时推荐系统                  |
+| **语音转文字**      | [[Amazon Transcribe]]                  | 自动语音识别 (ASR)，支持 100+ 语言        |
+| **文字转语音**      | [[Amazon Polly]]                       | 多语言深度学习 TTS，支持 SSML            |
+| **机器翻译**       | [[Amazon Translate]]                   | 神经网络机器翻译，75 种语言                |
+| **时间序列预测**     | Amazon Forecast                        | AI 时间序列预测服务                    |
+| **欺诈检测**       | Amazon Fraud Detector                  | 全托管在线欺诈检测                      |
+| **AI 编码助手**    | [[Amazon Q Developer]] / CodeWhisperer | AI 代码生成和建议                     |
 
 ---
 
@@ -310,14 +310,15 @@
 
 ---
 
-## [[Amazon Q Developer]] / CodeWhisperer（AI 编码）
+## [[Amazon Q]]（AWS 生成式 AI 助手家族）
 
-> **Amazon Q** 是 AWS 的企业 AI 助手，**CodeWhisperer** 是 VS Code / JetBrains 中的 AI 代码建议工具（现已整合入 Amazon Q Developer）。智能体式编码、代码转换、安全扫描、CLI 等完整能力见 [[Amazon Q Developer]] 独立笔记。
+> **[[Amazon Q]]** 是 AWS 生成式 AI 助手的统一品牌，按用户角色拆分为多个垂直产品。**CodeWhisperer** 是 VS Code / JetBrains 中的 AI 代码建议工具（现已整合入 Amazon Q Developer）。完整的产品家族总览、选型判断依据见 [[Amazon Q]] 独立笔记；Q Developer 的智能体式编码、代码转换、安全扫描、CLI 等完整能力见 [[Amazon Q Developer]] 独立笔记。
 
 | 产品 | 场景 |
 |------|------|
-| **Amazon Q Business** | 企业内部知识问答助手 |
+| **Amazon Q Business** | 企业内部知识问答助手，完整能力见 [[Amazon Q]] |
 | **[[Amazon Q Developer]]** | 代码生成、代码审查、bug 修复建议 |
+| **Amazon Q Apps / Q in QuickSight / Q in Connect** | 免代码小应用、生成式 BI、客服实时辅助，完整能力见 [[Amazon Q]] |
 
 ---
 

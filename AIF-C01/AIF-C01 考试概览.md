@@ -2,7 +2,7 @@
 
 > **AWS Certified AI Practitioner (AIF-C01)** 是 AWS 的 AI 基础认证，涵盖传统 ML 流程、AWS 托管 AI 服务、生成式 AI 与大语言模型的基础知识，适合 AI 工程师、数据科学家及希望将 AI 纳入业务决策的架构师。
 >
-> 相关文档：[[AI与ML概念]] | [[大语言模型 - LLM]] | [[Amazon Bedrock]] | [[Amazon SageMaker]] | [[负责任的AI与安全]]
+> 相关文档：[[AI与ML概念]] | [[大语言模型 - LLM]] | [[Amazon Bedrock]] | [[Amazon Bedrock AgentCore]] | [[Amazon SageMaker]] | [[Amazon Q]] | [[负责任的AI与安全]]
 
 ---
 
@@ -66,8 +66,9 @@
 - 神经网络与深度学习基础
 - NLP 基础概念
 - ML 数据生命周期（CRISP-DM）
+- 数据标注与人工审核：**SageMaker Ground Truth**（训练前，标注原始数据，机器自动标注+人工处理难例）vs **Amazon Augmented AI (A2I)**（推理后，对低置信度预测结果做人工复核）
 
-相关笔记：[[AI与ML概念]] | [[机器学习算法]] | [[深度学习与神经网络]]
+相关笔记：[[AI与ML概念]] | [[Machine Learning]] | [[Deep learning and neural networks]] | [[Model training and evaluation]]
 
 ### Domain 2 - 生成式 AI 基础
 
@@ -89,6 +90,8 @@
 ### Domain 3 - 基础模型应用
 
 - Amazon Bedrock：基础模型访问、Fine-tuning、RAG、Agents、Guardrails
+- **Bedrock Agents Classic 于 2026-07-30 起停止向新客户开放（维护模式）**，AWS 力推的新一代智能体生产平台是 **[[Amazon Bedrock AgentCore]]**（框架无关+模型无关，Runtime/Gateway/Memory/Identity/Harness 等按需拼装组件）
+- **[[Amazon Q]]**：AWS 生成式 AI 助手统一品牌，按角色拆分为 Q Developer（开发者）/ Q Business（业务知识问答）/ Q Apps（免代码小应用）/ Q in QuickSight（生成式 BI）/ Q in Connect（客服实时辅助）
 - **迁移学习**：预训练模型 + 小数据集微调，节省时间和成本
 - **项目生命周期**：确定使用案例 → 实验 → 适应调整（高度迭代）→ 评估部署 → 监控
 - **基础模型生命周期**：数据选择 → 模型选择 → 预训练 → 微调 → 评估 → 部署 → 反馈
@@ -97,7 +100,7 @@
 - **PartyRock**：基于 Bedrock 的免费学习/原型体验平台
 - 模型评估与选择；ROUGE（摘要）/ BLEU（翻译）
 
-相关笔记：[[Amazon Bedrock]] | [[Amazon SageMaker]]
+相关笔记：[[Amazon Bedrock]] | [[Amazon Bedrock AgentCore]] | [[Amazon SageMaker]] | [[Amazon Q]]
 
 ### Domain 4 - 负责任的 AI
 
@@ -114,28 +117,34 @@
 - **Trainium（训练）/ Inferentia（推理）**：专用 AI 芯片，高性价比
 - IAM 权限控制；CloudWatch 日志监控
 - 加密、MFA、持续监控合规框架
+- **模型治理工具**：SageMaker **Model Cards**（标准化模型文档）/ **Model Registry**（版本管理+部署前审批工作流）/ **Role Manager**（基于角色人设的最小权限 IAM 策略）/ **Model Dashboard**（组织级已部署模型集中视图）
+- **[[Amazon Macie]]**：自动发现 S3 中训练数据集/存储数据里的 PII 和敏感信息，与 Amazon GuardDuty（威胁检测）分工不同
+- **[[AWS Artifact]]**：下载 AWS 自身的合规报告/证书（SOC、ISO 等）+ 管理 BAA/DPA 等协议，与持续收集**自有系统**证据的 [[AWS Audit Manager]] 分工不同
+- **[[AWS Config]]**：持续评估和记录**我方资源配置**是否符合合规规则（如 S3 桶是否加密）
+- **[[AWS Audit Manager]]**：持续自动收集**我方系统**的合规审计证据并生成评估报告，简化审计准备——三者判断依据是"评估对象是谁"：Config 管自己的配置，Artifact 管 AWS 的证书，Audit Manager 管自己的证据；**⚠️ Audit Manager 已于 2026-04-30 起进入维护模式，停止向新账户开放**，AWS 推荐新需求改用 Config 的 Conformance Packs
 
-相关笔记：[[负责任的AI与安全]]
+相关笔记：[[负责任的AI与安全]] | [[Amazon Macie]] | [[AWS Artifact]] | [[AWS Config]] | [[AWS Audit Manager]]
 
 ---
 
 ## 重要 AWS AI 服务汇总
 
-| 服务 | 类别 | 核心功能 |
-|------|------|---------|
-| **Amazon Bedrock** | 生成式 AI | 访问基础模型（Claude、Titan、Llama 等） |
-| **Amazon SageMaker** | ML 平台 | 完整 ML 训练、部署、监控流程 |
-| **Amazon Rekognition** | 计算机视觉 | 图像/视频中的对象、人脸、文字识别 |
-| **Amazon Comprehend** | NLP | 情感分析、实体提取、PII 检测 |
-| **Amazon Lex** | 对话 AI | 语音/文字聊天机器人（Alexa 商业版） |
-| **[[Amazon Kendra]]** | 企业搜索 | 语义搜索引擎 |
-| **[[Amazon Personalize]]** | 推荐系统 | 个性化推荐（用户-物品交互） |
-| **Amazon Polly** | 文字转语音 | 多语言 TTS，支持 SSML |
-| **[[Amazon Textract]]** | 文档处理 | OCR、表单提取、签名检测 |
-| **Amazon Transcribe** | 语音转文字 | 自动语音识别 (ASR) |
-| **Amazon Translate** | 翻译 | 神经网络机器翻译 |
-| **Amazon Fraud Detector** | 欺诈检测 | 实时在线欺诈检测 |
-| **[[Amazon Q Developer]]** | AI 助手 | 企业级 AI 聊天助手 |
+| 服务                               | 类别          | 核心功能                                                                                        |
+| -------------------------------- | ----------- | ------------------------------------------------------------------------------------------- |
+| **[[Amazon Bedrock]]**           | 生成式 AI      | 访问基础模型（Claude、Titan、Llama 等）                                                                |
+| **[[Amazon Bedrock AgentCore]]** | 生成式 AI 智能体  | 框架/模型无关的智能体生产基础设施（Runtime/Gateway/Memory/Identity/Harness），取代进入维护模式的 Bedrock Agents Classic |
+| **[[Amazon SageMaker]]**         | ML 平台       | 完整 ML 训练、部署、监控流程                                                                            |
+| **[[Amazon Rekognition]]**       | 计算机视觉       | 图像/视频中的对象、人脸、文字识别                                                                           |
+| **[[Amazon Comprehend]]**        | NLP         | 情感分析、实体提取、PII 检测                                                                            |
+| **[[Amazon Lex]]**               | 对话 AI       | 语音/文字聊天机器人（Alexa 商业版）                                                                       |
+| **[[Amazon Kendra]]**            | 企业搜索        | 语义搜索引擎                                                                                      |
+| **[[Amazon Personalize]]**       | 推荐系统        | 个性化推荐（用户-物品交互）                                                                              |
+| **[[Amazon Polly]]**             | 文字转语音       | 多语言 TTS，支持 SSML                                                                             |
+| **[[Amazon Textract]]**          | 文档处理        | OCR、表单提取、签名检测                                                                               |
+| **[[Amazon Transcribe]]**        | 语音转文字       | 自动语音识别 (ASR)                                                                                |
+| **[[Amazon Translate]]**         | 翻译          | 神经网络机器翻译                                                                                    |
+| **Amazon Fraud Detector**        | 欺诈检测        | 实时在线欺诈检测                                                                                    |
+| **[[Amazon Q]]**                 | 生成式 AI 助手家族 | Q Business（企业问答）/ Q Developer（编码）/ Q Apps / Q in QuickSight / Q in Connect                  |
 
 相关笔记：[[AWS AI托管服务]] | [[数据与分析服务]]
 
@@ -152,6 +161,8 @@
 5. **监督/无监督/强化学习** 的定义与典型算法
 6. **负责任 AI**：偏见、公平性、Guardrails
 7. **各托管 AI 服务** 的核心功能对应场景
+8. **Bedrock Agents Classic → [[Amazon Bedrock AgentCore]]**：Agents Classic 已停止新客户接入，AgentCore 是框架/模型无关的智能体生产基础设施
+9. **[[Amazon Q]] 产品家族选型**：按"谁在用、做什么"判断对应的 Q 产品（Developer/Business/Apps/QuickSight/Connect）
 
 ### 场景题解题思路
 
@@ -165,5 +176,8 @@
 ├── "聊天机器人/对话" → Amazon Lex
 ├── "企业知识库搜索" → [[Amazon Kendra]]
 ├── "个性化推荐" → [[Amazon Personalize]]
-└── "语音转文字" → Amazon Transcribe
+├── "语音转文字" → Amazon Transcribe
+├── "已用 LangGraph/CrewAI/Strands 构建智能体，需零改造部署到生产" → [[Amazon Bedrock AgentCore]]
+├── "非技术业务人员查询企业内部文档" → [[Amazon Q]] Business
+└── "需要模型部署前的审批流程/标准化文档" → SageMaker Model Registry / Model Cards
 ```

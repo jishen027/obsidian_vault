@@ -2,7 +2,7 @@
 
 > **大语言模型 (Large Language Model, LLM)** 是生成式 AI 的文本子集，能生成类人自然语言文本，基于 Transformer 架构和大规模语料训练。理解 LLM 的核心概念是 AIF-C01 考试中权重最高的内容（Domain 2 + 3）。
 >
-> 相关文档：[[Transformer与Embeddings]] | [[提示工程 - Prompt Engineering]] | [[Amazon Bedrock]] | [[AI与ML概念]]
+> 相关文档：[[Transformer与Embeddings]] | [[提示工程 - Prompt Engineering]] | [[Amazon Bedrock]] | [[AI与ML概念]] | [[Amazon Q]]
 
 ---
 
@@ -371,7 +371,7 @@
 | **推荐引擎** | 基于用户历史和偏好的个性化推荐 | [[Amazon Personalize]] |
 | **个性化营销/广告** | 根据用户特征生成定制化营销内容 | 提升 CLTV 和转化率 |
 | **聊天机器人** | 多轮对话式用户交互 | Amazon Lex + Amazon Bedrock |
-| **客服座席** | 辅助或替代人工客服处理咨询 | Amazon Q Business |
+| **客服座席** | 辅助或替代人工客服处理咨询 | Amazon Q in Connect（实时应答建议），完整的 Amazon Q 产品家族见 [[Amazon Q]] |
 | **搜索** | 语义搜索和智能文档检索 | [[Amazon Kendra]]、Bedrock Knowledge Bases |
 | **代码生成** | 根据自然语言或注释生成代码片段或完整函数 | [[Amazon Q Developer]]（前身：CodeWhisperer） |
 

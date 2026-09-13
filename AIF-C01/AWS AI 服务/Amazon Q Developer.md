@@ -1,8 +1,8 @@
 # Amazon Q Developer - AI 编码助手
 
-> **Amazon Q Developer** 是 AWS 的生成式 AI 编码助手，前身为 **Amazon CodeWhisperer**（2024 年 4 月更名并大幅扩展能力），集成于 IDE、命令行（CLI）和 AWS 控制台，提供代码补全、聊天问答、**自主智能体式编码（Agentic Coding）**、代码转换、安全扫描等能力，帮助开发者更快地理解、编写、调试和运维基于 AWS 的应用。
+> **Amazon Q Developer** 是 AWS 的生成式 AI 编码助手，前身为 **Amazon CodeWhisperer**（2024 年 4 月更名并大幅扩展能力），集成于 IDE、命令行（CLI）和 AWS 控制台，提供代码补全、聊天问答、**自主智能体式编码（Agentic Coding）**、代码转换、安全扫描等能力，帮助开发者更快地理解、编写、调试和运维基于 AWS 的应用。它是 **[[Amazon Q]]** 生成式 AI 助手家族中**面向开发者**的产品，家族内其他成员（Q Business、Q Apps、Q in QuickSight、Q in Connect）及产品选型判断依据见 [[Amazon Q]] 独立笔记。
 >
-> 相关文档：[[Amazon Bedrock]] | [[AWS CloudFormation]] | [[IAM]] | [[CloudWatch]]
+> 相关文档：[[Amazon Q]] | [[Amazon Bedrock]] | [[AWS CloudFormation]] | [[IAM]] | [[CloudWatch]]
 
 ---
 
@@ -21,7 +21,7 @@
 | **Amazon Q Developer** | 面向开发者的编码助手 | 软件工程师、云架构师 | 代码编写、调试、代码转换、AWS 资源理解与运维 |
 | **Amazon Q Business** | 面向业务用户的企业 AI 助手 | 非技术业务团队 | 基于企业知识库（SharePoint、Confluence、内部 Wiki 等）的自然语言问答 |
 
-> **考试陷阱**：**Q Developer 和 Q Business 是两个面向不同用户群的独立产品，容易混淆**——题目强调"帮助开发者写代码、理解 AWS 服务、排查问题"→ **Q Developer**；题目强调"让非技术业务人员通过自然语言查询企业内部文档/知识库"→ **Q Business**（定位上与 [[Amazon Kendra]] 存在功能重叠，均可作为企业知识库问答方案）。
+> **考试陷阱**：**Q Developer 和 Q Business 是两个面向不同用户群的独立产品，容易混淆**——题目强调"帮助开发者写代码、理解 AWS 服务、排查问题"→ **Q Developer**；题目强调"让非技术业务人员通过自然语言查询企业内部文档/知识库"→ **Q Business**（定位上与 [[Amazon Kendra]] 存在功能重叠，均可作为企业知识库问答方案）。Q Business 的完整能力（内置连接器、插件/操作、权限继承、Q Apps 等）及整个 Amazon Q 产品家族的选型判断见 [[Amazon Q]] 独立笔记。
 
 ---
 
@@ -99,7 +99,7 @@
 | **上线前排查代码中的安全漏洞/硬编码密钥** | Q Developer 安全扫描（SAST + 密钥检测 + IaC 扫描） |
 | **习惯终端工作流，不想频繁切换到 IDE** | Q Developer CLI 智能体 |
 | **理解/调试 AWS 相关代码、IAM 策略、SDK 用法** | Q Developer 聊天问答，深度 AWS 集成优势明显 |
-| **企业内部非技术人员查询知识库文档** | 改用 Amazon Q Business（而非 Q Developer） |
+| **企业内部非技术人员查询知识库文档** | 改用 [[Amazon Q\|Amazon Q Business]]（而非 Q Developer），完整能力见 [[Amazon Q]] |
 | **企业级语义搜索，无需生成式对话** | 改用 [[Amazon Kendra]]（而非 Q Developer/Q Business） |
 
 ---
@@ -115,7 +115,7 @@
 5. **安全扫描三件套**：SAST（漏洞检测）、密钥检测、IaC 扫描，覆盖开发阶段的安全左移
 6. **CLI 智能体支持终端原生工作流**：无需在终端和 IDE 之间切换即可完成多步骤任务
 7. **深度 AWS 集成是差异化优势**：相比通用代码助手，对 AWS 服务/IAM/SDK 的理解更准确
-8. **Q Developer vs Q Business 是两个独立产品**：分别面向开发者和业务用户，不可混淆
+8. **Q Developer vs Q Business 是两个独立产品**：分别面向开发者和业务用户，不可混淆；两者同属 [[Amazon Q]] 产品家族，完整家族总览见 [[Amazon Q]] 独立笔记
 9. **Q Business 与 Kendra 功能存在重叠**：都可用于企业知识库问答，但 Q Business 提供生成式对话体验，Kendra 更偏传统语义检索
 10. **提供免费层**：每月固定额度的智能体交互和代码转换行数，适合个人开发者试用
 

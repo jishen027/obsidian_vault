@@ -1,8 +1,8 @@
 # AWS Lake Formation - 数据湖治理与权限中心
 
-> **AWS Lake Formation** 是用于**快速构建、保护和管理数据湖**的服务，在 **[[AWS Glue]] Data Catalog** 的元数据基础之上，提供统一的**细粒度访问控制（Fine-Grained Access Control, FGAC）**层——按数据库、表、列、行甚至单元格级别授权，并让这份权限定义**同时对 [[Amazon Athena]]、Redshift Spectrum、[[Amazon EMR]] 等多个分析服务生效**，而无需在每个服务中分别配置权限。
+> **AWS Lake Formation** 是用于**快速构建、保护和管理数据湖**的服务，在 **[[AWS Glue]] Data Catalog** 的元数据基础之上，提供统一的**细粒度访问控制（Fine-Grained Access Control, FGAC）**层——按数据库、表、列、行甚至单元格级别授权，并让这份权限定义**同时对 [[Amazon Athena]]、[[Redshift#S3 集成 - Redshift Spectrum|Redshift Spectrum]]、[[Amazon EMR]] 等多个分析服务生效**，而无需在每个服务中分别配置权限。
 >
-> 相关文档：[[AWS Glue]] | [[Amazon Athena]] | [[Amazon EMR]] | [[Redshift]] | [[S3]] | [[IAM]] | [[Amazon QuickSight]]
+> 相关文档：[[AWS Glue]] | [[Amazon Athena]] | [[Amazon EMR]] | [[Redshift]] | [[S3]] | [[IAM]] | [[Amazon QuickSight]] | [[Redshift#S3 集成 - Redshift Spectrum|Redshift Spectrum]]
 
 ---
 
@@ -61,11 +61,11 @@
 
 ## 与分析服务的集成（考试高频）
 
-| 集成服务 | 说明 |
-|---------|------|
-| **[[Amazon Athena]]** | 查询时自动遵循 Lake Formation 定义的列/行级权限，无需在 Athena 内单独配置 |
-| **Redshift Spectrum** | 通过 Lake Formation 授权后，可对 S3 数据湖中的表实现细粒度访问控制 |
-| **[[Amazon EMR]]（EMR on EC2 / EMR Serverless / EMR on EKS）** | Spark 作业可强制执行 Lake Formation 定义的数据库/表/列/行/单元格级权限策略，且已扩展支持 **Hudi、Delta Lake、Iceberg** 等主流数据湖表格式 |
+| 集成服务                                                          | 说明                                                                                              |
+| ------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| **[[Amazon Athena]]**                                         | 查询时自动遵循 Lake Formation 定义的列/行级权限，无需在 Athena 内单独配置                                               |
+| **[[Redshift#S3 集成 - Redshift Spectrum\|Redshift Spectrum]]** | 通过 Lake Formation 授权后，可对 S3 数据湖中的表实现细粒度访问控制                                                     |
+| **[[Amazon EMR]]（EMR on EC2 / EMR Serverless / EMR on EKS）**  | Spark 作业可强制执行 Lake Formation 定义的数据库/表/列/行/单元格级权限策略，且已扩展支持 **Hudi、Delta Lake、Iceberg** 等主流数据湖表格式 |
 
 > **考试要点**：Lake Formation 的核心卖点是**"一次授权、处处生效"**——题目强调"多个分析服务需要对同一份数据湖数据执行一致的细粒度权限策略"时，Lake Formation 是标准答案，而非在 Athena、EMR 里分别设置权限。
 

@@ -1,8 +1,8 @@
 # AWS Config - 配置追踪与合规审计
 
-> **AWS Config** 在 AWS 的管理和监控体系中扮演"资源时间机器"的角色，持续发现、记录 AWS 资源的**配置状态**及其变化历史，并通过**规则（Rule）**自动评估配置是否符合预定义基准，回答"**资源配置长什么样、如何随时间变化**"。与专注"资源运行得怎么样"的 [[CloudWatch]]、专注"谁做了什么"的 [[CloudTrail]] 共同构成 AWS 管理和监控三件套。
+> **AWS Config** 在 AWS 的管理和监控体系中扮演"资源时间机器"的角色，持续发现、记录 AWS 资源的**配置状态**及其变化历史，并通过**规则（Rule）**自动评估配置是否符合预定义基准，回答"**资源配置长什么样、如何随时间变化**"。与专注"资源运行得怎么样"的 [[CloudWatch]]、专注"谁做了什么"的 [[CloudTrail]] 共同构成 AWS 管理和监控三件套。本笔记以 **SAA-C02（架构选型视角）** 的深度为主，AIF-C01 也会在**治理与合规**语境下提及 Config，简化版考点见文末 [[#AIF-C01 考试视角（简化版）]]，完整背景见 [[负责任的AI与安全]]。
 >
-> 相关文档：[[CloudTrail]] | [[CloudWatch]] | [[SNS]] | [[IAM]] | [[S3]] | [[AWS CloudFormation]] | [[AWS Organizations]] | [[AWS Systems Manager]] | [[AWS Well-Architected Framework]] | [[AWS Trusted Advisor]]
+> 相关文档：[[CloudTrail]] | [[CloudWatch]] | [[SNS]] | [[IAM]] | [[S3]] | [[AWS CloudFormation]] | [[AWS Organizations]] | [[AWS Systems Manager]] | [[AWS Well-Architected Framework]] | [[AWS Trusted Advisor]] | [[AWS Artifact]] | [[负责任的AI与安全]] | [[AIF-C01 考试概览]]
 
 ---
 
@@ -155,3 +155,19 @@
 6. **变更前善用关系分析评估影响范围**：尤其是安全组、IAM 角色等被广泛引用的核心资源
 7. **主动型规则不能替代真正的部署拦截机制**：需要强制阻止不合规部署时，应结合 [[AWS CloudFormation#CloudFormation Hooks（部署前拦截，考试提示）|CloudFormation Hooks]] 或 [[AWS Organizations]] SCP 等机制
 8. **结合 CloudTrail 构建完整的变更溯源链路**：仅有配置状态历史不足以确定责任人，需要 CloudTrail 的操作记录补全"谁做的"这一环
+
+---
+
+## AIF-C01 考试视角（简化版）
+
+> AIF-C01 Domain 5（安全、合规、治理）和 [[负责任的AI与安全]] 笔记中的 [[负责任的AI与安全#AI 合规性 (Compliance for AI)|AI 合规性]] 章节会提到 AWS Config，但考查深度远低于 SAA-C02——**只需记住"Config = 持续评估我自己的资源配置是否符合合规规则"这一句话**，不要求掌握主动型/检测型规则、聚合器等实现细节。
+
+### AI 合规工具链中的定位（AIF-C01 高频对比）
+
+| 服务 | 一句话定位 |
+|------|-----------|
+| **AWS Config** | 持续评估**我自己的资源配置**是否符合预设规则（如"所有 S3 桶必须加密"） |
+| **[[AWS Artifact]]** | 下载 **AWS 自身**的合规报告/证书（SOC、ISO 等），证明底层基础设施合规 |
+| **[[AWS Audit Manager]]** | 持续自动收集**我自己系统**的合规审计证据，简化审计准备——**⚠️ 已于 2026-04-30 起进入维护模式，停止向新账户开放**，AWS 推荐新需求改用 Config 的 **Conformance Packs**，详见 [[AWS Audit Manager]] 独立笔记 |
+
+> **考试要点**：题目描述"需要持续检测用于 AI 工作负载的 S3 桶/EC2 是否符合内部安全基准" → **AWS Config**；描述"需要下载 AWS 基础设施本身的合规证书" → **[[AWS Artifact]]**；描述"需要自动化收集我方系统的审计证据" → **[[AWS Audit Manager]]**。三者常在同一道 Domain 5 场景题的选项中一起出现，判断关键是**"评估对象是谁"**：Config 管**自己的资源配置**，Artifact 管**AWS 自己的证书**，Audit Manager 管**自己的审计证据**。

@@ -1,6 +1,6 @@
 # AWS Glue - 无服务器数据集成与 ETL 服务
 
-> **AWS Glue** 是无服务器（Serverless）的**数据集成与 ETL（Extract, Transform, Load）**服务，负责发现、编目、清洗、转换和移动数据，是整个 AWS 数据分析生态中**元数据管理和数据准备**的核心枢纽——[[Amazon Athena]]、Redshift Spectrum、[[Amazon EMR]] 等分析服务通常共享同一份 **Glue Data Catalog** 作为统一的元数据目录。
+> **AWS Glue** 是无服务器（Serverless）的**数据集成与 ETL（Extract, Transform, Load）**服务，负责发现、编目、清洗、转换和移动数据，是整个 AWS 数据分析生态中**元数据管理和数据准备**的核心枢纽——[[Amazon Athena]]、[[Redshift#S3 集成 - Redshift Spectrum|Redshift Spectrum]]、[[Amazon EMR]] 等分析服务通常共享同一份 **Glue Data Catalog** 作为统一的元数据目录。
 >
 > 相关文档：[[Amazon Athena]] | [[Amazon EMR]] | [[AWS Lake Formation]] | [[Amazon MSK]] | [[Redshift]] | [[Amazon OpenSearch]] | [[Amazon QuickSight]] | [[S3]] | [[DynamoDB]] | [[RDS]] | [[VPC]] | [[Amazon AppFlow]]
 
@@ -32,7 +32,7 @@
 ### 1. Glue Data Catalog（数据目录）
 
 - **中心化的元数据仓库**：存储数据库、表的 schema 定义（列名、数据类型、数据在 S3 中的位置等），本身**不存储实际数据**
-- **多服务共享**：[[Amazon Athena]]、Redshift Spectrum、[[Amazon EMR]] 上的 Hive/Spark 作业可**共享同一份 Data Catalog**，避免每个服务各自重复定义表结构
+- **多服务共享**：[[Amazon Athena]]、[[Redshift#S3 集成 - Redshift Spectrum|Redshift Spectrum]]、[[Amazon EMR]] 上的 Hive/Spark 作业可**共享同一份 Data Catalog**，避免每个服务各自重复定义表结构
 - 类似传统 Hive Metastore 的托管版本，是数据湖架构中"让数据可被 SQL 查询"的关键一环
 
 ### 2. Glue Crawler（爬虫）

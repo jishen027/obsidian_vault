@@ -2,7 +2,7 @@
 
 > **深度学习 (Deep Learning)** 是使用多层神经网络处理复杂特征的机器学习子领域。当数据复杂、特征不明确时，深度学习比传统 ML 更有优势。它是 LLM 和生成式 AI 的核心技术基础。
 >
-> 相关文档：[[AI与ML概念]] | [[机器学习算法]] | [[大语言模型 - LLM]] | [[Transformer与Embeddings]]
+> 相关文档：[[AI与ML概念]] | [[Machine Learning]] | [[大语言模型 - LLM]] | [[Transformer与Embeddings]]
 
 ---
 

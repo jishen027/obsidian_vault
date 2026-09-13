@@ -2,7 +2,7 @@
 
 > **Amazon Kendra** 是全托管的企业级机器学习搜索引擎，使用**语义理解**（而非简单关键词匹配）跨多个企业数据源（SharePoint、Salesforce、S3、数据库等）提供自然语言问答和智能文档检索。**Amazon Kendra 已于 2026 年 6 月 30 日进入维护模式（不再开发新功能），并于 2026 年 7 月 30 日起停止向新客户开放**；AWS 官方建议新工作负载迁移到 **[[Amazon Bedrock]] Knowledge Bases**，其 GenAI Index 也已支持作为 Bedrock Knowledge Bases 的托管检索器（Managed Retriever）以承接过渡。
 >
-> 相关文档：[[Amazon Bedrock]] | [[Amazon OpenSearch]] | [[Amazon Comprehend]] | [[Amazon Lex]] | [[S3]] | [[IAM]] | [[KMS]]
+> 相关文档：[[Amazon Bedrock]] | [[Amazon Q]] | [[Amazon OpenSearch]] | [[Amazon Comprehend]] | [[Amazon Lex]] | [[S3]] | [[IAM]] | [[KMS]]
 
 ---
 
@@ -62,7 +62,7 @@
 
 ## 与生成式 AI 的关系（考试要点）
 
-- **GenAI Index** 是 Kendra 在维护模式前推出的最后一批重要能力，设计目标是让 Kendra 的语义检索能力可以**在 [[Amazon Bedrock]] Knowledge Bases、Amazon Q Business 等生成式 AI 服务之间迁移复用**
+- **GenAI Index** 是 Kendra 在维护模式前推出的最后一批重要能力，设计目标是让 Kendra 的语义检索能力可以**在 [[Amazon Bedrock]] Knowledge Bases、[[Amazon Q\|Amazon Q Business]] 等生成式 AI 服务之间迁移复用**
 - 这意味着已有 Kendra 索引投入的客户，可以通过 GenAI Index 平滑过渡到以 Bedrock 为核心的 RAG 架构，而不必推倒重来
 - **考试提示**：题目若涉及"企业搜索"或"文档问答"场景，需要结合当前服务状态判断——Kendra 仍可能出现在题目选项中（历史考纲/现有部署），但**新架构设计的推荐答案应优先考虑 Bedrock Knowledge Bases**
 
@@ -106,7 +106,7 @@
 6. **相关性调优**：索引级/查询级两个层次调整字段权重，提升关键字段的搜索排名
 7. **三种索引版本**：Developer（PoC）、Enterprise（生产）、GenAI Enterprise（新一代语义模型 + 可作 Bedrock 托管检索器）
 8. **服务状态变化（重要）**：**2026-06-30 起进入维护模式，2026-07-30 起停止新客户接入**，AWS 推荐新项目迁移至 Bedrock Knowledge Bases
-9. **GenAI Index 是过渡桥梁**：让已有 Kendra 投入可迁移复用到 Bedrock Knowledge Bases/Amazon Q Business 等生成式 AI 服务
+9. **GenAI Index 是过渡桥梁**：让已有 Kendra 投入可迁移复用到 Bedrock Knowledge Bases/Amazon Q Business 等生成式 AI 服务，Q Business 完整能力见 [[Amazon Q]]
 10. **Kendra vs OpenSearch**：Kendra 内置语义理解和问答能力开箱即用；OpenSearch 是更底层的搜索引擎，需自行构建语义理解层
 
 ### 场景题解题思路
