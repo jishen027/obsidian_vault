@@ -43,6 +43,16 @@
 - 部分敏感报告（如 SOC 2 Type II 的完整报告）需要先**在线接受保密协议（NDA）**才能下载，属于"受限报告"
 - 报告**按区域、按服务范围**组织——不同 AWS 服务、不同区域覆盖的认证范围可能不同，下载前需确认报告是否覆盖目标服务/区域
 
+#### 第三方/ISV 合规报告（Third-Party Reports，考试重点）
+
+> Artifact Reports 页面有一个**"Third-party reports"（第三方报告）标签页**，提供对通过 **AWS Marketplace** 销售产品的**独立软件供应商（ISV）**的安全合规报告的**按需访问**——不仅能拿到 AWS 自身的合规证明，也能在同一个门户里拿到你所依赖的第三方软件供应商的合规报告（如 SOC 2、ISO 认证）。
+
+#### 通知订阅（Notifications，考试重点：新报告/新协议可用时自动提醒）
+
+> Artifact 支持**订阅通知**——可以配置当**新的报告/协议**，或**已有报告/协议出现新版本**（包括第三方 ISV 报告）时，**自动通过邮件/Amazon SNS 收到提醒**，无需每次手动登录检查是否有更新。这项能力使 Artifact 不仅是"被动的下载门户"，还能**主动通知**合规团队关注的报告何时更新。
+
+> **考试陷阱**：题目描述"需要在新的 ISV 合规报告（如供应商的 SOC 2）可用时**自动收到邮件通知**" → 正确答案是 **AWS Artifact**（其通知订阅功能覆盖包括 ISV 报告在内的所有 Artifact 报告）——容易被误判为 **AWS Audit Manager**（它是收集**自己**系统的审计证据，不负责下发第三方报告的可用性通知）或 **AWS Config**（配置合规监控，与外部合规报告无关）或 **AWS Trusted Advisor**（最佳实践建议，与合规文档订阅无关）。
+
 ### AWS Artifact Agreements（协议管理）
 
 > 让客户在线**查看、接受、跟踪**与 AWS 之间的各类法律协议，无需线下签署纸质文件。
@@ -96,12 +106,15 @@
 5. **BAA 是 HIPAA 场景的关键协议**：处理健康信息前需先通过 Artifact 接受
 6. **组织级集中管理**：管理账户可代表整个 [[AWS Organizations]] 下载报告/接受协议
 7. **完全免费**：本身不产生任何费用，仅受 IAM 权限控制访问范围
+8. **第三方/ISV 报告 + 通知订阅**：Reports 页面的"Third-party reports"标签可下载通过 AWS Marketplace 销售的 ISV 供应商合规报告；支持配置邮件/SNS 通知，在新报告/协议（含 ISV 报告）可用或有新版本时自动提醒，这是 Artifact 独有能力，不能用 Audit Manager/Config/Trusted Advisor 替代
 
 ### 场景题解题思路
 
 ```
 场景分析 → 判断是否使用 AWS Artifact
 ├── "需要下载 AWS 的 SOC 2/ISO 27001/PCI DSS 合规报告给审计方" → AWS Artifact Reports
+├── "需要下载 AWS Marketplace 上 ISV 供应商的合规报告" → AWS Artifact Reports 的 Third-party reports 标签
+├── "希望新的合规报告/协议可用时自动收到邮件通知" → AWS Artifact 通知订阅功能
 ├── "即将处理患者健康信息（PHI），需要与 AWS 签署责任协议" → AWS Artifact Agreements（BAA）
 ├── "处理受 GDPR 约束的个人数据，需要补充数据处理条款" → AWS Artifact Agreements（DPA）
 ├── "需要持续自动收集自己系统的审计证据" → 改用 AWS Audit Manager
