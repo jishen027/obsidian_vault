@@ -4,6 +4,36 @@
 >
 > 相关文档：[[大语言模型 - LLM]] | [[提示工程 - Prompt Engineering]] | [[Amazon Bedrock]]
 
+## 目录
+
+- [[#从深度学习到生成式 AI]]
+	- [[#RNN vs Transformer（处理序列的方式）]]
+	- [[#Transformer 在生成式 AI 中的作用]]
+	- [[#LLM 擅长的任务]]
+- [[#Transformer 架构]]
+	- [[#核心特点]]
+	- [[#Encoder-Decoder 结构]]
+	- [[#Transformer 关键组件总览（推理流程）]]
+	- [[#Transformer 层内部结构]]
+- [[#Tokenization（词元化）]]
+- [[#Embeddings（嵌入向量）]]
+	- [[#向量 (Vector) 基础]]
+	- [[#语义接近原则（考试重点）]]
+	- [[#嵌入向量的流转]]
+	- [[#核心用途]]
+	- [[#AWS 提供的嵌入模型]]
+	- [[#多模态嵌入模型 vs 多模态生成模型（考试重点）]]
+	- [[#静态嵌入 vs 上下文嵌入（考试重点：区分一词多义）]]
+- [[#注意力机制详解]]
+	- [[#自注意力 (Self-Attention)]]
+	- [[#多头注意力 (Multi-Head Attention)]]
+- [[#向量数据库 (Vector Database)]]
+	- [[#相似度搜索算法]]
+	- [[#常用向量数据库对比]]
+- [[#考试重点总结]]
+	- [[#AIF-C01 高频考点]]
+	- [[#场景题解题思路]]
+
 ---
 
 ## 从深度学习到生成式 AI
@@ -176,7 +206,7 @@
 
 ### 嵌入向量的流转
 
-> 模型处理流程中，嵌入向量会被传递到 Transformer 的**自注意力层（Self-Attention Layer）**：
+> 模型处理流程中，嵌入向量会被传递到 Transformer 的**自注意力层（Self-Attention Layer）**，详见 [[#注意力机制详解]]：
 
 ```
 原始文本 → Tokenizer → Token ID（输入 ID）向量
@@ -209,32 +239,43 @@
 
 | 模型 | 提供商 | 特点 |
 |------|--------|------|
-| **Amazon Titan Embeddings** | Amazon | AWS 原生，与 Bedrock 深度集成 |
+| **Amazon Titan Text Embeddings** | Amazon | 纯文本嵌入，AWS 原生，与 Bedrock 深度集成 |
+| **Amazon Titan Multimodal Embeddings** | Amazon | **文本 + 图像**统一嵌入到**同一向量空间**，详见下方[[#多模态嵌入模型 vs 多模态生成模型（考试重点）]] |
 | **Cohere Embed** | Cohere | 高质量多语言嵌入 |
 
----
+### 多模态嵌入模型 vs 多模态生成模型（考试重点）
 
-## 向量数据库 (Vector Database)
+> **考试场景**：电商聊天机器人需要同时理解用户发来的**文字描述和图片**（如商品照片、报错截图），要求"最具成本效益"地让机器人**理解**这些多模态输入——正确答案是**多模态嵌入模型（Multi-modal Embedding Model）**，而不是多模态生成模型、纯文本 LLM 或 CNN。
 
-> **向量数据库** 专门存储和检索高维向量，支持高效的相似度搜索（最近邻搜索）。是 RAG 架构的核心组件。
+| 方案 | 能否处理"文本+图像" | 是否成本最优 | 原因 |
+|------|-------------------|------------|------|
+| **多模态嵌入模型**（如 **Amazon Titan Multimodal Embeddings**） | ✅ 能 | ✅ **最优** | 将文本和图像**对齐到同一向量空间**，只需比较向量相似度即可"理解"查询与内容的关联，无需逐字逐句生成新内容，计算成本远低于生成式模型 |
+| 多模态生成模型 | ✅ 能 | ❌ 过度设计 | 能根据文本+图像输入**生成**新的响应内容，功能更强大但也更复杂、构建和维护成本更高；如果目标只是**理解/检索/匹配**查询而非生成全新内容，用生成模型是"杀鸡用牛刀" |
+| 纯文本语言模型 | ❌ 不能 | — | 只能处理文本，完全无法理解图像输入，从根本上不满足多模态需求 |
+| **CNN**（卷积神经网络） | ❌ 不能（单独使用） | — | 专为**图像**设计，擅长图像识别/处理，但本身不理解文本，无法单独满足"文本+图像"的多模态需求，若要处理文本还需额外搭配其他模型，增加复杂度 |
 
-### 相似度搜索算法
+> **核心区分：嵌入模型 ≠ 生成模型**——嵌入模型的目标是把不同模态的数据**表示**到统一的语义空间中以便**理解、检索、匹配、推荐**（参见前文 [[#Embeddings（嵌入向量）]]）；生成模型的目标是**产出全新内容**（文本、图像等）。当题目的诉求是"理解/检索/匹配多模态查询"而非"生成新内容"时，嵌入模型通常是更**轻量、更省钱**的选择。
+>
+> **Titan Multimodal Embeddings 实际用法**：为内容（文本、图像或两者组合）生成嵌入向量并存入[[#向量数据库 (Vector Database)|向量数据库]]；用户提交文本、图像或"图文组合"查询时，模型为查询生成嵌入并与库中向量做相似度匹配，返回最相关结果——典型场景是**图文混合搜索/推荐**（如图库网站按"一句话 + 一张参考图"搜索相似商品图片）。
 
-| 算法 | 全称 | 特点 |
-|------|------|------|
-| **KNN** | K-Nearest Neighbor | 精确搜索，计算量大 |
-| **ANN** | Approximate Nearest Neighbor | 近似搜索，更快但精度略低 |
-| **HNSW** | Hierarchical Navigable Small World | 高效 ANN 算法，广泛使用 |
+参考：
+- [AWS Community - Product search using Titan Multimodal Embeddings](https://community.aws/content/2Z5Z29gSjBC2kRYeWpAQZzFE3tV/a-new-way-to-implement-product-search-using-titan-multimodal-embeddings-on-amazon-bedrock)
+- [AWS What's New - Amazon Titan Multimodal Embeddings](https://aws.amazon.com/about-aws/whats-new/2023/11/amazon-titan-multimodal-embeddings-model-bedrock/)
 
-### 常用向量数据库对比
+### 静态嵌入 vs 上下文嵌入（考试重点：区分一词多义）
 
-| 数据库 | 类型 | 特点 |
-|--------|------|------|
-| **Amazon OpenSearch Serverless** | AWS 托管 | 全文搜索 + 向量搜索，AWS 原生集成 |
-| **Amazon Aurora (pgvector)** | 关系型 + 向量 | 已有 Aurora 用户的首选扩展 |
-| **Pinecone** | 专用向量数据库 | 使用最简单，丰富云集成 |
-| **MongoDB Atlas** | 文档 + 向量 | 灵活的文档模型 |
-| **Redis Enterprise Cloud** | 内存 + 向量 | 毫秒级低延迟 |
+> **考试场景**：题目问"哪种嵌入模型最适合区分同一个词在不同短语中的**不同含义**（上下文语义）"——答案是 **BERT**，而不是 Word2Vec、PCA 或 SVD。
+
+| 模型/方法 | 类型 | 能否区分上下文含义 | 原因 |
+|----------|------|------------------|------|
+| **BERT**（Bidirectional Encoder Representations from Transformers） | **动态（上下文）嵌入** | ✅ 能 | 基于 Transformer **双向**编码器，同时看词的**前文和后文**；同一个词在不同句子中会生成**不同的向量**（如"银行倒了很多树" vs "他去银行取钱"中的"银行"） |
+| **Word2Vec** | **静态嵌入** | ❌ 不能 | 早期嵌入模型，基于词的共现关系训练；每个词**只有一个固定向量**，无论上下文如何都不变，无法处理一词多义 |
+| **PCA**（主成分分析） | 降维统计方法 | ❌ 不适用 | 用于**压缩高维数据、保留方差**（如图像压缩、数据可视化），本身不理解词义，也不产出上下文相关的表示 |
+| **SVD**（奇异值分解） | 矩阵分解方法 | ❌ 不适用 | 是 LSA（潜在语义分析）等**旧方法**的数学基础，可用于文本降维，但同样是静态、不区分上下文的表示 |
+
+> **本质区别**：Word2Vec / PCA / SVD 产出的是**静态嵌入**——同一个词永远对应同一个向量；BERT 等基于 Transformer 的模型产出**动态嵌入**——向量会随 [[#注意力机制详解|自注意力机制]] 计算出的上下文而变化。这正是 Transformer 双向上下文建模能力的直接体现，参见前文 [[#语义接近原则（考试重点）|语义接近原则]]。
+
+参考：[AWS - What is Embeddings in Machine Learning?](https://aws.amazon.com/what-is/embeddings-in-machine-learning/)
 
 ---
 
@@ -294,6 +335,30 @@
 
 ---
 
+## 向量数据库 (Vector Database)
+
+> **向量数据库** 专门存储和检索高维向量，支持高效的相似度搜索（最近邻搜索）。是 RAG 架构的核心组件。
+
+### 相似度搜索算法
+
+| 算法 | 全称 | 特点 |
+|------|------|------|
+| **KNN** | K-Nearest Neighbor | 精确搜索，计算量大 |
+| **ANN** | Approximate Nearest Neighbor | 近似搜索，更快但精度略低 |
+| **HNSW** | Hierarchical Navigable Small World | 高效 ANN 算法，广泛使用 |
+
+### 常用向量数据库对比
+
+| 数据库 | 类型 | 特点 |
+|--------|------|------|
+| **Amazon OpenSearch Serverless** | AWS 托管 | 全文搜索 + 向量搜索，AWS 原生集成 |
+| **Amazon Aurora (pgvector)** | 关系型 + 向量 | 已有 Aurora 用户的首选扩展 |
+| **Pinecone** | 专用向量数据库 | 使用最简单，丰富云集成 |
+| **MongoDB Atlas** | 文档 + 向量 | 灵活的文档模型 |
+| **Redis Enterprise Cloud** | 内存 + 向量 | 毫秒级低延迟 |
+
+---
+
 ## 考试重点总结
 
 ### AIF-C01 高频考点
@@ -311,6 +376,8 @@
 11. **上下文窗口**：模型一次能处理的最大 Token 数
 12. **向量数据库**：存储嵌入向量，支持相似度搜索（用于 RAG）
 13. **生成式 AI = 深度学习 + Transformer + 超大规模预训练数据**
+14. **静态 vs 动态嵌入**：Word2Vec/PCA/SVD 是静态嵌入（一词一向量，不分上下文）；**BERT** 基于双向 Transformer，能生成随上下文变化的动态嵌入，适合区分一词多义
+15. **多模态嵌入 vs 多模态生成模型**：需要"理解/检索/匹配"文本+图像查询 → 选**多模态嵌入模型**（如 Titan Multimodal Embeddings），成本更低；需要"生成全新内容" → 才需要多模态生成模型；纯文本 LLM 和 CNN 单独都无法覆盖"文本+图像"需求
 
 ### 场景题解题思路
 

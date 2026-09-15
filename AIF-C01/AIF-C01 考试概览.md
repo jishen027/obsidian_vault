@@ -56,6 +56,23 @@
 
 ---
 
+## 云计算六大优势（跨认证通用基础考点）
+
+> 这是 AWS **所有**认证考试（从 Cloud Practitioner 到 AIF-C01、SAA-C03）中最基础且必考的标准知识点，属于[[#前置建议|前置的 Cloud Practitioner 知识]]，AIF-C01 虽不专门考察，但理解它有助于把握"为什么用云做 AI/ML"这一价值主张的底层逻辑。
+
+| 优势 | 说明 |
+|------|------|
+| **将资本支出转为可变支出 (Trade capital expense for variable expense)** | 不再需要提前购买昂贵的服务器和数据中心，改为**用多少付多少**——用 OpEx（运营支出）替代 CapEx（资本支出） |
+| **受益于巨大的规模效益 (Benefit from massive economies of scale)** | 云服务商通过海量客户的聚集效应，获得更低的采购成本，从而为用户提供**更低的按需购买价格** |
+| **停止猜测容量 (Stop guessing capacity)** | 无需提前预估未来容量需求，告别**容量不足**（影响可用性）或**资源浪费**（多余成本）的两难，按需**弹性伸缩（Auto Scaling）** |
+| **提高速度和敏捷性 (Increase speed and agility)** | 计算资源的获取和部署从原来的数周/数月缩短到**几分钟内**完成，加快创新和试错节奏 |
+| **停止花费资金在数据中心的运行和维护上 (Stop spending money running and maintaining data centers)** | 摆脱布线、搬迁机架、散热管理等基础设施"重活"（**Undifferentiated Heavy Lifting**），把精力集中在真正创造业务价值的事情上 |
+| **几分钟内部署到全球 (Go global in minutes)** | 利用云厂商全球分布的 **Region（区域）/ AZ（可用区）**，轻松以低成本实现低延迟的全球化部署 |
+
+> **考试提示**：题目常以场景描述形式出现（如"公司希望避免提前采购硬件的大额投入" → 对应第一条 CapEx→OpEx；"公司希望几分钟内就能在海外为用户提供服务" → 对应"Go global in minutes"），要求判断该场景体现的是六大优势中的哪一条。**Undifferentiated Heavy Lifting（无差别的重活）** 这一说法在生成式 AI 场景下也常被复用——例如"使用 Amazon Bedrock 而非自建基础模型" 同样是把"训练/维护基础模型"这种重活交给 AWS。
+
+---
+
 ## 各域考点速览
 
 ### Domain 1 - AI 和 ML 基础

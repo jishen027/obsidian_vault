@@ -140,6 +140,23 @@
 - **建立信任**：让用户和利益相关者理解 AI 行为
 - **问责制**：明确 AI 错误的责任归属
 
+### Shapley 值 vs PDP（局部解释 vs 全局解释）
+
+> **考试陷阱**：题目常把"局部"和"全局"这两个概念故意颠倒——**Shapley 值是局部方法，PDP 是全局方法**，千万不要记反。
+
+| 方法 | 类型 | 说明 | 用途 |
+|------|------|------|------|
+| **Shapley 值** | **局部 (Local)** | 基于博弈论，量化**每个特征对某一条具体预测**的贡献值 | 解释"为什么这一个样本得到了这个预测结果" |
+| **PDP（部分依赖图）** | **全局 (Global)** | 固定其他特征不变，观察**某个特征在整个数据集范围内变化时**对模型预测的边际影响 | 理解模型在整体数据层面的行为趋势 |
+
+- **Shapley 值**：计算成本**较高**，因为需要考虑特征所有可能的排列组合来计算边际贡献。
+- **PDP**：计算成本相对较低，只需在特征取值范围内扫描并对其他特征取平均。
+- 二者在 [[#可解释性工具|SageMaker Clarify]] 中都有提供，分别对应**实例级解释（Shapley）**和**数据集级解释（PDP）**。
+
+> **记忆技巧**：Shapley → "**S**pecific（单个实例）"；PDP → "**P**opulation（整体数据集）"。
+
+参考：[SageMaker Clarify 模型可解释性文档](https://docs.aws.amazon.com/sagemaker/latest/dg/clarify-model-explainability.html)
+
 ---
 
 ## 数据隐私与 PII
@@ -345,9 +362,10 @@
 | **[[AWS Artifact]]** | 按需下载 AWS 的合规报告和认证证书（如 SOC、ISO、PCI DSS），用于向审计方证明底层基础设施的合规性 |
 | **[[AWS Audit Manager]]** | 持续自动收集合规审计所需的证据，简化审计准备工作——**⚠️ 已于 2026-04-30 起进入维护模式，停止向新账户开放**，新需求 AWS 推荐改用 [[AWS Config]] 的 Conformance Packs |
 | **[[AWS Config]]** | 持续评估和记录 AWS 资源配置是否符合预设的合规规则，完整能力与 AIF-C01 简化版考点见 [[AWS Config]] 独立笔记 |
+| **Amazon Inspector** | **自动化安全评估服务**——自动扫描已部署的应用（EC2、容器镜像、Lambda 函数）以发现**漏洞（Vulnerabilities）**和**偏离安全最佳实践**的问题，回答"这个应用本身安不安全" |
 | **数据驻留/数据主权 (Data Residency/Sovereignty)** | 选择特定 AWS 区域部署，确保数据存储和处理位置满足所在地法律要求 |
 
-> **考试要点**：**判断依据是"评估对象是谁"**——**[[AWS Artifact]]** 下载 **AWS 自身**的合规报告（证明底层基础设施合规）；**[[AWS Audit Manager]]** 持续收集**我方系统**的审计证据（简化审计流程）；**[[AWS Config]]** 持续评估**我方资源配置**是否合规（如 S3 桶是否加密）——三者容易混淆，题目问"需要下载 SOC 2 报告给审计方" → **[[AWS Artifact]]**；题目问"需要自动化、持续地收集合规证据" → **[[AWS Audit Manager]]**；题目问"需要持续检测我们自己的资源配置是否符合安全基准" → **[[AWS Config]]**。完整的 Artifact 功能（Reports/Agreements）见 [[AWS Artifact]] 独立笔记，Audit Manager 的框架/评估机制见 [[AWS Audit Manager]] 独立笔记，Config 的规则/修复机制见 [[AWS Config]] 独立笔记。
+> **考试要点**：**判断依据是"评估对象是谁、评估的是什么"**——**[[AWS Artifact]]** 下载 **AWS 自身**的合规报告（证明底层基础设施合规）；**[[AWS Audit Manager]]** 持续收集**我方系统**的审计证据（简化审计流程）；**[[AWS Config]]** 持续评估**我方资源配置**是否合规（如 S3 桶是否加密——关注"配置是否正确"）；**Amazon Inspector** 自动扫描**我方已部署应用/工作负载本身**是否存在**安全漏洞**（关注"应用是否有洞可钻"，而非配置是否合规）。四者容易混淆，题目问"需要下载 SOC 2 报告给审计方" → **[[AWS Artifact]]**；题目问"需要自动化、持续地收集合规证据" → **[[AWS Audit Manager]]**；题目问"需要持续检测我们自己的资源配置是否符合安全基准" → **[[AWS Config]]**；题目问"**自动化的安全评估**，检测应用的**漏洞**（vulnerabilities）和对最佳实践的偏离" → **Amazon Inspector**。完整的 Artifact 功能（Reports/Agreements）见 [[AWS Artifact]] 独立笔记，Audit Manager 的框架/评估机制见 [[AWS Audit Manager]] 独立笔记，Config 的规则/修复机制见 [[AWS Config]] 独立笔记。
 
 ---
 
@@ -366,7 +384,7 @@
 9. **威胁检测服务**：[[Amazon GuardDuty]]（异常/恶意活动监控）vs [[Amazon Macie]]（敏感数据自动发现）
 10. **GenAI Security Scoping Matrix**：Scope 1（消费级应用）→ Scope 5（自训练模型），**Scope 越高，客户自身承担的安全/合规责任越大**
 11. **治理 vs 合规**：治理关注内部流程/角色/结构（谁能做什么），合规关注是否满足外部法规（GDPR/HIPAA/NIST AI RMF 等）
-12. **[[AWS Artifact]] vs [[AWS Audit Manager]] vs [[AWS Config]]**：Artifact 下载 AWS 自身合规报告；Audit Manager 持续收集我方审计证据；Config 持续评估我方资源配置是否合规
+12. **[[AWS Artifact]] vs [[AWS Audit Manager]] vs [[AWS Config]] vs Amazon Inspector**：Artifact 下载 AWS 自身合规报告；Audit Manager 持续收集我方审计证据；Config 持续评估我方资源**配置**是否合规；Amazon Inspector 自动扫描我方**应用/工作负载**本身的安全**漏洞**
 
 ### 场景题解题思路
 
@@ -390,5 +408,6 @@
 ├── "公司从零训练了专有模型" → Scope 5，承担全部数据治理责任
 ├── "需要下载 SOC 2/ISO 合规报告给审计方" → [[AWS Artifact]]
 ├── "需要持续自动化收集合规审计证据" → [[AWS Audit Manager]]
-└── "需要持续检测我们自己的资源配置是否符合安全基准" → [[AWS Config]]
+├── "需要持续检测我们自己的资源配置是否符合安全基准" → [[AWS Config]]
+└── "需要自动化评估已部署应用的漏洞和安全最佳实践偏离" → Amazon Inspector
 ```
