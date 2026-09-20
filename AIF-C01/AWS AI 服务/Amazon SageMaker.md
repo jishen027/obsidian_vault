@@ -121,6 +121,8 @@
 
 > **考试陷阱（AIF-C01）**：**Feature Store 的在线/离线存储服务不同目的**——实时推理场景需要毫秒级读取特征，用 Online Store；批量训练需要读取历史大批量特征，用 Offline Store，两者不可混淆。
 
+> **考试陷阱：题干出现"跨团队共享/管理变量（features）"就是 Feature Store，不是 Model Cards/Clarify/Data Wrangler**——"需要在多个团队之间共享和管理模型开发用的变量"这类描述，考的就是 Feature Store 的核心定位（集中式特征仓库，支持复用、版本管理）；**Model Cards** 只负责记录模型的用途/指标/局限性等**文档**，不存储特征；**Clarify** 负责偏差检测和可解释性，与"共享变量"无关；**Data Wrangler** 只负责特征的**生成/清洗**，不提供跨团队长期共享和治理的能力。
+
 > **考试提示**：**SageMaker Canvas 空闲时也持续计费**，费用可能远超预期，使用后应及时关闭工作区。
 
 ### SageMaker Ground Truth（数据标注，考试高频）
