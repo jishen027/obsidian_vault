@@ -227,6 +227,8 @@
 | **基础真实性 (Grounding)** | 验证响应是否有参考来源支持 | 需提供参考文档 |
 | **相关性 (Relevance)** | 验证响应是否与用户查询相关 | — |
 
+> **考试陷阱：内容过滤 (Content Filter) 的官方内置类别是 Hate（仇恨）、Insults（侮辱）、Sexual（性相关）、Violence（暴力）、Misconduct（不当行为）、Prompt Attacks（提示攻击）这几类——不包含 Politics（政治）、Religion（宗教）、Gambling（赌博）**。题目问"Guardrails 默认能过滤哪些内容类别"时，只从上述内置类别里选；如果场景需要屏蔽政治/宗教/赌博这类题材，要靠**禁止话题 (Denied Topics)** 自定义配置，而不是内置的内容过滤类别——这是"内置安全类别 vs 自定义业务类别"的边界，题目常用这几个听起来"也很敏感"的话题作干扰项。
+
 ---
 
 ## AI 的安全与隐私 (Security and Privacy for AI)
