@@ -477,7 +477,7 @@ m5.large
 ### 跨区域部署
 
 - 在**多个区域**部署实例实现[[Disaster Recovery On AWS|灾难恢复]]，完整的策略选择（备份恢复/引导恢复/温备份/多活）见 [[Disaster Recovery On AWS]] 独立笔记
-- 使用 **[[Route 53 DNS|Route 53]]** 实现 DNS 级别故障转移
+- 使用 **[[Route 53|Route 53]]** 实现 DNS 级别故障转移
 - 使用 **S3 Cross-Region Replication** 同步数据
 
 ---

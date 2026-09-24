@@ -2,7 +2,7 @@
 
 > **AWS Elastic Disaster Recovery（DRS）**是全托管的灾难恢复服务，通过在源服务器（物理机、VMware/Hyper-V 虚拟机、其他云的实例，也包括 AWS 内部跨区域/跨账号）上安装轻量代理，持续进行**块级复制（Block-Level Replication）**到 AWS 一个**低成本的暂存区（Staging Area）**——平时只产生极低的存储和最小化实例成本，故障发生时才**按需启动**全规格的恢复实例。它本质是把 [[Disaster Recovery On AWS]] 笔记中"**引导恢复（Pilot Light）**"策略**产品化、自动化**，免去了自建复制管道和手动维护 AMI/启动模板的运维负担。
 >
-> 相关文档：[[Disaster Recovery On AWS]] | [[Database Migration Service]] | [[AWS Application Discovery Service]] | [[VMware Cloud on AWS]] | [[EC2]] | [[EBS]] | [[VPC]] | [[Auto Scaling]] | [[AWS Snowball]] | [[Route 53 DNS]]
+> 相关文档：[[Disaster Recovery On AWS]] | [[Database Migration Service]] | [[AWS Application Discovery Service]] | [[VMware Cloud on AWS]] | [[EC2]] | [[EBS]] | [[VPC]] | [[Auto Scaling]] | [[AWS Snowball]] | [[Route 53]]
 
 ---
 

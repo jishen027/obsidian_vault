@@ -2,7 +2,7 @@
 
 > **Amazon CloudFront** 是 AWS 的全球内容分发网络（CDN），通过遍布全球的边缘节点（Edge Locations）缓存内容，为用户提供低延迟、高传输速度的静态与动态内容分发。
 >
-> 相关文档：[[S3]] | [[AWS Load Balance]] | [[Route 53 DNS]] | [[IAM]] | [[AWS WAF]] | [[AWS Shield]] | [[AWS Certificate Manager]] | [[AWS Amplify]] | [[AWS Global Accelerator]]
+> 相关文档：[[S3]] | [[AWS Load Balance]] | [[Route 53]] | [[IAM]] | [[AWS WAF]] | [[AWS Shield]] | [[AWS Certificate Manager]] | [[AWS Amplify]] | [[AWS Global Accelerator]]
 
 ---
 
@@ -15,7 +15,7 @@
 | **CloudFront** | CDN | 全球加速静态/动态内容分发 | 边缘缓存、就近接入、降低源站负载 |
 | [[S3]] | 对象存储 | 存储源内容 | 常作为 CloudFront 的源站之一 |
 | [[AWS Load Balance]] | 负载均衡 | 区域内流量分发 | 常作为 CloudFront 的动态内容源站 |
-| [[Route 53 DNS]] | DNS | 域名解析 | 通过 Alias 记录将自定义域名指向 CloudFront |
+| [[Route 53]] | DNS | 域名解析 | 通过 Alias 记录将自定义域名指向 CloudFront |
 
 ### 边缘网络架构
 
@@ -104,13 +104,13 @@
 - 在 CloudFront 边缘层部署 **[[AWS WAF]]**，可拦截 SQL 注入、跨站脚本（XSS）等攻击，在流量到达源站之前完成过滤，完整规则类型、托管规则组等详见 [[AWS WAF]] 独立笔记
 - WAF 规则可基于 IP 黑白名单、地理位置、速率限制（Rate-based Rule）等条件精细过滤
 
-> **CloudFront 自带的 Geo Restriction（地理限制）只能附加到 CloudFront 分发本身**——如果流量入口是 ALB 而非 CloudFront，应改用 [[AWS WAF#地理位置限制三兄弟：WAF Geo Match vs CloudFront Geo Restriction vs Route 53 Geolocation（考试易混淆点）|WAF 的地理位置匹配规则]]，两者不可混用；需要按地区把用户导向不同资源（而非单纯允许/拒绝）则用 [[Route 53 DNS#路由策略|Route 53 地理位置路由]]。
+> **CloudFront 自带的 Geo Restriction（地理限制）只能附加到 CloudFront 分发本身**——如果流量入口是 ALB 而非 CloudFront，应改用 [[AWS WAF#地理位置限制三兄弟：WAF Geo Match vs CloudFront Geo Restriction vs Route 53 Geolocation（考试易混淆点）|WAF 的地理位置匹配规则]]，两者不可混用；需要按地区把用户导向不同资源（而非单纯允许/拒绝）则用 [[Route 53#路由策略|Route 53 地理位置路由]]。
 
 ---
 
 ## 与 Route 53 集成
 
-- 可将自定义域名（如 `www.example.com`）通过 [[Route 53 DNS]] 的 **Alias 记录**指向 CloudFront 分发
+- 可将自定义域名（如 `www.example.com`）通过 [[Route 53]] 的 **Alias 记录**指向 CloudFront 分发
 - Alias 记录指向 CloudFront 时**查询免费**，且能自动感知分发状态变化，优于使用 CNAME
 
 ---

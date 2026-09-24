@@ -25,7 +25,7 @@
 |------|---------|---------|-----------------|
 | **卓越运营（Operational Excellence）** | 如何运行、监控系统并持续改进运维流程？ | 把运维**代码化**、小步快跑的可回滚变更、从故障中学习、提前演练 | [[AWS CloudFormation]]、[[AWS Systems Manager]]、[[AWS Config]]、[[CloudTrail]]、[[CloudWatch]] |
 | **安全性（Security）** | 如何保护数据、系统和资产？ | 最小权限身份基础、全链路可追溯、纵深防御、自动化安全响应、数据全程加密 | [[IAM]]、[[KMS]]、[[Security Group]]、[[NACL]]、[[AWS WAF]]、[[AWS Shield]]、[[Amazon GuardDuty]] |
-| **可靠性（Reliability）** | 系统能否正确、一致地履行预期功能，并从故障中恢复？ | 自动从故障恢复、水平扩展而非垂直堆料、定期测试恢复流程、通过自动化管理变更 | Multi-AZ、[[Auto Scaling]]、[[AWS Load Balance]]、[[Disaster Recovery On AWS]]、[[Route 53 DNS]] 健康检查 |
+| **可靠性（Reliability）** | 系统能否正确、一致地履行预期功能，并从故障中恢复？ | 自动从故障恢复、水平扩展而非垂直堆料、定期测试恢复流程、通过自动化管理变更 | Multi-AZ、[[Auto Scaling]]、[[AWS Load Balance]]、[[Disaster Recovery On AWS]]、[[Route 53]] 健康检查 |
 | **性能效率（Performance Efficiency）** | 如何高效使用计算资源，并随需求和技术演进保持高效？ | 优先用托管服务而非自建、善用多区域降低延迟、拥抱 Serverless、为工作负载选择匹配的资源类型 | [[CloudFront]]、[[ElastiCache]]、EC2 实例类型选型、[[EBS]] 卷类型选型 |
 | **成本优化（Cost Optimization）** | 如何避免不必要的成本？ | 采用按需付费的消费模型、停止为"无差别的重体力劳动"buy 服务器、按标签归因成本、持续衡量整体效率 | [[Cost Explorer]]、Reserved/Savings Plans、Spot 实例、S3 生命周期管理 |
 | **可持续性（Sustainability）** | 如何降低云工作负载的环境影响？ | 理解自身用量的环境足迹、提高资源利用率、优先使用托管服务、拥抱更高能效的新硬件/软件 | 右规格化、Serverless/托管服务、区域选型 |

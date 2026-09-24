@@ -2,7 +2,7 @@
 
 > **AWS Shield** 是抵御**分布式拒绝服务（DDoS）攻击**的托管防护服务，提供 **Standard**（所有客户默认免费开启）和 **Advanced**（付费订阅，增强防护 + 专家支持）两个层级，保护 EC2、ELB、CloudFront、Global Accelerator、Route 53 等面向公网的资源免受大规模流量淹没型攻击。
 >
-> 相关文档：[[AWS WAF]] | [[CloudFront]] | [[AWS Load Balance]] | [[Route 53 DNS]] | [[VPC]] | [[Security Group]] | [[AWS Organizations]] | [[AWS Firewall Manager]]
+> 相关文档：[[AWS WAF]] | [[CloudFront]] | [[AWS Load Balance]] | [[Route 53]] | [[VPC]] | [[Security Group]] | [[AWS Organizations]] | [[AWS Firewall Manager]]
 
 ---
 
@@ -42,7 +42,7 @@
 
 ### 受保护资源
 
-- **[[EC2]]**（需关联弹性 IP）、**[[AWS Load Balance]]**、**[[CloudFront]]**、**AWS Global Accelerator**、**[[Route 53 DNS]]**
+- **[[EC2]]**（需关联弹性 IP）、**[[AWS Load Balance]]**、**[[CloudFront]]**、**AWS Global Accelerator**、**[[Route 53]]**
 - 需要显式将资源加入 Shield Advanced 的**受保护资源组（Protected Resource Group）**才能获得高级防护和 DRT 支持
 
 ### 订阅与计费
@@ -69,7 +69,7 @@
 |------|---------|
 | **[[AWS WAF]]** | Shield Advanced 的应用层防护构建在 WAF 规则引擎之上，两者结合覆盖第 3/4/7 层的完整防护 |
 | **[[AWS Firewall Manager]]** | 可结合 [[AWS Organizations]] 在组织级统一部署 Shield Advanced 保护策略，确保新资源自动纳入防护，完整的策略类型和自动纳入机制见 [[AWS Firewall Manager]] 独立笔记 |
-| **[[Route 53 DNS]] 健康检查** | Shield Advanced 可结合健康检查数据更精准地判断资源是否因攻击而不可用，辅助攻击检测的准确性 |
+| **[[Route 53]] 健康检查** | Shield Advanced 可结合健康检查数据更精准地判断资源是否因攻击而不可用，辅助攻击检测的准确性 |
 
 ---
 

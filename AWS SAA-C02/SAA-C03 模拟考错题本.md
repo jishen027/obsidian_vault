@@ -456,7 +456,7 @@
 - **我的选择（错）**：创建 Route 53 私有托管区域，关联到 VPC
 - **正确答案**：**创建 Route 53 Resolver 出站端点**，配置转发规则把特定域名的查询转发到本地 DNS 服务器
 - **核心原因**：私有托管区域只能解析**托管在 Route 53 里、AWS 侧自己创建**的域名记录，不会自动获取本地真实 DNS 服务器上的记录（除非手动复制，运维繁琐且容易不一致）；出站端点专门用于把 VPC 内对特定域名的查询**转发**到本地 DNS 服务器，是 AWS 官方推荐的混合 DNS 解析方案；入站端点方向相反（本地查询 VPC 内的 AWS 私有域名）
-- **关联笔记**：[[Route 53 DNS#混合云和全球可视化]]
+- **关联笔记**：[[Route 53#混合云和全球可视化]]
 
 ---
 
@@ -658,26 +658,6 @@
     批次二 Q46（S3TA 未加速则完全免费，不是仍收标准传输费）
 ```
 
-
----
-
-## 相关知识笔记（已有课程笔记，按类别索引）
-
-| 类别 | 笔记 |
-|------|------|
-| 计算服务 | [[AWS SAA-C02/计算服务/EC2\|EC2]] \| [[AWS SAA-C02/计算服务/Auto Scaling\|Auto Scaling]] \| [[AWS SAA-C02/计算服务/AWS Load Balance\|ELB]] \| [[AWS SAA-C02/计算服务/ECS\|ECS]] \| [[AWS SAA-C02/计算服务/EKS\|EKS]] \| [[AWS SAA-C02/计算服务/AWS Fargate\|Fargate]] \| [[AWS SAA-C02/计算服务/AWS Lambda\|Lambda]] \| [[AWS SAA-C02/计算服务/Elastic Beanstalk\|Elastic Beanstalk]] |
-| 存储服务 | [[AWS SAA-C02/存储服务/S3\|S3]] \| [[AWS SAA-C02/存储服务/S3 Security\|S3 Security]] \| [[AWS SAA-C02/存储服务/S3 Glacier Archive\|S3 Glacier]] \| [[AWS SAA-C02/存储服务/EBS\|EBS]] \| [[AWS SAA-C02/存储服务/AWS EFS\|EFS]] \| [[AWS SAA-C02/存储服务/AWS FSx\|FSx]] \| [[AWS SAA-C02/存储服务/AWS Storage Gateway\|Storage Gateway]] \| [[AWS SAA-C02/存储服务/AWS DataSync\|DataSync]] \| [[AWS SAA-C02/存储服务/AWS Snowball\|Snowball]] |
-| 数据库服务 | [[AWS SAA-C02/数据库服务/RDS\|RDS]] \| [[AWS SAA-C02/数据库服务/RDS Proxy\|RDS Proxy]] \| [[AWS SAA-C02/数据库服务/Aurora\|Aurora]] \| [[AWS SAA-C02/数据库服务/DynamoDB\|DynamoDB]] \| [[AWS SAA-C02/数据库服务/ElastiCache\|ElastiCache]] \| [[AWS SAA-C02/数据库服务/Redshift\|Redshift]] \| [[AWS SAA-C02/数据库服务/Amazon DocumentDB\|DocumentDB]] \| [[AWS SAA-C02/数据库服务/Amazon Neptune\|Neptune]] \| [[AWS SAA-C02/数据库服务/Amazon Keyspaces\|Keyspaces]] \| [[AWS SAA-C02/数据库服务/Amazon Timestream\|Timestream]] |
-| 网络服务 | [[AWS SAA-C02/网络服务/VPC\|VPC]] \| [[AWS SAA-C02/网络服务/Subnet\|Subnet]] \| [[AWS SAA-C02/网络服务/Route Table\|Route Table]] \| [[AWS SAA-C02/网络服务/Security Group\|Security Group]] \| [[AWS SAA-C02/网络服务/NACL\|NACL]] \| [[AWS SAA-C02/网络服务/NAT Gateway\|NAT Gateway]] \| [[AWS SAA-C02/网络服务/Internet Gateway\|Internet Gateway]] \| [[AWS SAA-C02/网络服务/VPC Peering\|VPC Peering]] \| [[AWS SAA-C02/网络服务/Transit Gateway\|Transit Gateway]] \| [[AWS SAA-C02/网络服务/VPC Endpoints\|VPC Endpoints]] \| [[AWS SAA-C02/网络服务/Direct Connect\|Direct Connect]] \| [[AWS SAA-C02/网络服务/Site to Site VPN\|Site-to-Site VPN]] \| [[AWS SAA-C02/网络服务/CloudFront\|CloudFront]] \| [[AWS SAA-C02/网络服务/Route 53 DNS\|Route 53]] \| [[AWS SAA-C02/网络服务/AWS Global Accelerator\|Global Accelerator]] |
-| 访问管理与身份 | [[AWS SAA-C02/访问管理和身份识别/IAM\|IAM]] \| [[AWS SAA-C02/访问管理和身份识别/Cognito\|Cognito]] \| [[AWS SAA-C02/访问管理和身份识别/AWS Organizations\|Organizations]] \| [[AWS SAA-C02/访问管理和身份识别/AWS Directory Service\|Directory Service]] \| [[AWS SAA-C02/访问管理和身份识别/AWS Control Tower\|Control Tower]] |
-| 安全和加密 | [[AWS SAA-C02/安全和加密/KMS\|KMS]] \| [[AWS SAA-C02/安全和加密/AWS Secrets Manager\|Secrets Manager]] \| [[AWS SAA-C02/安全和加密/AWS Certificate Manager\|ACM]] \| [[AWS SAA-C02/安全和加密/AWS CloudHSM\|CloudHSM]] \| [[AWS SAA-C02/安全和加密/AWS WAF\|WAF]] \| [[AWS SAA-C02/安全和加密/AWS Shield\|Shield]] \| [[AWS SAA-C02/安全和加密/AWS Firewall Manager\|Firewall Manager]] |
-| 监控与审计 | [[AWS SAA-C02/监控与审计/CloudWatch\|CloudWatch]] \| [[AWS SAA-C02/监控与审计/CloudTrail\|CloudTrail]] \| [[AWS SAA-C02/监控与审计/AWS X-Ray\|X-Ray]] \| [[AWS SAA-C02/监控与审计/AWS Config\|Config]] \| [[AWS SAA-C02/监控与审计/Amazon GuardDuty\|GuardDuty]] \| [[AWS SAA-C02/监控与审计/Amazon Inspector\|Inspector]] \| [[AWS SAA-C02/监控与审计/Amazon Macie\|Macie]] |
-| 应用集成 | [[AWS SAA-C02/应用集成服务/SQS\|SQS]] \| [[AWS SAA-C02/应用集成服务/SNS\|SNS]] \| [[AWS SAA-C02/应用集成服务/Amazon EventBridge\|EventBridge]] \| [[AWS SAA-C02/应用集成服务/AWS Step Functions\|Step Functions]] \| [[AWS SAA-C02/应用集成服务/Amazon Kinesis\|Kinesis]] \| [[AWS SAA-C02/应用集成服务/Amazon MSK\|MSK]] \| [[AWS SAA-C02/应用集成服务/Amazon API Gateway\|API Gateway]] |
-| 数据分析 | [[AWS SAA-C02/数据分析服务/AWS Glue\|Glue]] \| [[AWS SAA-C02/数据分析服务/Amazon Athena\|Athena]] \| [[AWS SAA-C02/数据分析服务/Amazon EMR\|EMR]] \| [[AWS SAA-C02/数据分析服务/Amazon OpenSearch\|OpenSearch]] \| [[AWS SAA-C02/数据分析服务/Amazon QuickSight\|QuickSight]] \| [[AWS SAA-C02/数据分析服务/AWS Lake Formation\|Lake Formation]] |
-| 灾难恢复与迁移 | [[AWS SAA-C02/灾难恢复和迁移/Disaster Recovery On AWS\|Disaster Recovery]] \| [[AWS SAA-C02/灾难恢复和迁移/AWS Backup\|Backup]] \| [[AWS SAA-C02/灾难恢复和迁移/AWS Elastic Disaster Recovery\|Elastic DR]] \| [[AWS SAA-C02/灾难恢复和迁移/Database Migration Service\|DMS]] |
-| 管理与治理 | [[AWS SAA-C02/管理与治理/AWS CloudFormation\|CloudFormation]] \| [[AWS SAA-C02/管理与治理/AWS Systems Manager\|Systems Manager]] \| [[AWS SAA-C02/管理与治理/AWS Well-Architected Framework\|Well-Architected Framework]] \| [[AWS SAA-C02/管理与治理/AWS Trusted Advisor\|Trusted Advisor]] \| [[AWS SAA-C02/管理与治理/Cost Explorer\|Cost Explorer]] |
-
-> ⚠️ 提醒：以上笔记文件夹命名为 **SAA-C02**，但目标考试是 **SAA-C03**——两版考试内容高度重叠，服务层面的知识基本通用，但 C03 相比 C02 更强调无服务器架构（Lambda/Fargate/DynamoDB/Step Functions）和弹性韧性设计的权重。做模拟考时如果遇到笔记里完全没覆盖的新服务或新概念，提醒我一并补充到对应笔记里。
 
 ---
 

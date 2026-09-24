@@ -2,7 +2,7 @@
 
 > **灾难恢复（Disaster Recovery, DR）**是指为应对**区域级重大故障**（自然灾害、区域性服务中断、大规模误操作）而提前准备的恢复方案，核心是在**成本**与**恢复速度**之间做权衡。**[[AWS Well-Architected Framework]]**（可靠性支柱）定义了四种由轻到重的标准 DR 策略——**备份恢复（Backup & Restore）→ 引导恢复（Pilot Light）→ 温备份（Warm Standby）→ 多活（Multi-Site Active/Active）**——策略越靠后，**恢复越快、成本越高**。选择哪种策略完全取决于业务能接受的 **RTO（恢复时间目标）**和 **RPO（恢复点目标）**，而非"预算无限就无脑选最贵的"。
 >
-> 相关文档：[[AWS Well-Architected Framework]] | [[AWS Elastic Disaster Recovery]] | [[AWS Backup]] | [[RDS]] | [[Aurora]] | [[DynamoDB]] | [[ElastiCache]] | [[Redshift]] | [[Amazon DocumentDB]] | [[Amazon Keyspaces]] | [[EBS]] | [[S3]] | [[S3 Glacier Archive]] | [[Route 53 DNS]] | [[EC2]] | [[Auto Scaling]] | [[KMS]] | [[AWS Secrets Manager]] | [[AWS CloudHSM]] | [[AWS Snowball]] | [[AWS Systems Manager]]
+> 相关文档：[[AWS Well-Architected Framework]] | [[AWS Elastic Disaster Recovery]] | [[AWS Backup]] | [[RDS]] | [[Aurora]] | [[DynamoDB]] | [[ElastiCache]] | [[Redshift]] | [[Amazon DocumentDB]] | [[Amazon Keyspaces]] | [[EBS]] | [[S3]] | [[S3 Glacier Archive]] | [[Route 53]] | [[EC2]] | [[Auto Scaling]] | [[KMS]] | [[AWS Secrets Manager]] | [[AWS CloudHSM]] | [[AWS Snowball]] | [[AWS Systems Manager]]
 
 ---
 
@@ -64,7 +64,7 @@
 - **典型实现**：
   - 数据层：[[RDS]] 跨区域只读副本、[[Aurora]] Global Database、[[DynamoDB]] Global Tables、[[Amazon Keyspaces]] 多区域复制表、[[Amazon DocumentDB]] Global Clusters、[[ElastiCache]] Global Datastore 均是"引导恢复"数据层的标准实现
   - 应用层：预先构建好的 **AMI** + 已配置但**容量为 0** 的 Auto Scaling Group，故障时快速扩容启动
-- **故障转移**：触发后需要**启动应用层实例**、将只读副本**提升为主库**、切换 DNS（[[Route 53 DNS]] 故障转移路由），耗时通常在几十分钟量级
+- **故障转移**：触发后需要**启动应用层实例**、将只读副本**提升为主库**、切换 DNS（[[Route 53]] 故障转移路由），耗时通常在几十分钟量级
 - **全托管实现**：无需自建复制管道和手动维护 AMI/启动模板，可直接使用 **[[AWS Elastic Disaster Recovery]]**——它把整台服务器（不仅是数据库）的持续块级复制、低成本暂存、按需启动恢复实例全流程产品化，完整能力见 [[AWS Elastic Disaster Recovery]] 独立笔记
 
 > **考试要点**：**"引导恢复"得名于"只保留最核心的火苗（数据库），其余在需要时才点燃（启动应用层）"**——题目描述"数据库需要持续复制保持最新，但应用服务器平时不需要运行以节省成本" → 引导恢复是标准答案；题目描述"需要对整台服务器（含操作系统和应用）做低成本持续复制，而非只复制数据库" → **AWS Elastic Disaster Recovery**。
@@ -75,7 +75,7 @@
 
 - **核心机制**：DR 区域运行一套**功能完整**但**规模缩小**（更少实例数/更小实例规格）的生产环境副本，**始终对外可用**（可用于低流量场景或作为只读服务），灾难发生时**扩容**到生产规模
 - 与引导恢复的核心差异：**应用层在 DR 区域本身就在运行**（只是容量小），而不是平时完全停机等待启动——这让故障转移速度更快，但日常成本也更高
-- 结合 [[Route 53 DNS]] 的**故障转移路由**或**加权路由**，可以让 DR 区域平时承接**少量流量**做健康校验，主区域故障时通过健康检查自动/半自动切换全部流量
+- 结合 [[Route 53]] 的**故障转移路由**或**加权路由**，可以让 DR 区域平时承接**少量流量**做健康校验，主区域故障时通过健康检查自动/半自动切换全部流量
 
 > **考试要点**：**"引导恢复 vs 温备份"是最容易混淆的一对**——判断依据是"DR 区域的应用层平时是否在运行"：完全不运行（容量为 0）→ 引导恢复；以缩小规模持续运行 → 温备份。
 
@@ -83,7 +83,7 @@
 
 ## 多活（Multi-Site Active/Active）
 
-- **核心机制**：**多个区域同时**以**生产全量规模**对外提供服务，用户流量通过 [[Route 53 DNS]] 的**延迟路由**或**地理邻近路由**分发到最近的健康区域，任一区域故障时 Route 53 健康检查自动将流量导向其余区域
+- **核心机制**：**多个区域同时**以**生产全量规模**对外提供服务，用户流量通过 [[Route 53]] 的**延迟路由**或**地理邻近路由**分发到最近的健康区域，任一区域故障时 Route 53 健康检查自动将流量导向其余区域
 - **数据一致性是最大挑战**：多区域**同时读写**同一份数据集时需要处理**写冲突**——[[DynamoDB]] Global Tables 采用"最后写入者获胜（Last Writer Wins）"自动解决冲突；[[Aurora]] Global Database 的托管故障转移仍是"一个主区域可写，其余只读"，并非真正意义上的多主写入
 - **成本和复杂度最高**：需要在多个区域**长期维持全量生产规模**的资源，且必须设计能容忍最终一致性/写冲突的应用逻辑
 
@@ -99,7 +99,7 @@
 | **整机（服务器级）持续复制** | **[[AWS Elastic Disaster Recovery]]**：对物理机/虚拟机/其他云实例做持续块级复制，低成本暂存 + 按需启动恢复实例，全托管实现引导恢复 | 引导恢复（可配置向温备份靠拢） |
 | **对象/文件存储备份** | [[S3]] 跨区域复制（CRR）、[[S3 Glacier Archive\|S3 Glacier]] 长期归档、[[EBS]] 快照跨区域复制、AWS FSx/EFS 备份跨区域恢复 | 备份恢复（也是其余策略的静态数据基础） |
 | **集中化备份编排** | **[[AWS Backup]]**：跨 EBS/RDS/DynamoDB/EFS/FSx 等服务统一管理备份计划、生命周期、跨区域/跨账号复制 | 备份恢复 |
-| **DNS 故障转移** | [[Route 53 DNS]] 故障转移路由（主备）、延迟/地理邻近路由（多活分流）+ 健康检查 | 温备份 / 多活（故障切换入口） |
+| **DNS 故障转移** | [[Route 53]] 故障转移路由（主备）、延迟/地理邻近路由（多活分流）+ 健康检查 | 温备份 / 多活（故障切换入口） |
 | **密钥与凭证的跨区域可用性** | [[KMS]] 多区域密钥（避免"数据在异地却无法解密"）、[[AWS Secrets Manager]] Secret 跨区域自动复制 | 所有策略（加密数据的前提条件） |
 | **自建密钥管理的特殊情况** | [[AWS CloudHSM]]：密钥的备份与灾难恢复**完全是客户责任**，AWS 无法代为恢复丢失的密钥材料 | 需要客户自行设计 DR 方案，而非依赖 AWS |
 | **大规模数据离线迁移** | [[AWS Snowball]] Edge：网络带宽不足以支撑跨区域复制时的物理传输补充手段 | 备份恢复（尤其是初始种子数据或灾难后紧急导出） |

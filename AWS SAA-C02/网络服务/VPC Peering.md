@@ -2,7 +2,7 @@
 
 > **VPC 对等连接（VPC Peering）**是两个 [[VPC]] 之间的**一对一**网络连接，通过 AWS 的骨干网络私密路由流量，双方 VPC 内的资源可以像在同一网络中一样使用私有 IP 互相通信。它是最简单、最基础的 VPC 互联方式，但**不支持传递路由**，规模化场景通常改用 [[Transit Gateway]]。
 >
-> 相关文档：[[VPC]] | [[Virtual Private Gateway]] | [[Transit Gateway]] | [[Security Group]] | [[NACL]] | [[Subnet]] | [[Route Table]] | [[CIDR]] | [[Route 53 DNS]] | [[AWS EFS]]
+> 相关文档：[[VPC]] | [[Virtual Private Gateway]] | [[Transit Gateway]] | [[Security Group]] | [[NACL]] | [[Subnet]] | [[Route Table]] | [[CIDR]] | [[Route 53]] | [[AWS EFS]]
 
 > **考试陷阱：VPC Peering ≠ VPC 共享（VPC Sharing）**——Peering 只是连接**两个独立的 VPC**，既不能把 VPC 本身共享出去，也不提供集中化管理能力；题目描述"希望在 Organizations 下多账户之间提供共享的、集中管理的 VPC"时，正确答案是 [[VPC#VPC 共享（VPC Sharing，考试易混淆点）|VPC 共享]]（通过 AWS RAM 共享子网），不是 VPC Peering。
 

@@ -2,7 +2,7 @@
 
 > **AWS Amplify** 是面向**前端/移动开发者**的全栈开发平台，包含两大能力：**Amplify Hosting**（基于 Git 的全托管**静态网站/SSR 应用**持续部署与托管，底层由 [[S3]] + [[CloudFront]] 承载）和 **Amplify Libraries/CLI/Studio**（一键式配置和调用 [[Cognito]]（认证）、AppSync/[[Amazon API Gateway]]（API）、[[S3]]（存储）、[[DynamoDB]]（数据）等后端服务，无需逐个手动配置或编写基础设施代码）。它的目标是让前端开发者**几分钟内**从"一份代码"到"一个具备完整认证、API、存储能力的可上线应用"，与面向**传统服务器端应用**的 [[Elastic Beanstalk]] 定位完全不同。
 >
-> 相关文档：[[S3]] | [[CloudFront]] | [[Cognito]] | [[Amazon API Gateway]] | [[DynamoDB]] | [[AWS Lambda]] | [[Elastic Beanstalk]] | [[AWS CloudFormation]] | [[Route 53 DNS]]
+> 相关文档：[[S3]] | [[CloudFront]] | [[Cognito]] | [[Amazon API Gateway]] | [[DynamoDB]] | [[AWS Lambda]] | [[Elastic Beanstalk]] | [[AWS CloudFormation]] | [[Route 53]]
 
 ---
 

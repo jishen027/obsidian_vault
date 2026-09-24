@@ -2,7 +2,7 @@
 
 > **AWS Global Accelerator** 是一种网络层加速服务，通过**两个静态 Anycast IP 地址**将用户流量引入 AWS 全球骨干网络，绕开公共互联网的拥堵路径，把流量路由到延迟最低、最健康的区域端点（ALB/NLB/EC2/Elastic IP）。与 CloudFront 不同，它**不缓存内容**，面向**任意 TCP/UDP 流量**（不局限于 HTTP/HTTPS），核心价值是**加速网络路径 + 秒级跨区域故障转移**。
 >
-> 相关文档：[[CloudFront]] | [[Route 53 DNS]] | [[AWS Load Balance]] | [[EC2]] | [[Transit Gateway]] | [[Disaster Recovery On AWS]]
+> 相关文档：[[CloudFront]] | [[Route 53]] | [[AWS Load Balance]] | [[EC2]] | [[Transit Gateway]] | [[Disaster Recovery On AWS]]
 
 ---
 
@@ -44,7 +44,7 @@
 
 > **考试关键词识别**：题干强调"需要固定的静态 IP 供客户端**防火墙白名单**"或"应用是**非 HTTP 的 TCP/UDP 协议**（如游戏、VoIP）" → **Global Accelerator**；题干强调"静态网站/视频/API 内容，希望**减少回源、降低延迟**" → **CloudFront**。两者也可以叠加使用（不同场景），但不能互相替代。
 
-### AWS Global Accelerator vs [[Route 53 DNS]]（延迟路由/故障转移路由）
+### AWS Global Accelerator vs [[Route 53]]（延迟路由/故障转移路由）
 
 | 维度 | Global Accelerator | Route 53 DNS 路由 |
 |------|--------------------|--------------------|
