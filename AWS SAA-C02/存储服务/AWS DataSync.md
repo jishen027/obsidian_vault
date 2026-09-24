@@ -62,6 +62,8 @@
 | **VPC 私有连接** | 支持通过 [[VPC]] Endpoint 私有连接，流量不经过公网 |
 | **IAM 权限控制** | 通过 IAM 角色/策略控制 DataSync 任务对源和目标存储的访问权限 |
 
+> **考试要点：本地数据中心通过 [[Direct Connect]] 传输数据到 EFS/FSx 时，应使用私有虚拟接口（Private VIF）连接到目标服务的 PrivateLink 接口 VPC 终端节点**——[[Direct Connect]] 提供公有 VIF（连接 S3 等公网可达的 AWS 服务）、私有 VIF（连接 VPC 内资源/PrivateLink 接口终端节点）、传输 VIF（连接 Transit Gateway）三种类型。目标是 [[AWS EFS]]/[[AWS FSx]] 这类需要通过接口 VPC 终端节点访问的服务时，用**私有 VIF**；如果绕道先传到 S3 再用 Lambda 转存到 EFS，属于多此一举、操作效率更低的方案，不是最优解。
+
 ---
 
 ## 典型应用场景

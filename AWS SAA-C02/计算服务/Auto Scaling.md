@@ -25,6 +25,8 @@
 | **启动配置 (Launch Configuration)** | 旧版，功能有限，推荐使用启动模板 |
 | **Auto Scaling Group (ASG)** | 定义实例数量范围和伸缩策略 |
 
+> **考试陷阱：只有启动模板支持"混合实例类型 + On-Demand/Spot 混合采购"，启动配置完全不支持**——如果 ASG 需要跨**多种实例类型**、同时使用 **On-Demand 和 Spot 实例**来兼顾规模、性能和成本（Mixed Instances Policy），**必须使用启动模板**；启动配置（Launch Configuration）从设计上就不具备这个能力，无论怎么配置都做不到。题目问"用启动配置还是启动模板才能实现跨实例类型的 On-Demand+Spot 混合" → 只能选启动模板。
+
 ### ASG 容量设置
 
 | 参数 | 描述 |

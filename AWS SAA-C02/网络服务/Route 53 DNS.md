@@ -2,7 +2,7 @@
 
 > **Amazon Route 53** 是一种高可用且可扩展的域名系统（DNS）服务，提供域名注册、DNS 解析、健康检查和多种高级流量路由策略，帮助用户构建高可用、低延迟的全球架构。
 >
-> 相关文档：[[VPC]] | [[CloudFront]] | [[AWS Load Balance]] | [[CloudWatch]] | [[Disaster Recovery On AWS]]
+> 相关文档：[[VPC]] | [[CloudFront]] | [[AWS Load Balance]] | [[CloudWatch]] | [[Disaster Recovery On AWS]] | [[AWS Global Accelerator]]
 
 ---
 
@@ -59,6 +59,8 @@
 - 健康检查失败的记录会被路由策略自动排除，直到恢复健康后重新纳入
 
 > **考试要点**：故障转移路由**必须**配置健康检查，否则 Route 53 无法判断何时应切换到备用记录。
+
+> **考试陷阱：Route 53 故障转移路由的切换速度受 DNS TTL 和客户端/中间层 DNS 缓存制约，不是"实时"切换**——健康检查发现异常后，Route 53 会更新返回的记录，但客户端/中间 DNS 解析器可能仍持有旧记录的缓存直到 TTL 过期（部分解析器甚至会忽略/延长 TTL），导致故障转移实际耗时可能达数分钟甚至更久。如果题目强调**"故障切换要快/近乎实时""不希望受 DNS 缓存影响"**，标准答案是 **[[AWS Global Accelerator]]**（基于固定 Anycast IP + 健康检查，秒级切换，无需依赖 DNS 传播），而不是 Route 53 故障转移路由。
 
 ---
 
@@ -121,6 +123,7 @@
 5. **多值应答 vs 简单路由**：多值应答支持健康检查，简单路由不支持
 6. **地理邻近路由**：唯一支持 Bias 偏向调整的策略，需通过 Traffic Flow 配置
 7. **Route 53 Resolver**：解决混合云环境下的双向 DNS 解析问题
+8. **DNS 故障转移的速度局限**：受 TTL 和 DNS 缓存制约，需要秒级切换时应改用 [[AWS Global Accelerator]]
 
 ### 场景题解题思路
 
@@ -131,6 +134,7 @@
 ├── "需要主备容灾，自动切换" → 故障转移路由（配合健康检查）
 ├── "灰度发布/A-B 测试，按比例分流" → 加权路由
 ├── "需要人为调整某区域流量占比" → 地理邻近路由（Bias）
+├── "故障切换必须秒级完成，不能受 DNS 缓存影响" → [[AWS Global Accelerator]]（不是 Route 53 故障转移路由）
 ├── "根域名需要指向 ALB/CloudFront" → Alias 记录
 ├── "本地数据中心需要解析 VPC 内私有域名" → Route 53 Resolver 入站端点
 └── "VPC 内资源需要查询本地私有域名" → Route 53 Resolver 出站端点

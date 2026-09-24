@@ -38,6 +38,16 @@
 | 类型 | 说明 |
 |------|------|
 | **自定义规则（Custom Rules）** | 用户自行定义的匹配条件，如字符串匹配、正则匹配、地理位置匹配、IP 集合匹配、请求大小限制等 |
+
+### 地理位置限制三兄弟：WAF Geo Match vs CloudFront Geo Restriction vs Route 53 Geolocation（考试易混淆点）
+
+| 方案 | 生效层级 | 能附加到哪些资源 | 典型场景 |
+|------|---------|-----------------|---------|
+| **WAF 地理位置匹配规则（Geo Match Condition）** | 应用层（第 7 层），基于 Web ACL 规则 | **CloudFront、ALB、API Gateway、AppSync、Cognito** | 需要按国家白名单/黑名单允许或拒绝访问，且入口不是 CloudFront（如直接面向 **ALB** 的应用） |
+| **CloudFront Geo Restriction（地理限制/Geo-blocking）** | CDN 边缘层 | **仅 CloudFront 分发** | 内容分发场景，且入口就是 CloudFront 本身 |
+| **Route 53 地理位置路由策略（Geolocation Routing Policy）** | DNS 层 | Route 53 托管的任意记录 | 按用户地理位置把 DNS 查询解析到**不同的资源**（如欧洲用户解析到法兰克福的负载均衡器），本质是**分流**而不是"允许/拒绝访问" |
+
+> **考试陷阱：题目描述"应用部署在 ALB 后面（不是 CloudFront），需要按国家限制访问"时，正确答案是 WAF 地理位置匹配规则，不是 CloudFront Geo Restriction**——CloudFront 的 Geo Restriction **只能附加到 CloudFront 分发**，如果入口是 ALB 而非 CloudFront，选项里出现"在 VPC 中使用 CloudFront 的 Geo Restriction"本身就是自相矛盾的描述（CloudFront 运行在边缘节点，不属于任何 VPC）。判断依据很简单：**先看流量入口是什么资源，再决定用哪个地理位置控制方案**——入口是 CloudFront 用 CloudFront 自带的 Geo Restriction；入口是 ALB/API Gateway 用 WAF；需要把不同地区用户导向不同后端资源（而非单纯允许/拒绝）用 Route 53 地理位置路由。
 | **速率限制规则（Rate-Based Rule）** | 基于**聚合键（Aggregation Key）**统计单位时间内的请求次数，超过阈值自动拦截，聚合键可组合 IP、请求头、Cookie、查询参数、Label 命名空间等**最多 5 个维度**，实现如"按 IP + 按 URI 路径"的精细限流 |
 | **AWS 托管规则组（AWS Managed Rules）** | AWS 预置并持续更新的规则集合，覆盖 OWASP Top 10 常见漏洞、已知恶意 IP、SQL 注入特征库等，开箱即用 |
 | **市场规则组（Marketplace Rule Groups）** | 第三方安全厂商在 AWS Marketplace 提供的专业规则集，可直接订阅使用 |

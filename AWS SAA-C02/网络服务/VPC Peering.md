@@ -4,6 +4,8 @@
 >
 > 相关文档：[[VPC]] | [[Virtual Private Gateway]] | [[Transit Gateway]] | [[Security Group]] | [[NACL]] | [[Subnet]] | [[Route Table]] | [[CIDR]] | [[Route 53 DNS]] | [[AWS EFS]]
 
+> **考试陷阱：VPC Peering ≠ VPC 共享（VPC Sharing）**——Peering 只是连接**两个独立的 VPC**，既不能把 VPC 本身共享出去，也不提供集中化管理能力；题目描述"希望在 Organizations 下多账户之间提供共享的、集中管理的 VPC"时，正确答案是 [[VPC#VPC 共享（VPC Sharing，考试易混淆点）|VPC 共享]]（通过 AWS RAM 共享子网），不是 VPC Peering。
+
 ---
 
 ## 核心概念
@@ -94,7 +96,7 @@
 | 场景 | 推荐配置 |
 |------|---------|
 | **两个 VPC 之间简单直连，数量不多** | VPC Peering |
-| **跨账户共享特定 VPC 内的资源** | VPC Peering（发起方 + 接受方账户批准） |
+| **跨账户建立两个独立 VPC 之间的私有连接** | VPC Peering（发起方 + 接受方账户批准） |
 | **跨区域灾备架构需要私有互联** | Inter-Region VPC Peering（流量自动加密，无需额外 VPN） |
 | **[[AWS EFS]] 需要被其他 VPC 内的实例挂载** | VPC Peering 或 Transit Gateway（取决于规模），详见 [[AWS EFS]] 笔记 |
 | **大规模多 VPC/多账户/混合云统一互联** | 改用 [[Transit Gateway]]（而非维护大量 Peering 连接） |

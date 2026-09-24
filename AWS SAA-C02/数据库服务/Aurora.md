@@ -118,6 +118,19 @@
 ### Aurora Global Database
 
 - 面向跨区域[[Disaster Recovery On AWS|灾难恢复]]和全球低延迟读取，是 [[Disaster Recovery On AWS]] 笔记中"引导恢复/温备份"数据层的标准实现之一
+
+### Aurora Global Database vs DynamoDB Global Tables（考试易混淆点：不要为了"全球化"混用两种引擎）
+
+> 题目常给出"应用里有些表需要全球可访问，有些表只需要区域级"这类场景，容易让人误以为"全球表用 DynamoDB Global Tables，区域表继续用 Aurora"是合理的混合方案——**这其实违背了"最小化应用重构"的要求**。
+
+| 方案 | 是否满足最小化重构 | 原因 |
+|------|---------------------|------|
+| **全部表统一用 Aurora**（全球表用 Aurora Global Database，区域表用普通 Aurora 集群） | ✅ 是 | 应用始终面对**同一套 SQL/关系型 API**，只是底层多了一个 Global Database 集群，业务逻辑基本不用改 |
+| **全球表换成 DynamoDB Global Tables，区域表继续用 Aurora** | ❌ 否 | Aurora（SQL）和 DynamoDB（NoSQL）的**查询 API 完全不同**，只要引入 DynamoDB，涉及该表的所有查询逻辑都要重写，无论是否"顺便"解决了全球化需求 |
+
+> **考试关键词识别**：题目问"如何以最小化应用改造的方式实现部分表全球可用、部分表区域级"时，正确答案几乎总是**保持单一数据库引擎**（如两个 Aurora 集群：一个 Global Database + 一个普通集群），而不是"为全球表专门换一个数据库产品"——换产品即便技术上可行，也必然带来 API 层面的重构成本，与"最小化重构"的要求相悖。
+
+
 - 一个主区域（读写）+ 最多 **5 个次要区域**（只读）
 - 基于存储层的跨区域复制，延迟通常**低于 1 秒**，不占用数据库计算资源
 - 支持托管的计划性故障转移（Managed Planned Failover），用于区域级灾难恢复演练或真实切换

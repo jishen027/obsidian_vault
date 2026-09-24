@@ -2,7 +2,9 @@
 
 > **Elastic Load Balancing (ELB)** 是 AWS 的托管负载均衡服务，充当流量的"指挥官"，将请求分发到健康的后端资源，并与 [[Auto Scaling]] 紧密集成实现弹性扩展。
 >
-> 相关文档：[[Auto Scaling]] | [[EC2]] | [[Security Group]] | [[VPC]] | [[AWS Certificate Manager]] | [[VPC Traffic Mirroring]]
+> 相关文档：[[Auto Scaling]] | [[EC2]] | [[Security Group]] | [[VPC]] | [[AWS Certificate Manager]] | [[VPC Traffic Mirroring]] | [[AWS Global Accelerator]]
+
+> **多区域架构提示**：单个 ALB/NLB 只在**一个区域**内做负载均衡；如果需要把多个区域的 ALB/NLB 作为统一入口，并在区域故障时实现秒级流量切换，应在前面再加一层 [[AWS Global Accelerator]]（ALB/NLB 是 Global Accelerator 支持的端点类型之一）。
 
 ---
 

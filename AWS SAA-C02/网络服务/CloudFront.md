@@ -2,7 +2,7 @@
 
 > **Amazon CloudFront** 是 AWS 的全球内容分发网络（CDN），通过遍布全球的边缘节点（Edge Locations）缓存内容，为用户提供低延迟、高传输速度的静态与动态内容分发。
 >
-> 相关文档：[[S3]] | [[AWS Load Balance]] | [[Route 53 DNS]] | [[IAM]] | [[AWS WAF]] | [[AWS Shield]] | [[AWS Certificate Manager]] | [[AWS Amplify]]
+> 相关文档：[[S3]] | [[AWS Load Balance]] | [[Route 53 DNS]] | [[IAM]] | [[AWS WAF]] | [[AWS Shield]] | [[AWS Certificate Manager]] | [[AWS Amplify]] | [[AWS Global Accelerator]]
 
 ---
 
@@ -104,6 +104,8 @@
 - 在 CloudFront 边缘层部署 **[[AWS WAF]]**，可拦截 SQL 注入、跨站脚本（XSS）等攻击，在流量到达源站之前完成过滤，完整规则类型、托管规则组等详见 [[AWS WAF]] 独立笔记
 - WAF 规则可基于 IP 黑白名单、地理位置、速率限制（Rate-based Rule）等条件精细过滤
 
+> **CloudFront 自带的 Geo Restriction（地理限制）只能附加到 CloudFront 分发本身**——如果流量入口是 ALB 而非 CloudFront，应改用 [[AWS WAF#地理位置限制三兄弟：WAF Geo Match vs CloudFront Geo Restriction vs Route 53 Geolocation（考试易混淆点）|WAF 的地理位置匹配规则]]，两者不可混用；需要按地区把用户导向不同资源（而非单纯允许/拒绝）则用 [[Route 53 DNS#路由策略|Route 53 地理位置路由]]。
+
 ---
 
 ## 与 Route 53 集成
@@ -139,6 +141,21 @@
 | **机制** | 边缘节点缓存内容后就近提供 | 利用边缘节点作为入口，通过 AWS 高速内部网络转发上传流量到 S3，不缓存 |
 | **典型场景** | 静态网站、视频点播、API 加速 | 全球用户向同一 S3 Bucket 高速上传大文件 |
 
+> **考试陷阱：S3TA 只在"实际产生加速效果"时才收费，且从互联网上传数据到 S3 本身从不收数据传输费**——如果 S3TA 尝试加速但最终判定走标准路径更快（未产生加速效果），则**不产生任何 S3TA 费用**；同时，从公网向 S3 上传数据（数据传入）本身**永远免费**，不区分是否经过加速。也就是说，"开启了 S3TA 但没有实际加速"这种情况下，用户**完全不需要为这次上传付费**——不是"至少要付 S3 标准传输费"，因为 S3 数据传入本来就不收费。
+
+### [[AWS Global Accelerator]]（易混淆点）
+
+> **考试陷阱**：两者都能"加速全球访问"，但加速的对象和适用协议完全不同——**CloudFront 缓存 HTTP(S) 内容**，**Global Accelerator 优化任意 TCP/UDP 流量的网络路径且不缓存**。
+
+| 特性 | CloudFront | Global Accelerator |
+|------|-----------|---------------------|
+| **是否缓存内容** | ✅ 是 | ❌ 否，纯网络加速 |
+| **支持协议** | 仅 HTTP/HTTPS | 任意 TCP/UDP |
+| **入口 IP** | 边缘节点域名，IP 不固定 | **2 个永久固定的 Anycast IP** |
+| **典型场景** | 静态网站/视频/API 等可缓存内容 | 游戏/VoIP/IoT 等非 HTTP 协议、需要固定 IP 或秒级故障转移的场景 |
+
+> **考试关键词识别**：题干出现"游戏""VoIP""IoT""非 HTTP 协议""需要固定 IP 白名单"→ Global Accelerator；出现"静态内容/视频/API，希望减少回源"→ CloudFront。完整对比见 [[AWS Global Accelerator]] 独立笔记。
+
 ---
 
 ## 典型应用场景
@@ -168,6 +185,7 @@
 8. **失效请求收费**：优先用带版本号的文件名代替频繁 Invalidation
 9. **多源 + 多缓存行为**：可按路径模式将流量路由到不同源站（S3/ALB 混合架构）
 10. **RTMP 分发已废弃**：不应出现在正确答案中
+11. **CloudFront ≠ [[AWS Global Accelerator]]**：前者缓存 HTTP(S) 内容，后者加速任意 TCP/UDP 流量且不缓存——非 HTTP 协议或需要固定 IP 时该选 Global Accelerator
 
 ### 场景题解题思路
 

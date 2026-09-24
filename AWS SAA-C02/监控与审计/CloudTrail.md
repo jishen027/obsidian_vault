@@ -69,6 +69,8 @@
 
 - CloudTrail 可将日志**流式传输到 CloudWatch Logs**，使用户能够实时搜索特定的 API 事件，或通过指标筛选器对特定操作模式（如根用户登录、未授权 API 调用）设置告警
 
+> **考试陷阱：CloudTrail 的日志交付目的地只有 Amazon S3 和 CloudWatch Logs 两种，不能直接流式传输到 Kinesis**——题目问"用近实时的自动化方案监控异常 API 调用模式"时，正确的技术路径是 **CloudTrail → CloudWatch Logs → 指标筛选器（Metric Filter）→ CloudWatch Alarm → SNS 通知**；出现"配置 CloudTrail 直接流式传输到 Kinesis"这类描述本身就是错误前提，可直接排除，不需要再看后续步骤是否合理。
+
 ### 与 [[Amazon EventBridge]] 集成
 
 - CloudTrail 记录的管理事件可作为 EventBridge 的事件源，实现"检测到特定 API 调用后自动触发响应"的事件驱动自动化（如检测到安全组被修改后自动触发 Lambda 审计）

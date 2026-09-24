@@ -15,10 +15,10 @@
 
 ### Control Tower 与 Organizations 的关系（考试要点）
 
-| 服务 | 定位 | 关系 |
-|------|------|------|
-| **[[AWS Organizations]]** | 底层的多账户管理基础设施 | SCP、RCP、OU、合并账单等原语能力 |
-| **AWS Control Tower** | 构建在 Organizations 之上的自动化编排层 | 自动创建标准化的 OU 结构、批量部署护栏、提供账户创建自助服务和合规仪表盘 |
+| 服务                        | 定位                          | 关系                                     |
+| ------------------------- | --------------------------- | -------------------------------------- |
+| **[[AWS Organizations]]** | 底层的多账户管理基础设施                | SCP、RCP、OU、合并账单等原语能力                   |
+| **AWS Control Tower**     | 构建在 Organizations 之上的自动化编排层 | 自动创建标准化的 OU 结构、批量部署护栏、提供账户创建自助服务和合规仪表盘 |
 
 > **考试陷阱**：**Control Tower 不是 Organizations 的替代品，而是它的自动化封装**——题目描述"需要从零手动精细控制每一个 SCP 和 OU 的细节"，直接用 Organizations 更灵活；题目描述"希望快速获得一套符合最佳实践的多账户环境，不想手动拼装" → **Control Tower**。已经使用 Organizations 的账户也可以后续"注册（Enroll）"到 Control Tower 获得自动化护栏管理。
 

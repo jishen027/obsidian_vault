@@ -2,7 +2,9 @@
 
 > **AWS Transit Gateway** 是**中心枢纽（星型拓扑）**式的区域级网络中转服务，可同时连接成百上千个 [[VPC]]、[[Site to Site VPN]] 连接、[[Direct Connect]]、甚至其他区域的 Transit Gateway，并**原生支持传递路由（Transitive Routing）**——这是它与 [[VPC Peering]]（不支持传递路由，点对点连接呈平方级增长）和传统 [[Virtual Private Gateway]]（一对一绑定单个 VPC）的核心区别，也是大规模混合云/多账户架构的标准连接枢纽。
 >
-> 相关文档：[[VPC]] | [[VPC Peering]] | [[Virtual Private Gateway]] | [[Site to Site VPN]] | [[Direct Connect]] | [[Customer Gateway]] | [[Route Table]] | [[CIDR]]
+> 相关文档：[[VPC]] | [[VPC Peering]] | [[Virtual Private Gateway]] | [[Site to Site VPN]] | [[Direct Connect]] | [[Customer Gateway]] | [[Route Table]] | [[CIDR]] | [[AWS Global Accelerator]]
+
+> **易混淆点**：Transit Gateway 解决的是 **AWS 内部**（VPC 之间、VPC 与本地网络之间）怎么互联的问题；[[AWS Global Accelerator]] 解决的是**外部客户端流量**怎么以最优路径进入 AWS 并找到最佳区域端点的问题——两者面向的流量方向和层面完全不同，不是互相替代关系。
 
 ---
 
