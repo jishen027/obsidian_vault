@@ -1,6 +1,6 @@
 # Amazon SageMaker - 通用机器学习平台
 
-> **Amazon SageMaker** 是全托管的**通用机器学习平台**，覆盖数据准备、模型构建、训练、调优、部署和监控的完整机器学习生命周期，让数据科学家和开发者能够针对**特有业务数据训练自定义模型**，区别于 [[Amazon Rekognition]]/[[Amazon Transcribe]]/[[Amazon Comprehend]] 等"开箱即用、面向特定任务"的预训练 AI 服务。**2025 年起，经典 SageMaker 更名为 "Amazon SageMaker AI"**，作为新的一体化平台 **"Amazon SageMaker Unified Studio"**（整合 SageMaker AI、[[Amazon EMR]]、[[AWS Glue]]、[[Amazon Athena]]、[[Redshift]]、Amazon Bedrock 于一体）的核心 ML 组件，但底层能力和考试考点保持不变。本笔记同时覆盖 **SAA-C02（架构选型视角）** 与 **AIF-C01（ML 生命周期/MLOps 视角）** 两个考纲的高频考点。
+> **Amazon SageMaker** 是全托管的**通用机器学习平台**，覆盖数据准备、模型构建、训练、调优、部署和监控的完整机器学习生命周期，让数据科学家和开发者能够针对**特有业务数据训练自定义模型**，区别于 [[Amazon Rekognition]]/[[Amazon Transcribe]]/[[Amazon Comprehend]] 等"开箱即用、面向特定任务"的预训练 AI 服务。**2025 年起，经典 SageMaker 更名为 "Amazon SageMaker AI"**，作为新的一体化平台 **"Amazon SageMaker Unified Studio"**（整合 SageMaker AI、[[Amazon EMR]]、[[AWS Glue]]、[[Amazon Athena]]、[[Amazon Redshift]]、Amazon Bedrock 于一体）的核心 ML 组件，但底层能力和考试考点保持不变。本笔记同时覆盖 **SAA-C02（架构选型视角）** 与 **AIF-C01（ML 生命周期/MLOps 视角）** 两个考纲的高频考点。
 >
 > 相关文档：[[Amazon Rekognition]] | [[Amazon Transcribe]] | [[Amazon Comprehend]] | [[Amazon EMR]] | [[AWS Glue]] | [[S3]] | [[EC2]] | [[VPC]] | [[IAM]] | [[KMS]] | [[Amazon Bedrock]] | [[AI与ML概念]] | [[Machine Learning]] | [[数据与分析服务]]
 
@@ -398,7 +398,7 @@
 |---------|------|
 | **[[S3]] 作为主要数据源** | 训练数据、模型产物通常存储在 S3，SageMaker 直接读写 |
 | **[[Aurora]] 机器学习集成** | Aurora 支持在 SQL 语句中直接调用 SageMaker 端点做实时预测，无需将数据导出到应用层 |
-| **SageMaker Unified Studio** | 新一代整合平台，在同一工作空间中衔接 [[Amazon EMR]]/[[AWS Glue]]/[[Amazon Athena]]/[[Redshift]] 的数据处理能力与 SageMaker AI 的建模能力，打通"数据准备 → 模型训练"的完整链路 |
+| **SageMaker Unified Studio** | 新一代整合平台，在同一工作空间中衔接 [[Amazon EMR]]/[[AWS Glue]]/[[Amazon Athena]]/[[Amazon Redshift]] 的数据处理能力与 SageMaker AI 的建模能力，打通"数据准备 → 模型训练"的完整链路 |
 | **AWS Step Functions** | 可编排包含 SageMaker 训练/推理步骤的复杂工作流，实现跨服务的自动化管道 |
 
 ---
