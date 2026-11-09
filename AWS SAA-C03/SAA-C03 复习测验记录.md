@@ -99,3 +99,9 @@
   - **一个文件 / 发给客户一个下载链接 → Signed URL**
   - **很多文件 / 登录后整站可看 / 不想改每个 URL → Signed Cookies**
   - 待办：11/8 再测一次
+
+## 2026-11-09 12:12 · Mock 5 前热身（8 题，对 8 题，100%）
+
+- ✅ 全对：Glacier Instant Retrieval（季度访问 + 毫秒级 + 多 AZ）、Route 53 Resolver Inbound（本地 → AWS）、SQS FIFO + Message Group ID、Multi-AZ 实例的备用不可读 → Read Replica、Spot、DynamoDB 网关终端节点、Failover 路由 + 健康检查、io2 Block Express（gp3 上限 16,000 IOPS）
+- 两个反复错的点（S3 存储类别、Resolver 方向）本轮都对
+- 注：热身题难度低于模考，不作为真实水平参考
