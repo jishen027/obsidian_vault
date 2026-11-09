@@ -39,6 +39,17 @@
 |------|------|
 | **自定义规则（Custom Rules）** | 用户自行定义的匹配条件，如字符串匹配、正则匹配、地理位置匹配、IP 集合匹配、请求大小限制等 |
 
+### WAF 的绑定对象边界（考试易混淆点）
+
+> **AWS WAF ACL 只能关联到 WAF 原生支持的资源类型**（CloudFront 分发、ALB、API Gateway REST API、AppSync GraphQL API、Cognito 用户池），**不能关联到 S3 Bucket Policy**——S3 没有原生的 WAF 集成点，"把 WAF ACL 关联到 S3 Bucket Policy"这种描述本身就不成立。
+
+- **典型组合场景**：S3 作为 CloudFront 的源站时，若要基于来源 IP 做访问限制，正确做法是把 WAF ACL（IP Match 条件）关联到 **CloudFront 分发**，而不是关联到 S3 Bucket Policy 或者给 S3 配置安全组/NACL（S3 是全托管服务，没有这两者的概念）
+- 配合 [[CloudFront#源访问控制：OAC vs OAI|OAC/OAI]] 限制只能通过 CloudFront 访问 S3 源，再用 WAF 在 CloudFront 层面做 IP 白名单，是"S3 源 + CloudFront 分发"架构下实现 IP 访问控制的标准组合
+
+> **考试关键词识别**：题目描述"S3 存储静态内容，通过 CloudFront 分发，要求只有特定 IP 段能访问" → **OAC/OAI 限制直连 S3** + **WAF ACL（IP Match）关联到 CloudFront 分发**；任何涉及"把 WAF 关联到 S3 Bucket Policy"或"给 CloudFront 配置安全组/NACL"的选项都是干扰项。
+
+---
+
 ### 地理位置限制三兄弟：WAF Geo Match vs CloudFront Geo Restriction vs Route 53 Geolocation（考试易混淆点）
 
 | 方案 | 生效层级 | 能附加到哪些资源 | 典型场景 |

@@ -97,6 +97,17 @@
 ## 混合与多云管理
 
 - 通过**混合激活（Hybrid Activations）**，本地数据中心服务器或其他云平台的实例安装 SSM Agent 并注册后，即可纳入与 EC2 实例相同的统一运维管理视图
+
+### Default Host Management Configuration（Quick Setup，考试易漏点）
+
+> 目标：让一批**已经在运行、已挂载自定义 IAM 角色**的 EC2 实例快速纳入 Systems Manager 管理（如自动打补丁），且**不能改动现有 IAM 角色**（避免影响实例依赖该角色访问的其他服务），运维工作量要最小。
+
+- **正确做法**：在 Systems Manager 的 **Quick Setup** 中启用 **Default Host Management Configuration**——它会在后台自动应用必要的 SSM 权限、激活库存收集、启用打补丁能力，**全程不需要手动修改现有 IAM 角色**，是 AWS 官方推荐的"开箱即用"纳管方式
+- **考试陷阱 1**：**混合激活（Hybrid Activations）是为非 EC2 资源设计的**（本地服务器、其他云实例），用它来管理标准 EC2 实例是用错了工具
+- **考试陷阱 2**：**一个 EC2 实例同一时间只能附加一个 IAM 角色**，"给实例附加第二个角色"这类方案在架构上不成立
+- **考试陷阱 3**：**直接替换现有 IAM 角色**（哪怕新角色包含了原有全部权限+新增的 SSM 权限）属于侵入性变更，存在切换瞬间影响正在运行应用的风险，不满足"零干扰"的要求
+
+> **考试关键词识别**：题目强调"已有 EC2 实例 + 现有 IAM 角色不能动 + 要启用集中化补丁管理 + 最小运维工作量" → **Default Host Management Configuration（Quick Setup）**，而不是混合激活、不是手动装 SSM Agent 配 cron、也不是替换 IAM 角色。
 - **2026 年计费调整**：AWS 已取消"高级实例层级"的额外收费，混合/多云节点的注册和大部分核心功能（Session Manager、Run Command、Patch Manager 等）现无需额外的实例注册费用
 
 ---

@@ -87,6 +87,16 @@
 | **健康检查** | 自动替换不健康的任务 |
 | **滚动更新** | 支持任务定义的滚动更新 |
 
+### ECS Service Auto Scaling 的正确指标来源（考试易混淆点）
+
+> ECS 服务的目标追踪伸缩策略，监控的是 **ECS 服务自身的 CPU/内存利用率**（CloudWatch 中 `ECS`/`ClusterName`/`ServiceName` 这个维度下的指标），**不是** ALB 的 CPU、不是目标组的 CPU、更不是 CloudWatch 告警本身的"CPU"（告警不是计算资源，没有 CPU 利用率这个概念，纯属干扰项）。
+
+- ALB/NLB 是负载均衡器，本身**不消耗 CPU 为任务提供计算**，监控它的 CPU 毫无意义
+- 目标组（Target Group）只是一组目标的逻辑容器，同样没有自己的 CPU 利用率
+- 正确的伸缩链路：**ECS 服务 CPU 利用率超过阈值** → 触发 Service Auto Scaling 的 CloudWatch 告警 → 增加任务数量
+
+> **考试关键词识别**：题目问"ECS 服务应该基于什么指标做自动扩缩容" → **ECS 服务自身的 CPU（或内存）利用率**，任何提到"ALB 的 CPU""目标组的 CPU""CloudWatch 告警的 CPU"的选项都是编造出来的干扰项。
+
 ### 网络模式（Network Mode）
 
 | 模式 | 说明 | 适用运行模式 |

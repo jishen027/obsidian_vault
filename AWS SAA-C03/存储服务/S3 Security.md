@@ -13,10 +13,12 @@
 | 机制 | 类型 | 绑定对象 | 特点 |
 |------|------|---------|------|
 | **IAM 策略** | 基于身份（Identity-based） | 用户/角色/组 | 控制该身份**能访问哪些资源**，适合管理内部用户权限 |
-| **Bucket Policy** | 基于资源（Resource-based） | Bucket | 控制**谁能访问这个 Bucket**，唯一能实现跨账户授权而无需对方 IAM 配合的方式 |
+| **Bucket Policy** | 基于资源（Resource-based） | Bucket | 控制**谁能访问这个 Bucket**，无需对方扮演本账户角色即可实现跨账户授权（对方账户仍需用自己的 IAM 策略把权限分配给具体用户/角色） |
 | **ACL（访问控制列表）** | 基于资源（旧机制） | Bucket / 单个对象 | **AWS 已不推荐使用**，仅在极少数需要跨账户对象级授权的场景保留 |
 
-> **考试要点**：IAM 策略和 Bucket Policy 是**并集**关系——只要任意一个允许访问且没有显式拒绝，请求就会通过。二者冲突时，**显式 Deny 始终优先**于任何 Allow。
+> **考试要点**：**同一账户内**，IAM 策略和 Bucket Policy 是**并集**关系——只要任意一个允许访问且没有显式拒绝，请求就会通过。二者冲突时，**显式 Deny 始终优先**于任何 Allow。
+>
+> **跨账户时是交集**：Bucket Policy 允许账户 B 访问后，账户 B 中的用户/角色**还需要自己账户的 IAM 策略也允许**，请求才会通过。
 
 ### 何时用 IAM 策略 vs Bucket Policy
 
@@ -78,10 +80,22 @@ S3 提供账户级和 Bucket 级的"公共访问阻止"开关，**独立于**任
 
 | 类型 | 密钥管理方 | 特点 | 适用场景 |
 |------|-----------|------|---------|
-| **SSE-S3** | AWS 全权管理（AES-256） | 默认加密方式，无需额外配置 | 无特殊合规要求的通用场景 |
+| **SSE-S3** | AWS 全权管理（AES-256） | 默认加密方式，无需额外配置；**每个对象在写入时都已自动使用唯一的数据密钥加密**（该密钥本身又被定期轮换的根密钥加密） | 无特殊合规要求的通用场景 |
 | **SSE-KMS** | [[KMS]] 管理，客户可控密钥策略 | 支持密钥轮换、细粒度权限、**CloudTrail 审计每次密钥使用** | 需要审计、合规、密钥访问控制的场景 |
 | **SSE-C** | 客户提供密钥，AWS 仅负责加解密过程 | AWS **不存储**密钥，请求中必须携带 | 客户自主管理密钥且不信任 AWS 存储密钥 |
 | **客户端加密** | 客户端本地完成 | 数据上传前已加密，AWS 只存储密文 | 最高安全要求，AWS 完全不接触明文/密钥 |
+
+### "每个文件用不同密钥加密"不需要额外设计（考试易混淆点）
+
+> 需求描述"希望每个文件都用不同的密钥加密，以提供最大安全性"时，第一反应不应该是去设计方案让每个对象拿到不同密钥——**SSE-S3 默认就已经为每个对象分配唯一的加密密钥**，不需要任何额外配置（不需要拆分成多个桶、不需要用 KMS 加密上下文人为构造"每文件不同密钥"、也不需要客户端加密）。
+
+- **常见干扰项 1**：把数据按逻辑拆分到不同的 S3 桶，每个桶单独用 SSE-S3 加密——多余的复杂度，SSE-S3 在单个桶内已经做到了对象级别的唯一密钥
+- **常见干扰项 2**：用 SSE-KMS 的"加密上下文（Encryption Context）"试图为每个对象生成不同密钥——加密上下文只是附加的校验/审计信息，**不会**也不是用来生成唯一密钥的机制
+- **常见干扰项 3**：用客户端加密或多区域密钥（Multi-Region Keys）手动管理每个文件的密钥——这是服务端加密场景下完全不必要的额外运维负担
+
+> **考试关键词识别**：题目描述"数据已从多密钥的本地环境迁移到 S3，希望继续保持每个文件独立密钥加密，且不想承担额外的拆分/管理开销" → **单个 S3 桶 + SSE-S3 即可**，这是最省事且已经满足要求的方案。
+
+---
 
 ### SSE-KMS 的额外考量
 
@@ -134,7 +148,7 @@ S3 提供账户级和 Bucket 级的"公共访问阻止"开关，**独立于**任
 | **合规模式（Compliance）** | **任何人（包括 Root 账户）都无法**删除或缩短保留期，直到期满 | 监管强制的法律合规场景（如金融、医疗记录） |
 | **法律保留（Legal Hold）** | 无固定到期时间，独立于保留期存在，需显式移除 | 诉讼/调查期间需无限期保留的证据数据 |
 
-> **考试陷阱**：Object Lock **必须在创建 Bucket 时启用**（或通过 AWS Support 特殊申请），不能对已存在的 Bucket 事后开启；且启用 Object Lock 会**强制同时启用版本控制**。
+> **考试陷阱**：Object Lock **依赖版本控制**，启用 Object Lock 必须同时启用版本控制（且之后不能暂停版本控制）。早期 Object Lock 只能在创建 Bucket 时启用，旧题答案可能仍以此为准；**自 2023 年 11 月起，已可对已存在且开启版本控制的 Bucket 启用 Object Lock**。
 
 ---
 
@@ -150,11 +164,64 @@ S3 提供账户级和 Bucket 级的"公共访问阻止"开关，**独立于**任
 
 > 当**同一个 Bucket**需要被多个团队/应用共享，且每个团队只应看到自己的前缀（prefix），而不是维护一份越来越复杂的 Bucket Policy 时，**S3 Access Points** 是专为此设计的机制。
 
-- 每个 Access Point 拥有**独立的主机名和自己的访问策略**，可以把访问权限精确限定到 Bucket 内的某个前缀/目录，而不用把所有权限规则堆在同一份 Bucket Policy 里
-- 相比"单个 Bucket Policy 里逐条列举每个服务/团队能访问哪些对象 ARN"的做法，Access Point **天然按团队/应用隔离**，新增团队时只需新建一个 Access Point + 独立策略，不需要改动已有配置，扩展性和可维护性远高于集中式 Bucket Policy
-- 也可以配合 **VPC 限定**（Access Point 只能通过特定 VPC 访问），进一步收紧网络层访问范围
+### 是什么
 
-> **考试关键词识别**：题目描述"多个应用/服务共享同一个 S3 Bucket，每个只能访问自己的前缀，要求方案可扩展、易维护、运维负担最小" → **S3 Access Points**（为每个应用创建独立访问点+独立策略），而不是硬编堆砌一份枚举所有对象 ARN 的 Bucket Policy，也不是用 Macie（Macie 只做敏感数据发现分类，不做访问控制）。
+Access Point 是挂在某个 Bucket 上的**具名网络入口**。一个 Bucket 可以挂很多个 Access Point，每个 Access Point 有：
+
+| 组成部分 | 说明 |
+|---------|------|
+| **独立的名称 / ARN / 主机名** | ARN 形如 `arn:aws:s3:<region>:<account-id>:accesspoint/<name>`，应用通过它而不是 Bucket 名访问数据 |
+| **Access Point 别名（Alias）** | 自动生成形如 `<name>-<随机串>-s3alias` 的别名，**凡是接受 Bucket 名的地方都可直接使用**，老应用无需改代码 |
+| **独立的 Access Point Policy** | 与 Bucket Policy 语法相同的资源策略，只作用于经由该入口的请求，可限定到某个前缀（如 `finance/*`） |
+| **网络来源（Network Origin）** | `Internet` 或 `VPC`；设为 VPC 时只接受来自指定 VPC 的请求，**创建后不可修改** |
+| **独立的 Block Public Access 设置** | 每个 Access Point 可单独开启阻止公共访问 |
+
+```
+                      ┌── AP: finance-ap   (策略: 仅 Finance 角色, 仅 finance/*)  ──┐
+应用/团队 ──请求────▶ ├── AP: analytics-ap (策略: 只读 GetObject, 仅 logs/*)      ├──▶ 同一个 S3 Bucket
+                      └── AP: vpc-only-ap  (Network Origin = VPC-A)              ──┘
+```
+
+### 权限评估：Bucket Policy 与 Access Point Policy 必须都允许
+
+经由 Access Point 的请求需要**同时**通过 Access Point Policy 和底层 Bucket Policy（以及调用者的 IAM 策略）。为避免在两处重复维护规则，标准做法是**在 Bucket Policy 中把访问控制委托给 Access Point**：
+
+```json
+{
+  "Effect": "Allow",
+  "Principal": { "AWS": "*" },
+  "Action": "*",
+  "Resource": ["arn:aws:s3:::my-bucket", "arn:aws:s3:::my-bucket/*"],
+  "Condition": { "StringEquals": { "s3:DataAccessPointAccount": "111122223333" } }
+}
+```
+
+含义：凡是经由本账户自有 Access Point 进来的请求，Bucket 层都放行，具体权限由各 Access Point Policy 决定。Bucket Policy 只需写一次，之后新增团队只需新建 Access Point。
+
+> 进一步收紧：可在 Bucket Policy 中添加 Deny，配合 `s3:DataAccessPointArn` / `s3:AccessPointNetworkOrigin` 条件键，**禁止绕过 Access Point 直接访问 Bucket**，或要求只能经由 VPC 类型的 Access Point 访问。
+
+### VPC 限定的 Access Point
+
+- Network Origin 设为 `VPC` 后，只有从该 VPC 内（通过 [[VPC Endpoints|S3 VPC Endpoint]]）发出的请求能使用该入口，公网请求一律拒绝
+- 与"Bucket Policy + `aws:SourceVpce`"的效果类似，但粒度是**每个 Access Point 一个 VPC**，适合多个 VPC/团队分别访问同一个 Bucket 的场景
+- VPC Endpoint 的 Endpoint Policy 也需要允许访问该 Access Point，否则请求会在 Endpoint 处被拒
+
+### 限制与注意事项
+
+- Access Point 只支持**对象级操作**（GetObject、PutObject、ListObjects 等）以及部分 Bucket 操作，不能用来做删除 Bucket、修改 Bucket 配置等管理操作
+- Access Point 与 Bucket 必须在**同一 Region**
+- 支持**跨账户 Access Point**：Bucket 拥有者可以允许其他账户在其 Bucket 上创建 Access Point（需 Bucket Policy 授权）
+
+### 两种衍生的 Access Point（考试会对比）
+
+| 类型 | 作用 | 典型考法 |
+|------|------|---------|
+| **S3 Multi-Region Access Points** | 一个**全局端点**对应多个 Region 的 Bucket，借助 AWS Global Accelerator 网络把请求路由到**延迟最低**的 Bucket；配合 [[S3]] 跨区域复制（CRR）保持数据同步，支持主备故障转移 | "全球用户访问多 Region 数据，要求单一端点 + 最低延迟 + Region 故障时自动切换" |
+| **S3 Object Lambda Access Points** | 在 GET 请求返回前调用 [[Lambda]] 函数**即时改写数据**（如脱敏 PII、调整图片尺寸、格式转换），无需存储多份副本 | "同一份数据给不同应用返回不同视图（如对分析团队隐去敏感字段），且不想复制数据" |
+
+> 注：AWS 已于 2025 年 11 月起停止向新客户开放 S3 Object Lambda，但它仍可能出现在考题中，需能识别。
+
+> **考试关键词识别**：题目描述"多个应用/服务共享同一个 S3 Bucket，每个只能访问自己的前缀，要求方案可扩展、易维护、运维负担最小" → **S3 Access Points**（为每个应用创建独立访问点+独立策略），而不是硬编码堆砌一份枚举所有对象 ARN 的 Bucket Policy，也不是用 Macie（Macie 只做敏感数据发现分类，不做访问控制）。
 
 ---
 
@@ -162,7 +229,7 @@ S3 提供账户级和 Bucket 级的"公共访问阻止"开关，**独立于**任
 
 | 模式 | 机制 | 适用场景 |
 |------|------|---------|
-| **Bucket Policy 授权** | 直接在策略中指定对方账户 Principal | 简单场景，对方无需承担额外 IAM 配置 |
+| **Bucket Policy 授权** | 直接在策略中指定对方账户 Principal | 简单场景，对方无需扮演角色，用自身凭证直接访问（仍需对方 IAM 策略允许） |
 | **IAM 角色 + AssumeRole** | 对方通过 STS 临时凭证扮演本账户角色 | 需要精细审计、临时访问、遵循最小权限原则 |
 | **S3 Access Points** | 为不同团队/应用创建独立访问入口，各自绑定策略 | 大规模共享 Bucket，简化多团队权限管理 |
 | **跨账户 ACL（已弃用）** | 对象级 ACL 授权其他账户 | 遗留系统，不建议新架构使用 |
@@ -192,9 +259,10 @@ S3 提供账户级和 Bucket 级的"公共访问阻止"开关，**独立于**任
 5. **私有网络限制**：VPC Endpoint + `aws:SourceVpce` 条件组合，实现仅限特定 VPC 访问
 6. **CORS**：解决浏览器跨域请求拦截问题，与 IAM/Bucket Policy 是互补关系，不能替代鉴权
 7. **SSE-KMS vs SSE-S3**：需要审计密钥使用或精细密钥权限控制时选 SSE-KMS，注意 KMS 请求限流问题（用 S3 Bucket Keys 缓解）
-8. **Object Lock**：治理模式可绕过、合规模式任何人不可绕过，且必须建桶时启用
+8. **Object Lock**：治理模式可绕过、合规模式任何人不可绕过，必须配合版本控制
 9. **MFA Delete**：只能通过 Root 账户 CLI/API 启用，防止误删/恶意删除
 10. **跨账户访问**：优先考虑 Bucket Policy 或 IAM 角色 AssumeRole，而非已弃用的 ACL
+11. **S3 Access Points**：多团队共享同一 Bucket 时，每个团队一个入口 + 独立策略；Bucket Policy 通过 `s3:DataAccessPointAccount` 委托授权；Multi-Region AP 提供全局单一端点
 
 ### 场景题解题思路
 
@@ -210,6 +278,9 @@ S3 提供账户级和 Bucket 级的"公共访问阻止"开关，**独立于**任
 ├── "监管要求对象在保留期内任何人都不能删除" → Object Lock 合规模式
 ├── "内部场景允许特殊权限人员紧急删除" → Object Lock 治理模式
 ├── "防止误删除关键数据版本" → MFA Delete
+├── "多个团队共享同一 Bucket，各自只能访问自己的前缀，易扩展" → S3 Access Points
+├── "多 Region Bucket 对全球用户提供单一端点 + 就近路由" → S3 Multi-Region Access Points
+├── "不复制数据，按调用方返回脱敏/改写后的对象" → S3 Object Lambda Access Points
 └── "自动发现存储的敏感数据（PII）" → [[Amazon Macie]]
 ```
 

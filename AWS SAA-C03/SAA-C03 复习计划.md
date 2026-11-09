@@ -78,9 +78,9 @@
 **优先级 3 —— IAM 策略评估细节（新出现的题目集群，警惕演变成重复错题）**
 
 批次三一次性出现 3 道独立的 IAM 细节题（Deny+Allow 组合评估、权限边界不能挂组、`aws:RequestedRegion` 语义），建议自己动手写 2-3 份示例策略并手动评估结果，而不是只重读笔记：
-- [[IAM#策略评估逻辑（考试陷阱高发区）]]
-- [[IAM#权限边界（Permission Boundaries）vs 服务控制策略（SCP）]]
-- [[IAM#`aws:RequestedRegion` 条件键：限定的是目标区域，不是发起请求的位置（考试易混淆点）]]
+- [[IAM#3. 策略评估逻辑（考试陷阱高发区）]]
+- [[IAM#4. 限制型机制：权限边界 vs SCP vs 会话策略]]
+- [[IAM#5.2 `aws:RequestedRegion`：限定目标区域，不是发起位置（易混淆点）]]
 
 **优先级 4 —— Design Secure Architectures 整体温习**
 
@@ -96,6 +96,44 @@
 **其他 —— 考试节奏**
 
 三次模拟考用时都在 2h6m～2h10m，接近 130 分钟上限。建议做一次纯计时训练（不追求全对，只练速度），确认能在合理时间内完成 65 题。
+
+---
+
+### 批次五备考重点（基于批次四 64% 的复盘，2026-11-04 制定）
+
+> 完整数据见 [[SAA-C03 模拟考错题本#批次四（23 题，5 处原标注调整）]]。四批次走势 66%→70%→66%→64%，最近两批次连续下滑，且距离批次四已过去一个月。按错题本的决策表，< 75% 应先**系统补课再考**，所以批次五前安排 3 个工作日的专项复习（在 Thaumion Plans「SAA C03 备考计划」中排期），之后再做模拟考。
+
+**复习节奏（工作时间，每天约 2 小时）**
+
+| 日期 | 内容 | 对应 Domain |
+|------|------|-------------|
+| 11-04 周三 | IAM 策略评估动手写 + VPC 访问控制 + 🚩 Route 53 Resolver | Secure（30%，加权风险最高） |
+| 11-05 周四 | 加密与密钥 + 边缘安全（地理限制/OAC+WAF）+ 🚩 EC2 租赁 | Secure |
+| 11-06 周五 | Resilient 知识面扫描 + 🚩 S3 存储类别脱稿复述 + 限时节奏练习 | Resilient（26%，波动最大） |
+| 11-09 周一 | **模拟考批次五**（严格 130 分钟、不查资料、一次做完） | — |
+| 11-10 周二 | 复盘批次五 → 更新错题本 + 本笔记追加批次六重点 | — |
+
+**优先级 1 —— Design Secure Architectures（58%，连续两批次下滑）**
+
+- 动手写 3 份 IAM 示例策略并手动评估：显式 Deny + Allow 组合、"区域外拒绝 + 指定 IP 允许"、`aws:RequestedRegion` → [[IAM#3. 策略评估逻辑（考试陷阱高发区）]]
+- 权限边界 vs SCP：边界只能挂用户/角色不能挂组；SCP 影响成员账户 root、不影响 service-linked role（批次三 Q63、批次四 Q63）→ [[IAM]] [[AWS Organizations]]
+- 批次四暴露的 VPC 基础题集群：公网实例 NAT 由 Internet Gateway 完成、NAT 网关必须在公有子网、安全组有状态 vs NACL 无状态 → [[Internet Gateway]] [[NAT Gateway]] [[Security Group]] [[NACL]]
+- 加密选型对比表（自己画）：SSE-S3（默认对象级唯一密钥）/ SSE-KMS（可审计）/ SSE-C（自管密钥、S3 执行加密）/ 客户端加密；KMS 跨账户 + 加密 RDS 快照共享 → [[S3 Security]] [[KMS]]
+- 边缘安全三选一：WAF 地理位置匹配（ALB）/ CloudFront Georestriction / Route 53 地理位置路由；CloudFront + S3 私有内容 = OAC + WAF → [[AWS WAF]] [[CloudFront]]
+
+**优先级 2 —— 三个跨批次重复错题（考前必须能脱稿复述）**
+
+- 🚩 Route 53 Resolver（2 次）：谁发起查询就用谁那一侧的端点——本地查 VPC → 入站；VPC 查本地 → 出站。画一张双向图 → [[Route 53#混合云和全球可视化]]
+- 🚩 EC2 租赁（3 次）：有 BYOL/许可证绑定 → Dedicated Host，否则 Dedicated Instance；Launch Template 与 VPC 租赁任一方 dedicated → 结果 dedicated → [[EC2]]
+- 🚩 S3 存储类别（4 次，已连续两批次零新增）：不看笔记复述"最短存储期限 + 检索费 + 访问模式已知/未知 + 合法转换瀑布"四个维度，复述不出的部分再回看 → [[S3]]
+
+**优先级 3 —— Design Resilient Architectures（54%，知识面广而分散）**
+
+不追求单点深挖，做一次覆盖面扫描：RDS Multi-AZ 同步 vs 读取副本异步、Multi-AZ 升级仍停机、存储自动扩展；ASG 健康检查/宽限期、Standby + 暂停 ReplaceUnhealthy、再平衡 vs 替换顺序；SQS 标准→FIFO 迁移；EC2 自动恢复保留项；DynamoDB PITR；Aurora Global Database → [[RDS]] [[Auto Scaling]] [[SQS]] [[DynamoDB]] [[Aurora]]
+
+**其他 —— 做题节奏**
+
+四次用时都在 2h6m～2h10m。批次五试行：第一遍每题 ≤ 2 分钟，不确定就标记跳过，目标 110 分钟内做完第一遍，留 20 分钟回看标记题。
 
 ---
 

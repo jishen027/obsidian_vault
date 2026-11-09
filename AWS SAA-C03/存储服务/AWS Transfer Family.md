@@ -32,6 +32,25 @@
 - 每个 SFTP 用户在 Transfer Family 中被映射到一个 **IAM 角色**，该角色的策略决定了这个用户能访问 S3 桶的哪个**前缀（prefix）**
 - 通过"一个用户 → 一个专属 IAM 角色 → 限定到特定前缀"的模式，可以让多个外部供应商共用同一个 S3 桶，同时严格隔离彼此的数据（如 `s3://company-ingest/vendor1/`、`s3://company-ingest/vendor2/`）
 
+### 终端节点类型：内部（Internal）vs 公网（Internet-Facing）（考试易漏点）
+
+| 类型 | 说明 | 适用场景 |
+|------|------|---------|
+| **公网（Internet-Facing）** | SFTP 终端节点暴露在公网，外部任意客户端可尝试连接 | 真正需要从公网直接接入的外部合作方 |
+| **内部（Internal）** | 终端节点只能通过 [[VPC]] 内部网络访问，不暴露公网 | 公司与合作方之间**已有安全的私有连接**（如 Direct Connect、Site-to-Site VPN），不需要、也不应该再额外暴露公网入口 |
+
+> **考试关键词识别**：题目强调"公司与合作方之间已有安全连接（专线/VPN），要求遵循安全最佳实践" → **内部（Internal）终端节点**；只有在合作方必须经公网直连、且没有现成私有连接时才考虑公网终端节点。
+
+### Transfer Family 托管工作流（Managed Workflows）：事件驱动而非轮询（考试易漏点）
+
+> 当需求是"文件一旦上传完成就立即处理，而不是定期轮询检查是否有新文件"时，Transfer Family 的**托管工作流（Managed Workflows）**可以在 SFTP 上传完成后**立即触发** AWS Lambda 函数，属于原生的事件驱动集成。
+
+- **正确方案**：Transfer Family Managed Workflow → 文件上传完成 → 立即调用 Lambda，无需任何轮询
+- **反例（不满足"立即处理"要求）**：用 EventBridge Scheduler 定时触发 Step Functions/Lambda 去扫描是否有新文件——这是**周期性轮询**，不仅引入处理延迟，还和"立即处理"的硬性要求直接矛盾
+- 也可以用 S3 Event Notifications 触发 Lambda（文件最终落地 S3 时触发），两种方案都能做到事件驱动，但 Transfer Family 托管工作流更贴近 SFTP 上传这个动作本身，配置也更直接
+
+> **考试关键词识别**：题目强调"文件到达后必须立即处理，而不是定期检查" → 直接排除任何包含 **EventBridge Scheduler 定期触发**的选项，优先选 Transfer Family 托管工作流或 S3 事件通知这类事件驱动方案。
+
 ### 身份联邦（Identity Provider 集成）
 
 - 除了 Transfer Family 自带的用户管理，还可以对接**外部身份提供商**：Amazon Cognito、SAML 2.0 第三方 IdP，或自定义身份提供商（通过 API Gateway + Lambda 实现）
