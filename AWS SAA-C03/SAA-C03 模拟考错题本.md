@@ -37,6 +37,7 @@
 - [[#批次二（19 题，含 3 处原标注调整）]]
 - [[#批次三（22 题）]]
 - [[#批次四（23 题，含 5 处原标注调整）]]
+- [[#批次五（23 题，4 处原标注调整）]]
 - [[#复习优先级建议]]
 - [[#相关知识笔记（已有课程笔记，按类别索引）]]
 
@@ -85,6 +86,7 @@
 | 批次二 | 2026-09-23 | 2h10m | — | 65 | 46 | **70%** | ❌ <72%，未达标（但比批次一提升 4 个百分点） |
 | 批次三 | 2026-09-24 | 2h6m | — | 65 | 43 | **66%** | ❌ <72%，未达标（较批次二回落 4 个百分点，回到批次一水平） |
 | 批次四 | 2026-10-05 | 2h9m | — | 65 | 42 | **64%** | ❌ <72%，未达标（四次模拟考最低分，连续两批次下滑） |
+| 批次五 | 2026-11-10 | 待补 | — | 65 | 42 | **约 65%**（按 23 道错题推算，待平台分数确认） | ❌ <72%，未达标（专项复习后 Secure 明显改善，但总分持平） |
 
 > 首次模拟考即暴露出明显差距（66% vs 72% 及格线，差 6 个百分点），且用时 2h10m 已接近 130 分钟的时长上限——时间管理也是需要关注的点，不只是知识掌握程度的问题。批次二提升到 70%，差距缩小到 2 个百分点，但**批次三回落到 66%，批次四进一步跌到 64%**——四批次走势是 66%→70%→66%→64%，前两批次像是锯齿波动，但**最近两批次已经是连续下滑**，不能再简单归因于"运气不好"。用时方面四次都在 2h6m～2h10m 之间，稳定接近 130 分钟上限，做题速度始终没有明显改善，这与正确率一样需要持续关注。
 
@@ -105,7 +107,7 @@
 
 ## 错题分布统计
 
-> 累计 **4 个批次、共 86 道错题**（22+19+22+23）。Domain 列原则上采用平台原始标注；批次二发现 3 道题、批次四发现 5 道题标注与实际内容明显不符，已按内容重新归类并在括号中注明原标注（参考 AIF-C01 错题本的处理方式）；批次三复核未发现明显标注错误。
+> 累计 **5 个批次、共 109 道错题**（22+19+22+23+23）。Domain 列原则上采用平台原始标注；批次二发现 3 道题、批次四发现 5 道题标注与实际内容明显不符，已按内容重新归类并在括号中注明原标注（参考 AIF-C01 错题本的处理方式）；批次三复核未发现明显标注错误。
 
 ### 批次一（共 22 题）
 
@@ -213,6 +215,34 @@
 | Q3 | Design Cost-Optimized Architectures | Spot 实例/Spot Fleet 事实判断（选三）：取消请求不终止实例+持久请求中断后重开（非停止后重开）+Spot Fleet 自动维持目标容量 | 📘 |
 | Q10 | Design Cost-Optimized Architectures | 根域名重定向最具成本效益：Alias 记录（非 CNAME，顶点不支持 CNAME 且 Alias 查询免费） | 📘 |
 
+### 批次五（共 23 题，4 处原标注调整）
+
+| 题号 | Domain（实际内容） | 考点主题 | 状态 |
+|------|-------------------|---------|------|
+| Q42 | Design Secure Architectures | 桶策略 IpAddress + NotIpAddress 同块 AND：整段 CIDR 允许、排除一个 IP | 📘 |
+| Q49 | Design Secure Architectures | 传输中加密 = RDS SSL/TLS（NACL/安全组不是加密，RDS 不能 SSH） | 📘 |
+| Q63 | Design Secure Architectures（原标注：Cost） | 密钥轮换+最少运维：KMS 客户托管密钥自动轮换（非 SSE-S3/导入密钥材料/CloudHSM） | 📘 |
+| Q15 | Design Resilient Architectures | 改 Route 53 记录不生效：TTL 缓存（简单路由无健康检查） | 📘 |
+| Q21 | Design Resilient Architectures | PB 级跨区域一次性复制（选二）：s3 sync + Batch Replication（非 S3TA） 🚩重复（批次一 Q50） | 📘 |
+| Q31 | Design Resilient Architectures | SaaS/第三方事件解耦：EventBridge（非 SQS/SNS） | 📘 |
+| Q34 | Design Resilient Architectures | SQL Server 最高可用最少运维：RDS Multi-AZ（不存在跨区域 Multi-AZ） | 📘 |
+| Q40 | Design Resilient Architectures | EKS 节点不扩：Cluster Autoscaler（非 CloudWatch 告警/Lambda 轮询/Fargate） | 📘 |
+| Q51 | Design Resilient Architectures | 白名单固定 IP + 高可用：NLB + ASG（ALB 无固定 IP） | 📘 |
+| Q57 | Design Resilient Architectures | CloudFront 能力（选三）：按内容类型多源 + Origin Group 故障转移 + 字段级加密 | 📘 |
+| Q18 | Design High-Performing Architectures | S3 → Kinesis 最快实现：DMS（非 EventBridge+Lambda） 🚩重复（批次一 Q65，同一错误选项） | 📘 |
+| Q20 | Design High-Performing Architectures（原标注：Secure） | 两 Region 两条 DX 全互联：共享 Direct Connect Gateway + 各 Region VGW | 📘 |
+| Q29 | Design High-Performing Architectures（原标注：Resilient） | Beanstalk 启动 45 分钟→2 分钟（选二）：Golden AMI 静态 + User Data 动态 | 📘 |
+| Q30 | Design High-Performing Architectures | MQTT 消息代理迁移：Amazon MQ | 📘 |
+| Q37 | Design High-Performing Architectures | 最大化 VPN 吞吐：Transit Gateway + ECMP + 多隧道（VGW 不支持 ECMP） | 📘 |
+| Q54 | Design High-Performing Architectures（原标注：Resilient） | 无服务器容器编排（选二）：ECS+Fargate、EKS+Fargate（非 ECS+EC2） | 📘 |
+| Q61 | Design High-Performing Architectures | 动态调整地理区域大小：Geoproximity（bias） | 📘 |
+| Q14 | Design Cost-Optimized Architectures | 可接受旧数据的读多 API 降本：API Gateway 缓存（非 Aurora 副本） | 📘 |
+| Q25 | Design Cost-Optimized Architectures | 本地扩容到 AWS + 热数据本地：Storage Gateway 缓存卷（非存储卷/FSx over VPN） | 📘 |
+| Q32 | Design Cost-Optimized Architectures | 跨 3 AZ ASG（选二）：最小容量 2 + RI（非 3） | 📘 |
+| Q33 | Design Cost-Optimized Architectures | EFS 偶发突发：GP + Standard + Bursting（One Zone 与吞吐模式无关） | 📘 |
+| Q44 | Design Cost-Optimized Architectures | 异步可重试最低成本（选二）：SQS + Spot（非 On-Demand） | 📘 |
+| Q62 | Design Cost-Optimized Architectures | 生命周期（选二）：45 天按前缀转 IA + 180 天全部转 Glacier | 📘 |
+
 ---
 
 ## 重复出现的错题（高危薄弱点，优先复习）
@@ -226,6 +256,9 @@
 | **🚩 S3 存储类别选型（4 次，已连续两批次零新增）** | 批次一 Q25（可再生数据+30天限制）→ 批次二 Q8（已知低频访问选 IA 还是 IT）→ 批次二 Q18（哪些转换不合法）→ 批次二 Q30（短期高频引用数据该用 Standard） | 四次错误覆盖了存储类别决策的四个不同侧面（最短存储期限、IA vs Intelligent-Tiering 的适用边界、合法转换路径、检索费与短生命周期数据的组合效应），说明目前是**逐条记忆孤立规则**，没有建立起"总拥有成本 = 存储单价 + 检索费 + 是否触发最短期限罚金"这套统一的判断框架 | [[S3#生命周期转换的"瀑布模型"：哪些转换合法（考试高频，多选题常考）]] \| [[S3#短期/高频引用数据的存储类别陷阱：min duration + 检索费的组合（考试高频）]] \| [[S3#Standard-IA vs Intelligent-Tiering：访问模式"已知稳定"还是"未知/多变"]] |
 | **🚩 EC2 实例隔离/专用硬件概念（3 次，升级为高优先级）** | 批次一 Q39（有 BYOL 需求 → 误选 Reserved Instance，正确是 Dedicated Host）→ 批次三 Q36（无 BYOL 需求 → 误选 Dedicated Host，正确是 Dedicated Instance）→ 批次四 Q41（Launch Template+VPC 租赁组合逻辑 → 误以为会"互相抵消"，实际是任一方 dedicated 则结果 dedicated） | 三次错误覆盖了 EC2 租赁/隔离概念的三个不同侧面（许可证绑定判断标准、BYOL vs 无 BYOL 的默认选择、租赁设置组合时的覆盖规则），已经从"选择题"扩展到"组合推理题"，说明这块的底层概念理解还不够扎实，不只是记混了两个选项 | [[EC2#实例租赁类型：Dedicated Host vs Dedicated Instance（考试易混淆点）]] \| [[EC2#EC2 实例租赁类型组合逻辑：Launch Template 与 VPC 租赁设置谁说了算（考试易混淆点）]] |
 | **🆕 Route 53 Resolver 入站/出站端点方向（2 次）** | 批次二 Q65（VPC 内解析本地私有 DNS → 误选私有托管区域，正确是出站端点）→ 批次四 Q38（入站+出站端点选二 → 方向搞反，漏选正确的入站端点） | 两次都是"入站 vs 出站该用哪个方向"的判断失误——核心记忆口诀是"谁发起查询，就用谁这一侧的端点"：本地查 VPC 内域名用入站端点，VPC 内查本地域名用出站端点 | [[Route 53#混合云和全球可视化]] |
+| **🆕🚩 S3 → Kinesis 用 DMS（2 次，原题重现且选了同一个错误选项）** | 批次一 Q65 → 批次五 Q18，两次都选 EventBridge/S3 事件 + Lambda | 看到"最快实现/不写代码"仍然倾向自己用 Lambda 拼管道；不知道 DMS 可以把 **S3 当作源**。口诀：**S3 → Kinesis，已有 + 持续的数据 = DMS** | [[Database Migration Service#灵活的源/目标端点]] |
+| **🆕 PB 级跨区域一次性复制（2 次，原题重现）** | 批次一 Q50（错选 S3 控制台复制）→ 批次五 Q21（错选 S3TA） | 两次都只记住了 Batch Replication，另一个正确答案 `aws s3 sync` 没记住；S3TA 只加速客户端 ↔ 桶，不能做桶到桶复制。口诀：**一次性桶到桶 = s3 sync + Batch Replication** | [[S3]] |
+| **🆕 ALB 没有固定 IP（2 次）** | 批次四 Q60（多区域 ALB 白名单 → Global Accelerator）→ 批次五 Q51（白名单固定 IP → NLB） | 需要固定 IP 时仍然先想到 ALB。规则：**要固定 IP → NLB；必须用 ALB → 前面加 Global Accelerator** | [[AWS Load Balance]] \| [[AWS Global Accelerator]] |
 
 ---
 
@@ -1195,6 +1228,261 @@
 - **正确答案**：**创建 Alias 记录**
 - **核心原因**：**根域名（zone apex）不能创建 CNAME 记录**，这是 DNS 协议本身的限制，不是 AWS 特有规则；Alias 记录是 Route 53 的扩展能力，专门支持在根节点创建、指向 AWS 资源（包括同一托管区域内的另一条记录），且**查询 Alias 记录不收费**，而 CNAME 查询会产生费用——即使 CNAME 在根域名可行，Alias 也更省钱
 - **关联笔记**：[[Route 53#Alias 记录 vs CNAME（考试高频考点）]]
+
+---
+
+## 批次五（23 题，4 处原标注调整）
+
+### Batch 5 复盘
+
+> 批次五按 23 道错题推算约 **65%（42/65）**，和批次一、三、四基本持平，**专项复习后的分数没有体现在模考上**。但分布变了：**Design Secure Architectures 只错了 3 道**（平台标注口径），是五次里最好的一次，说明 11/4–11/6 的 Secure 专项复习确实起效；失分集中到了 **Resilient（平台标注 9 道）**和 **Cost-Optimized（7 道）**。
+>
+> **最需要警惕的是两道"原题重现"**：Q18（S3 → Kinesis 用 DMS）和**批次一 Q65 完全一样，而且选了同一个错误选项**（EventBridge + Lambda）；Q21（PB 级跨区域一次性复制）和批次一 Q50 完全一样，这次把"S3 控制台复制"换成了"S3TA"，仍然错一半。错题本记过、但没有被复测过的题，七周后照样会错。
+
+**按内容重新归类的 4 道题**：Q20（Direct Connect Gateway，原标注 Secure → High-Performing）、Q29（Golden AMI 缩短启动时间，原标注 Resilient → High-Performing）、Q54（ECS/EKS + Fargate 选型，原标注 Resilient → High-Performing）、Q63（KMS 客户托管密钥自动轮换，原标注 Cost → Secure）。
+
+**本批次反复出现的失分模式**：
+- **"最快 / 最少改动 / 最少运维"类题目选了要写代码的方案**：Q18（Lambda 代替 DMS）、Q40（CloudWatch 告警代替 Cluster Autoscaler）、Q14（加 Aurora 副本而不是开 API Gateway 缓存）
+- **服务能力边界不清**：VGW 不支持 ECMP（Q37）、ALB 没有固定 IP（Q51）、SNS 没有 MQTT（Q30）、没有"跨区域 Multi-AZ"（Q34）、One Zone 和吞吐模式无关（Q33）
+- **多选题选对一个、错一个**：Q21、Q29、Q32、Q44、Q54、Q57、Q62 共 7 道，占本批次近三分之一
+
+---
+
+### Design Secure Architectures
+
+#### 批次五 · Q42 - 读懂 IpAddress + NotIpAddress 组合的桶策略 📘
+
+- **题干**：桶策略 `Allow` 所有主体 `s3:*`，条件同时有 `IpAddress: 54.240.143.0/24` 和 `NotIpAddress: 54.240.143.188/32`，问这条策略的含义
+- **我的选择（错）**：让 S3 桶"暴露"该 CIDR 范围内的一个外部 IP（除去一个 IP）
+- **正确答案**：**允许整个 CIDR 段访问桶，但排除其中一个 IP**
+- **核心原因**：同一个 Condition 块里的多个条件是 **AND** 关系：源 IP 必须在 /24 里，**并且**不能是 .188。桶策略控制的是"谁能访问桶"，S3 桶本身没有"暴露 IP"这种概念。看到策略题先逐段翻译：Effect → Principal → Action → Resource → Condition
+- **关联笔记**：[[S3 Security]] \| [[IAM]]
+
+---
+
+#### 批次五 · Q49 - 访问数据库时的端到端传输加密 📘
+
+- **题干**：（题干开头未保存）要为访问数据库的数据提供端到端的传输中加密
+- **我的选择（错）**：新建 NACL，阻止整个 EC2 子网 SSH 到数据库
+- **正确答案**：**配置 Amazon RDS 使用 SSL/TLS 加密传输中的数据**
+- **核心原因**：题目问的是 **data-in-transit 加密**，答案只能是 SSL/TLS。NACL 和安全组是访问控制，不是加密，而且 **RDS 根本不能 SSH 登录**；IAM 数据库认证只是换了一种认证方式，不提供额外的传输加密
+- **关联笔记**：[[RDS]]
+
+---
+
+#### 批次五 · Q63 - 加密密钥自动轮换且运维最少 📘（原标注：Design Cost-Optimized Architectures）
+
+- **题干**：（题干开头未保存）数据迁移到 S3，需要加密并满足密钥管理/轮换要求，且运维开销最小
+- **我的选择（错）**：SSE-S3，依赖其内置的密钥管理和轮换
+- **正确答案**：**用 KMS 创建客户托管密钥（CMK）并开启自动轮换，把桶的默认加密设为这个密钥**
+- **核心原因**：SSE-S3 的密钥完全由 AWS 管理，客户**无法控制轮换策略、无法审计密钥使用**，题目一旦对密钥有"控制 / 轮换 / 审计"的要求，SSE-S3 就不满足。客户托管 KMS 密钥可以开启自动轮换（默认每年一次），CloudTrail 能审计每次使用。导入密钥材料的 KMS 密钥**不支持自动轮换**；CloudHSM + 客户端加密 + 本地轮换流程运维最重。（与批次二 Q33"需审计密钥使用"是同一类题）
+- **关联笔记**：[[KMS]]
+
+---
+
+### Design Resilient Architectures
+
+#### 批次五 · Q15 - 改了 Route 53 记录但用户仍访问旧 ALB 📘
+
+- **题干**：Route 53 简单路由记录已从旧负载均衡器改到新负载均衡器，用户仍被解析到旧的，原因是什么？
+- **我的选择（错）**：Alias 记录配置错误
+- **正确答案**：**TTL 仍在生效**
+- **核心原因**：递归解析器会在 TTL 时间内缓存旧记录，过期后才会重新查询。**改记录前先把 TTL 调小（如 300 秒），确认无误后再调回来**。简单路由记录**没有健康检查**，所以"健康检查失败"也不成立
+- **关联笔记**：[[Route 53]]
+
+---
+
+#### 批次五 · Q21 - PB 级跨区域一次性复制数据（多选，选二）📘 🚩重复错题（批次一 Q50 原题）
+
+- **题干**：1PB 数据已通过 Direct Connect 传到 us-west-1 的 S3，需要一次性复制到 us-east-1 的另一个桶，现场不允许用 Snowball
+- **我的选择**：S3 批量复制（对）+ S3 Transfer Acceleration（错）
+- **正确答案**：**`aws s3 sync` 命令** + **S3 Batch Replication（完成后删除复制配置）**
+- **核心原因**：S3TA 加速的是**客户端 ↔ S3 桶**之间的远距离上传/下载，**不能用来做桶到桶的跨区域复制**。批次一选错的是"S3 控制台复制"，这次换成了 S3TA，说明记住的是"批量复制是对的"，而另一个正确答案 `s3 sync` 没记住。口诀：**一次性桶到桶 = s3 sync + Batch Replication**
+- **关联笔记**：[[S3]]
+
+---
+
+#### 批次五 · Q31 - SaaS 应用与内部应用之间的异步解耦 📘
+
+- **题干**：CRM SaaS 应用要把更新推送给内部和第三方应用，迁移到 AWS 后如何异步解耦？
+- **我的选择（错）**：Amazon SQS
+- **正确答案**：**Amazon EventBridge**
+- **核心原因**：题干关键词是 **SaaS + 第三方**。EventBridge 是唯一**原生集成第三方 SaaS 合作伙伴事件源**的服务，还能按 JSON 事件内容做规则过滤后路由到多个目标。SQS/SNS 都不能直接接入第三方 SaaS 事件；ELB 是同步的
+- **关联笔记**：[[Amazon EventBridge]]
+
+---
+
+#### 批次五 · Q34 - SQL Server 数据库层最高可用 + 最少运维 📘
+
+- **题干**：应用服务器 + Microsoft SQL Server 迁移上云，要求数据库层可用性最高、运维和管理开销最小
+- **我的选择（错）**：RDS for SQL Server **跨区域** Multi-AZ 部署
+- **正确答案**：**RDS for SQL Server Multi-AZ 部署**
+- **核心原因**：**RDS Multi-AZ 只在一个 Region 内**，不存在"cross-region Multi-AZ"，这是编出来的选项。跨区域读副本用于扩展读取，不提高可用性；EC2 自建 SQL Server 运维开销最大
+- **关联笔记**：[[RDS]]
+
+---
+
+#### 批次五 · Q40 - EKS 节点数不随 Pod 需求扩展 📘
+
+- **题干**：EKS 上 HPA 能按 CPU 扩 Pod，但节点满载时 EC2 工作节点数不变，需要在 Pod 需求超过集群容量时自动扩节点，运维最少
+- **我的选择（错）**：EC2 Auto Scaling + 基于集群 CPU/内存的自定义 CloudWatch 告警
+- **正确答案**：**部署 Kubernetes Cluster Autoscaler，与现有 ASG 集成，按 Pending Pod 自动增减节点**
+- **核心原因**：HPA 只扩 Pod，**扩节点要靠 Cluster Autoscaler（或 Karpenter）**。它直接看"有没有调度不了的 Pod"，而 EC2 层面的 CPU 指标反映不了 Pod 是否卡在调度上。Lambda 轮询运维重；换 Fargate 需要改造应用
+- **关联笔记**：[[EKS]]
+
+---
+
+#### 批次五 · Q51 - 银行要求白名单固定公网 IP，且高可用可扩展 📘
+
+- **题干**：银行客户访问外部服务时需要把公网 IP 加入白名单，要求高可用、可扩展到 10 台实例
+- **我的选择（错）**：ALB + ASG
+- **正确答案**：**NLB + ASG**
+- **核心原因**：**NLB 每个 AZ 有固定 IP（可绑定 EIP）**，ALB/CLB 只提供 DNS 名，IP 会变。"ASG 动态绑定 EIP"是不存在的功能。（与批次四 Q60 同一类：ALB 要固定 IP，就在前面加 Global Accelerator）
+- **关联笔记**：[[AWS Load Balance]] \| [[AWS Global Accelerator]]
+
+---
+
+#### 批次五 · Q57 - CloudFront 路由、安全与高可用能力（多选，选三）📘
+
+- **题干**：判断关于 CloudFront 路由、安全和高可用的正确说法
+- **我的选择**：按内容类型路由到多个源（对）+ Origin Group 主备故障转移（对）+ 第三项错选（导出里没标出来，大概率是"KMS 加密"），漏选了字段级加密
+- **正确答案**：按内容类型路由多源 + **Origin Group 主备源故障转移** + **字段级加密（Field-Level Encryption）**
+- **核心原因**：CloudFront 保护特定敏感字段用的是**字段级加密**（在边缘用公钥加密 POST 请求里最多 10 个字段），不是"KMS 加密"；地理限制只是封锁国家，与高可用无关；Price Class 决定用哪些边缘站点，不决定路由到哪个源
+- **关联笔记**：[[CloudFront]]
+
+---
+
+### Design High-Performing Architectures
+
+#### 批次五 · Q18 - S3 流式桥接到 Kinesis 最快实现 📘 🚩重复错题（批次一 Q65 原题，同一错误选项）
+
+- **题干**：把 S3 中已有和持续更新的数据流式传输到 Kinesis Data Streams，要求最快实现
+- **我的选择（错）**：S3 的 EventBridge 事件触发 Lambda，写入 Kinesis（**与批次一选的完全一样**）
+- **正确答案**：**用 AWS DMS 作为 S3 和 Kinesis Data Streams 之间的桥梁**
+- **核心原因**：DMS 原生支持 **S3 作为源、Kinesis/MSK 作为目标**，全量 + CDC 开箱即用，不用写代码。题干"fastest way of building"等于"不写代码"，任何 Lambda 方案都要自己开发。口诀：**S3 → Kinesis，已有 + 持续的数据 = DMS**
+- **关联笔记**：[[Database Migration Service#灵活的源/目标端点]]
+
+---
+
+#### 批次五 · Q20 - 两个 Region、两条 Direct Connect 的全互联 📘（原标注：Design Secure Architectures）
+
+- **题干**：us-west-2 和 eu-central-1 各有 VPC 和各自的 Direct Connect，CIDR 不重叠，要求两个数据中心和所有 VPC 跨 Region 全互通，可扩展、运维最少
+- **我的选择（错）**：每个 Region 建 Private VIF，直接关联到其他 Region 的 VPC，再用 VPC Endpoint 转发跨区域流量
+- **正确答案**：**两条 Direct Connect 都连到同一个 Direct Connect Gateway，把每个 Region 的 VGW 关联到这个 DX Gateway**
+- **核心原因**：**DX Gateway 是全局资源**，可以把任意 Region（中国除外）的 VGW 接到同一组 Direct Connect 上。Private VIF 只能连**同一 Region** 的 VGW/TGW；VPC Endpoint 是访问 AWS 服务用的，不能转发私有跨区域流量；VPC 对等不支持传递路由，也不能让本地流量穿过
+- **关联笔记**：[[Direct Connect]] \| [[Transit Gateway]]
+
+---
+
+#### 批次五 · Q29 - Elastic Beanstalk 实例启动从 45 分钟缩到 2 分钟（多选，选二）📘（原标注：Design Resilient Architectures）
+
+- **题干**：安装过程超过 45 分钟，包含静态文件和安装时生成的动态文件，要把新实例启动时间缩到 2 分钟以内
+- **我的选择**：Golden AMI（对）+ "Elastic Beanstalk 部署缓存功能"（错）
+- **正确答案**：**Golden AMI 预装静态部分** + **EC2 User Data 在启动时处理动态部分**
+- **核心原因**："Beanstalk deployment caching"是**编出来的功能**。拆分思路：**静态的提前烤进 AMI，动态的启动时用 User Data 生成**。用 User Data 装整个应用还是要 45 分钟；S3 只是存放安装文件，解决不了安装耗时
+- **关联笔记**：[[Elastic Beanstalk]] \| [[EC2]]
+
+---
+
+#### 批次五 · Q30 - 迁移支持 MQTT 的消息代理 📘
+
+- **题干**：本地微服务用支持 MQTT 的消息代理通信，要迁移到 AWS 且不改应用逻辑，需要托管的消息代理
+- **我的选择（错）**：Amazon SNS
+- **正确答案**：**Amazon MQ**
+- **核心原因**：看到 **MQTT / AMQP / STOMP / JMS / OpenWire** 这些行业标准协议，并且要求**不改代码迁移**，就选 Amazon MQ（托管 ActiveMQ/RabbitMQ）。SNS、SQS、Kinesis 都是 AWS 自有 API，不支持 MQTT
+- **关联笔记**：[[SQS]] \| [[SNS]]
+
+---
+
+#### 批次五 · Q37 - 最大化 Site-to-Site VPN 吞吐 📘
+
+- **题干**：Site-to-Site VPN 流量激增导致连接变慢，如何最大化 VPN 吞吐？
+- **我的选择（错）**：建一个支持 ECMP 和多通道的虚拟私有网关（VGW）
+- **正确答案**：**建 Transit Gateway，开启 ECMP 并增加 VPN 隧道**
+- **核心原因**：单条 VPN 隧道上限约 **1.25 Gbps**，突破上限只能靠 **Transit Gateway + ECMP** 在多条隧道上做等价多路径（需开启动态路由/BGP）。**VGW 不支持 ECMP**；S3TA 和 VPN 无关；Global Accelerator 加速 VPN 改善的是路径质量，不是吞吐上限
+- **关联笔记**：[[Site to Site VPN]] \| [[Transit Gateway]]
+
+---
+
+#### 批次五 · Q54 - Docker API 的无服务器容器编排（多选，选二）📘（原标注：Design Resilient Architectures）
+
+- **题干**：为客户托管基于 Docker 容器的 API，要求无服务器编排
+- **我的选择**：ECS + Fargate（对）+ ECS + EC2（错）
+- **正确答案**：**ECS + Fargate** + **EKS + Fargate**
+- **核心原因**：题干要求 **serverless**，只要底层是 EC2 就要自己管实例，不算无服务器。Fargate 既能配合 ECS，也能配合 EKS。EMR、SageMaker 都不是容器编排服务
+- **关联笔记**：[[AWS Fargate]] \| [[ECS]] \| [[EKS]]
+
+---
+
+#### 批次五 · Q61 - 动态调整某个资源覆盖的地理区域大小 📘
+
+- **题干**：需要能动态扩大或缩小把流量路由到某个服务器资源的地理区域范围
+- **我的选择（错）**：Geolocation 路由
+- **正确答案**：**Geoproximity 路由**
+- **核心原因**：只有 **Geoproximity 有 bias（偏差值）**：正值（1~99）扩大资源覆盖的区域，负值（-1~-99）缩小。Geolocation 是按用户所在洲/国家/州做固定映射，范围不能调整。口诀：**"改区域大小" = bias = Geoproximity**
+- **关联笔记**：[[Route 53]]
+
+---
+
+### Design Cost-Optimized Architectures
+
+#### 批次五 · Q14 - 读多写少、可接受 24 小时旧数据的 API 降本 📘
+
+- **题干**：API Gateway + Lambda + Aurora，读多写少，数据很少变化，可以接受约 24 小时的旧数据；Aurora 负载高、成本高，要求改动最少、降本又提速
+- **我的选择（错）**：增加 Aurora 读副本
+- **正确答案**：**开启 API Gateway 缓存**
+- **核心原因**：题干出现"**可以接受旧数据**"，就是在提示加缓存。API Gateway 缓存在最前端直接返回响应，Lambda 和 Aurora 都不会被调用，既省钱又快，只需改配置。**加读副本会增加成本**，不符合"降本"。（TTL 默认 300 秒，最大 3600 秒；Lambda 没有原生内存缓存功能）
+- **关联笔记**：[[Amazon API Gateway]]
+
+---
+
+#### 批次五 · Q25 - 本地存储扩容到 AWS、频繁本地访问且无取回费 📘
+
+- **题干**：医疗机构本地存储快速增长，要扩展到 AWS，常用数据要能本地快速访问，节省带宽、无取回费用、应用改动最少
+- **我的选择（错）**：FSx for Windows File Server，本地服务器通过 VPN 挂载，作为主 NAS
+- **正确答案**：**Storage Gateway 缓存卷（Cached Volumes）**：常用数据缓存在本地，全部主数据异步写入 S3
+- **核心原因**：区分两种卷网关：**缓存卷**的主数据在 S3、本地只缓存热数据，能"扩展容量"；**存储卷**的完整数据留在本地、只把快照备份到 S3，**不能减少本地存储**。FSx 走 VPN 每次读写都要过网络，不省带宽、延迟高；S3 Standard-IA 有取回费
+- **关联笔记**：[[AWS Storage Gateway]]
+
+---
+
+#### 批次五 · Q32 - 跨 3 个 AZ 的 ASG：高可用 + 弹性 + 省钱（多选，选二）📘
+
+- **题干**：ELB + ASG 跨 3 个 AZ，比赛时需要快速扩容，平时可以空闲，要求高可用、能扩展、成本最优
+- **我的选择**：最小容量设为 3（错）+ 最小容量用 Reserved Instances（对）
+- **正确答案**：**最小容量设为 2** + **最小容量用 RI**
+- **核心原因**：**高可用的最低要求是 2 台、分布在 2 个 AZ**，一个 AZ 故障时还有一台在服务，ASG 会在第三个 AZ 补回。设为 3 是多花钱。最小容量的实例会一直运行，所以用 RI 最便宜；Dedicated Host 用于许可证绑定场景，与本题无关
+- **关联笔记**：[[Auto Scaling]]
+
+---
+
+#### 批次五 · Q33 - EFS 偶发突发、平均吞吐低，不手动配置吞吐 📘
+
+- **题干**：基因组分析工作负载偶尔爆发，平均吞吐低，用 EFS，要求成本和突发性能最优，且不手动配置吞吐
+- **我的选择（错）**：切换到 EFS One Zone，"会自动启用突发吞吐模式"
+- **正确答案**：**General Purpose 性能模式 + EFS Standard 存储类别 + Bursting 吞吐模式**
+- **核心原因**：**存储类别（Standard / One Zone / IA）和吞吐模式（Bursting / Provisioned / Elastic）是两个独立维度**，切换 One Zone 不会改变吞吐模式。Provisioned 需要手动配置吞吐，违反题干要求；IA 只省存储费，与吞吐无关，访问时还有费用
+- **关联笔记**：[[AWS EFS]]
+
+---
+
+#### 批次五 · Q44 - 异步图片压缩、可重试、最低成本（多选，选二）📘
+
+- **题干**：客户愿意等待压缩结果，要求异步处理、快速扩展、失败自动重试，并且成本最低
+- **我的选择**：SQS（对）+ On-Demand 实例（错）
+- **正确答案**：**SQS** + **Spot Instances**
+- **核心原因**：客户愿意等待 + SQS 自带重试（消息可见性超时到期后会被重新处理），所以**被中断的任务会自动重做**，正好满足 Spot 的使用条件。题干强调"minimize cost"时，On-Demand 不是最便宜的；RI 需要 1~3 年承诺，不适合负载不可预测的场景
+- **关联笔记**：[[SQS]] \| [[EC2]]
+
+---
+
+#### 批次五 · Q62 - 按前缀分层的 S3 生命周期策略（多选，选二）📘
+
+- **题干**：（题干前文未保存，从解析推断）45 天后图片很少访问但缩略图仍常访问，180 天后所有对象都可以归档
+- **我的选择**：45 天后**按前缀**转 Standard-IA（对）+ 180 天后**按前缀**转 Glacier（错）
+- **正确答案**：**45 天后按前缀（images/）转 Standard-IA** + **180 天后全部对象转 Glacier**
+- **核心原因**：45 天时只有图片冷了，缩略图还热，所以要**用前缀过滤**；180 天时**所有对象**都该归档，就不需要前缀了。One Zone-IA 扛不住 AZ 故障。逐个对照题干：**每条规则作用于"哪些对象"**
+- **关联笔记**：[[S3]]
 
 ---
 
