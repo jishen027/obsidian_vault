@@ -105,3 +105,10 @@
 - ✅ 全对：Glacier Instant Retrieval（季度访问 + 毫秒级 + 多 AZ）、Route 53 Resolver Inbound（本地 → AWS）、SQS FIFO + Message Group ID、Multi-AZ 实例的备用不可读 → Read Replica、Spot、DynamoDB 网关终端节点、Failover 路由 + 健康检查、io2 Block Express（gp3 上限 16,000 IOPS）
 - 两个反复错的点（S3 存储类别、Resolver 方向）本轮都对
 - 注：热身题难度低于模考，不作为真实水平参考
+
+## 2026-11-11 16:58 · Mock 5 错题复测（考试长度题干，14 题，对 14 题，100%）
+
+- ✅ 全对，覆盖 Mock 5 的 14 个错点：S3 → Kinesis 用 DMS（🚩批次一 Q65 原题重现）、桶到桶一次性复制 s3 sync + Batch Replication（🚩批次一 Q50）、API Gateway 缓存、Route 53 TTL、DX Gateway 跨 Region、Storage Gateway 缓存卷、Golden AMI + User Data、Amazon MQ、EventBridge SaaS、ASG 最小容量 2 + RI、EFS 存储类别与吞吐模式独立、RDS Multi-AZ 不跨 Region、TGW + ECMP、Geoproximity bias
+- 本轮题干按真实考试长度出题（多约束场景 + 干扰项），不是短题
+- 当天还补讲了：CDC、VIF 三种类型、Transit Gateway / Transit VIF、ECMP、BGP；Q54 的陷阱在选项里的“serverless”描述
+- 待办：Mock 5 剩余 9 个错点（桶策略条件 AND、RDS SSL、KMS 自动轮换、CloudFront 字段级加密、Cluster Autoscaler、NLB 固定 IP、ECS/EKS + Fargate、SQS + Spot、生命周期前缀）还没复测
