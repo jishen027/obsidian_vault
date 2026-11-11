@@ -86,7 +86,7 @@
 
 **错在哪**：你选了 EventBridge + Lambda。**这和批次一 Q65 选的是同一个错误选项。**Lambda 方案可行，但读文件、解析、写 Kinesis、补历史数据都要自己写代码，不是最快的。
 
-**正确思路**：DMS 原生支持 **S3 作为源、Kinesis Data Streams 作为目标**，用 Full load + CDC 一次覆盖历史数据和后续变更，开箱即用，不写代码。
+**正确思路**：DMS 原生支持 **S3 作为源、Kinesis Data Streams 作为目标**，用 Full load（全量加载：先把已有的数据整体搬一遍）+ CDC（Change Data Capture，变更数据捕获：之后持续捕获源端新增和修改的数据，并实时同步过去）一次覆盖历史数据和后续变更，开箱即用，不写代码。
 
 **其他选项**：
 - S3 事件通知 + Lambda：同样要自己写代码
