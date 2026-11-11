@@ -113,7 +113,12 @@
 
 **题眼**：两个 Region、两条 Direct Connect、多个 VPC 全互通，要求可扩展、运维最少
 
-**错在哪**：你选了“Private VIF 直接关联到其他 Region 的 VPC + VPC Endpoint 转发”。这里有两处错：Private VIF 只能连**同一个 Region** 的 VGW/TGW；VPC Endpoint 是访问 AWS 服务用的，不能转发跨区域的私网流量。
+**错在哪**：你选了“Private VIF 直接关联到其他 Region 的 VPC + VPC Endpoint 转发”。这里有两处错：Private VIF 直连时只能连**同一个 Region** 的 VGW（要跨 Region 必须经过 DX Gateway；连 TGW 用的是 Transit VIF，不是 Private VIF）；VPC Endpoint 是访问 AWS 服务用的，不能转发跨区域的私网流量。
+
+**补充：什么是 VIF**：Direct Connect 本身只是一条物理专线，要在上面建 **VIF（Virtual Interface，虚拟接口）** 才能通流量，每个 VIF 就是一个 VLAN 加一个 BGP 会话。共有三种：
+- **Private VIF**：访问 **VPC 里的私有资源**（私有 IP）。接 VGW（同一 Region）或 DX Gateway（可跨 Region）。
+- **Public VIF**：访问 **AWS 公共服务端点**（S3、DynamoDB 等的公网地址），不经过互联网。
+- **Transit VIF**：经 DX Gateway 接 **Transit Gateway**，适合大量 VPC。
 
 **正确思路**：Direct Connect Gateway 是**全局资源**：两条专线的 Private VIF 都接到同一个 DX Gateway，再把两个 Region 的 VGW 关联上去，本地和所有 VPC 就能跨 Region 互通。
 
