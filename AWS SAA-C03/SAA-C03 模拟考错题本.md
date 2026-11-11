@@ -235,7 +235,7 @@
 | Q29 | Design High-Performing Architectures（原标注：Resilient） | Beanstalk 启动 45 分钟→2 分钟（选二）：Golden AMI 静态 + User Data 动态 | 📘 |
 | Q30 | Design High-Performing Architectures | MQTT 消息代理迁移：Amazon MQ | 📘 |
 | Q37 | Design High-Performing Architectures | 最大化 VPN 吞吐：Transit Gateway + ECMP + 多隧道（VGW 不支持 ECMP） | 📘 |
-| Q54 | Design High-Performing Architectures（原标注：Resilient） | 无服务器容器编排（选二）：ECS+Fargate、EKS+Fargate（非 ECS+EC2） | 📘 |
+| Q54 | Design High-Performing Architectures（原标注：Resilient） | 容器编排（选二）：选项都声称“serverless”，ECS+EC2 那句描述本身是错的 → ECS+Fargate、EKS+Fargate | 📘 |
 | Q61 | Design High-Performing Architectures | 动态调整地理区域大小：Geoproximity（bias） | 📘 |
 | Q14 | Design Cost-Optimized Architectures | 可接受旧数据的读多 API 降本：API Gateway 缓存（非 Aurora 副本） | 📘 |
 | Q25 | Design Cost-Optimized Architectures | 本地扩容到 AWS + 热数据本地：Storage Gateway 缓存卷（非存储卷/FSx over VPN） | 📘 |
@@ -1419,10 +1419,10 @@
 
 #### 批次五 · Q54 - Docker API 的无服务器容器编排（多选，选二）📘（原标注：Design Resilient Architectures）
 
-- **题干**：为客户托管基于 Docker 容器的 API，要求无服务器编排
+- **题干**：为客户托管基于 Docker 容器的 API，问推荐哪些编排方案（**题干本身没要求 serverless**，但每个选项都写了“for serverless orchestration”）
 - **我的选择**：ECS + Fargate（对）+ ECS + EC2（错）
 - **正确答案**：**ECS + Fargate** + **EKS + Fargate**
-- **核心原因**：题干要求 **serverless**，只要底层是 EC2 就要自己管实例，不算无服务器。Fargate 既能配合 ECS，也能配合 EKS。EMR、SageMaker 都不是容器编排服务
+- **核心原因**：陷阱在选项里，不在题干里。每个选项都附带了“serverless orchestration”这个说法，ECS + EC2 能托管容器，但“ECS on EC2 是 serverless”这句话是错的，所以整个选项就错了。**多选题要逐字检查选项里附带的属性，不只看服务名能不能用**。Fargate 既能配合 ECS，也能配合 EKS。EMR、SageMaker 都不是容器编排服务
 - **关联笔记**：[[AWS Fargate]] \| [[ECS]] \| [[EKS]]
 
 ---

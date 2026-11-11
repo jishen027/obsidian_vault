@@ -577,9 +577,9 @@ SQS、SNS、Kinesis 都是 AWS 专有 API，都不支持 MQTT
 
 ### 讲解
 
-**题眼**：Docker 容器 API；要求**无服务器**编排（选二）
+**题眼**：题干本身**没有要求 serverless**，陷阱在选项里：5 个选项**每一个都写了“for serverless orchestration”**，所以要判断的是“这句描述本身对不对”（选二）
 
-**错在哪**：你选了 ECS + Fargate（对）+ ECS + EC2（错）。底层是 EC2 就要自己管理实例，不算无服务器。
+**错在哪**：你选了 ECS + Fargate（对）+ ECS + EC2（错）。只看题干，ECS on EC2 确实能托管容器，你的直觉没错。但这个选项写的是“ECS with EC2 **for serverless orchestration**”，这句话本身是**错误的事实陈述**：EC2 启动类型要自己管理实例（选实例类型、打补丁、扩容量），不是 serverless。在多选题里，选项把一个能用的服务和一个错误的属性绑在一起，整个选项就是错的。
 
 **正确思路**：Fargate 可以配合 ECS 用，也可以配合 EKS 用，所以答案是 ECS + Fargate 和 EKS + Fargate。
 
