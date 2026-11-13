@@ -120,3 +120,10 @@
   - 口诀：**每条规则先问“作用于哪些对象”**；题干写 all → 不加过滤；然后按可接受的取回时间选最便宜的存储类别
 - ❌ **Q10 安全组引用 ALB 的安全组**（批次五 Q65 跳过的点，用户只贴了题干，未贴所选答案）→ 正确答案：入站规则来源 = ALB 的安全组；/23 CIDR 会把同子网的堡垒机和监控设备也放进来
 - 待办：生命周期前缀、安全组引用列为高危，Mock 6（11/16）前再测
+
+## 2026-11-13 10:05 · 专项复习 4B：隔天复测（8 题，对 7 题，88%）
+
+- ✅ DMS（S3 → Kinesis，第三次考终于稳定）、Batch Replication、TGW + BGP + ECMP、Storage Gateway 缓存卷、Geoproximity bias、**生命周期前缀（第 3 次考，这次对了）**、安全组逐层引用
+- ❌ **Direct Connect Gateway（第 2 次错：批次五 Q20 → 今天隔天复测）**：3 个数据中心 × 3 个 Region，要避免“每个数据中心到每个 Region 各建一个 VIF”。正解：**每条专线一个 Private VIF → 同一个 DX Gateway → 关联所有 Region 的 VGW**。Private VIF 不经过 DX Gateway 时只能连**同一个 Region** 的 VGW
+  - 判断：只要出现“多个 Region + Direct Connect”，就想 DX Gateway（全局资源）
+- 结论：11/11 当天 14/14 但隔天 DX Gateway 仍错，说明这一点还没内化 → 列为高危，Mock 6 前再测
