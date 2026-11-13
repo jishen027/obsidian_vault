@@ -112,3 +112,11 @@
 - 本轮题干按真实考试长度出题（多约束场景 + 干扰项），不是短题
 - 当天还补讲了：CDC、VIF 三种类型、Transit Gateway / Transit VIF、ECMP、BGP；Q54 的陷阱在选项里的“serverless”描述
 - 待办：Mock 5 剩余 9 个错点（桶策略条件 AND、RDS SSL、KMS 自动轮换、CloudFront 字段级加密、Cluster Autoscaler、NLB 固定 IP、ECS/EKS + Fargate、SQS + Spot、生命周期前缀）还没复测
+
+## 2026-11-13 09:57 · 专项复习 4A：Mock 5 剩余错点（考试长度，12 题，对 10 题，约 83%）
+
+- ✅ 桶策略多条件 AND（两题）、RDS 传输加密 SSL/TLS + require_secure_transport、KMS 客户托管密钥自动轮换、导入密钥材料不能自动轮换、CloudFront 字段级加密、Cluster Autoscaler、NLB 固定 IP、ECS/EKS + Fargate（逐句核对选项）、SQS + Spot
+- ❌ **S3 生命周期前缀（第 2 次错，批次五 Q62 同一个点）**：365 天归档选了“只对 web/ 前缀转 Glacier Flexible”。题干说的是“all objects”都要归档，所以这条规则**不加前缀**；而且 48 小时内取回可以接受 → 最便宜的是 **Deep Archive**。两次都错在“归档规则也加了前缀”
+  - 口诀：**每条规则先问“作用于哪些对象”**；题干写 all → 不加过滤；然后按可接受的取回时间选最便宜的存储类别
+- ❌ **Q10 安全组引用 ALB 的安全组**（批次五 Q65 跳过的点，用户只贴了题干，未贴所选答案）→ 正确答案：入站规则来源 = ALB 的安全组；/23 CIDR 会把同子网的堡垒机和监控设备也放进来
+- 待办：生命周期前缀、安全组引用列为高危，Mock 6（11/16）前再测
